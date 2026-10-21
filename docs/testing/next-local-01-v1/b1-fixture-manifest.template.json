@@ -1,0 +1,82 @@
+{
+  "schema_version": "b1-fixture-manifest-v1",
+  "template_only": true,
+  "status": "NOT_RUN",
+  "target_project_ref": "<OWNER_CONFIRMED_PROJECT_REF>",
+  "target_cost_evidence": null,
+  "approval_reference": null,
+  "source_digest": null,
+  "migration_digests": {},
+  "app_origin": "http://127.0.0.1:3100",
+  "payments": "simulation",
+  "ai": "manual",
+  "provider_actions": false,
+  "financial_actions": false,
+  "identities": [
+    {
+      "alias": "owner-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "owner-b",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "finance-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "coordinator-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "supplier-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "donor-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "revoked-a",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    },
+    {
+      "alias": "anonymous",
+      "verified_auth_user_id": null,
+      "consent_reference": null,
+      "browser_profile": null,
+      "existing_owner_workspace_may_be_mutated": false
+    }
+  ],
+  "resources_created": [],
+  "protected_existing_resources": [],
+  "cleanup_requires_separate_authority": true,
+  "stop_conditions": [
+    "Target, $0 plan, identity, source or permissions not confirmed",
+    "Any non-fixture resource would be changed",
+    "Provider/model/payment request attempted",
+    "Unexpected broad read, cross-tenant grant, duplicate binding or credential in logs"
+  ]
+}

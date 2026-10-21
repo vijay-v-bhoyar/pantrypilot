@@ -1,0 +1,1283 @@
+{
+  "schema_version": "next-local-01-template-v1",
+  "batch": "B1-IDENTITY-DB",
+  "template_only": true,
+  "authorization": "Preparation only. Separate exact target/identity/$0/participant/action authority is required before execution.",
+  "original_review_sha256": "e3613c32bcd3c51dfcf31310235405b70d95c39a675466eaf625a39b4376d04a",
+  "source_digest": null,
+  "configuration_digest": null,
+  "target_confirmed": false,
+  "approved_actions": [],
+  "cases": [
+    {
+      "variant_id": "PP-O01-V01",
+      "case_id": "PP-O01",
+      "name": "first-sign-in",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-site",
+        "W-API-auth-callback",
+        "W-API-auth-login",
+        "W-PAGE-workspace"
+      ],
+      "requirements": [
+        "ORG-01",
+        "OPS-01"
+      ],
+      "source_original_variant_assertions": [
+        "first-sign-in: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Repeat sign-in reuses the owned workspace and saved site; real memberships have no Demo role selector.",
+        "No seeded opening balance or confirmed provider payment is implied."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Fresh verified Google owner gets one fully blank owned workspace (no sites/funds/kits/ledger), no Demo role selector; save a test site deliberately.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O01-V02",
+      "case_id": "PP-O01",
+      "name": "repeat-sign-in",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-site",
+        "W-API-auth-callback",
+        "W-API-auth-login",
+        "W-PAGE-workspace"
+      ],
+      "requirements": [
+        "ORG-01",
+        "OPS-01"
+      ],
+      "source_original_variant_assertions": [
+        "repeat-sign-in: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Repeat sign-in reuses the owned workspace and saved site; real memberships have no Demo role selector.",
+        "No seeded opening balance or confirmed provider payment is implied."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Same verified Google identity reuses the same workspace and deliberately saved site after sign-out/sign-in; no duplicate binding.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O01-V03",
+      "case_id": "PP-O01",
+      "name": "failed-bootstrap-retry",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-site",
+        "W-API-auth-callback",
+        "W-API-auth-login",
+        "W-PAGE-workspace"
+      ],
+      "requirements": [
+        "ORG-01",
+        "OPS-01"
+      ],
+      "source_original_variant_assertions": [
+        "failed-bootstrap-retry: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Repeat sign-in reuses the owned workspace and saved site; real memberships have no Demo role selector.",
+        "No seeded opening balance or confirmed provider payment is implied."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "An isolated failed/unknown bootstrap is retried by the same verified identity; one binding/aggregate and no partial session; no shared-RPC disruption.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V01",
+      "case_id": "PP-O03",
+      "name": "finance",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "finance: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "A copied finance invitation grants finance only in the intended new test workspace; no owner escalation or cross-org visibility.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V02",
+      "case_id": "PP-O03",
+      "name": "coordinator",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "coordinator: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Coordinator invitation grants coordinator only; stock/request rights work and spending, refund and correction approval stay denied.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V03",
+      "case_id": "PP-O03",
+      "name": "donor",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "donor: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Donor invitation exposes published campaigns and own giving only; no staff/other donor records.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V04",
+      "case_id": "PP-O03",
+      "name": "supplier",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "supplier: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Supplier invitation binds the server-selected supplier; own offers/orders work, other merchant actions fail.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V05",
+      "case_id": "PP-O03",
+      "name": "expired-invite",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "expired-invite: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Expired invitation rejects enrollment without actor/membership/token-use side effects; original test members remain.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V06",
+      "case_id": "PP-O03",
+      "name": "used-third-identity",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "used-third-identity: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "A token consumed by B cannot enroll a distinct Google identity C; B retains its valid membership.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V07",
+      "case_id": "PP-O03",
+      "name": "existing-member-revisit",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "existing-member-revisit: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Existing intended member revisits the original link; actor/binding reused, no duplicate privilege or membership.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O03-V08",
+      "case_id": "PP-O03",
+      "name": "forged-role-fields",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FIN",
+        "U-COO",
+        "U-SUP",
+        "U-DON"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-invite",
+        "W-API-join",
+        "W-PAGE-join",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "The named invalid/unauthorized branch is rejected according to the source-traced case contract; no unauthorized stock, money, privilege or completed external action occurs. Permitted failed-attempt/audit bookkeeping is distinct from business effects."
+      ],
+      "source_case_assertions": [
+        "Invitation role and supplier assignment come from the server; token is single-use and expiring.",
+        "Finance cannot gain owner permission by changing request fields or Google user metadata."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Forged role/organization/metadata fields do not change server-owned invitation role; invalid body rejected.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O04-V01",
+      "case_id": "PP-O04",
+      "name": "finance-to-coordinator",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FORM",
+        "U-FIN",
+        "U-COO"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-member",
+        "W-CMD-revoke"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "finance-to-coordinator: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Changed role loses previous action permissions; revoked member receives 401 SESSION_REVOKED on protected access.",
+        "Owner cannot revoke self or remove the last owner."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Owner changes only the run-owned test member from finance to coordinator; previous finance commands fail on a fresh request.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-O04-V03",
+      "case_id": "PP-O04",
+      "name": "used-link-after-revocation",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FORM",
+        "U-FIN",
+        "U-COO"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-CMD-member",
+        "W-CMD-revoke"
+      ],
+      "requirements": [
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "used-link-after-revocation: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Changed role loses previous action permissions; revoked member receives 401 SESSION_REVOKED on protected access.",
+        "Owner cannot revoke self or remove the last owner."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Revoked run-owned test member remains denied when replaying a used invitation; last owner untouched.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-D04-V01",
+      "case_id": "PP-D04",
+      "name": "two-donor-projection",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-DON",
+      "related_personas": [],
+      "journey_id": "J-DON",
+      "workflow_ids": [
+        "W-API-receipt",
+        "W-API-workspace"
+      ],
+      "requirements": [
+        "FUND-04",
+        "ORG-01"
+      ],
+      "source_original_variant_assertions": [
+        "Each independently enrolled donor receives only own gifts/subscriptions and public campaign aggregates, with no staff ledger or other donor records."
+      ],
+      "source_case_assertions": [
+        "Own history is scoped to donor identity; another donor receipt is inaccessible.",
+        "The acknowledgment route returns a generic HTTP 403 for another donor or unconfirmed receipt; staff do not gain acknowledgment access merely from ledger authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Two distinct consenting Google donors see their own history on the actual scoped Supabase test fixture; no other donor record.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-D04-V02",
+      "case_id": "PP-D04",
+      "name": "other-receipt-denied",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-DON",
+      "related_personas": [],
+      "journey_id": "J-DON",
+      "workflow_ids": [
+        "W-API-receipt",
+        "W-API-workspace"
+      ],
+      "requirements": [
+        "FUND-04",
+        "ORG-01"
+      ],
+      "source_original_variant_assertions": [
+        "The named invalid/unauthorized branch is rejected according to the source-traced case contract; no unauthorized stock, money, privilege or completed external action occurs. Permitted failed-attempt/audit bookkeeping is distinct from business effects."
+      ],
+      "source_case_assertions": [
+        "Own history is scoped to donor identity; another donor receipt is inaccessible.",
+        "The acknowledgment route returns a generic HTTP 403 for another donor or unconfirmed receipt; staff do not gain acknowledgment access merely from ledger authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Another donor acknowledgment is generic 403; no identity, amount, capture or receipt content disclosure.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-D04-V03",
+      "case_id": "PP-D04",
+      "name": "staff-receipt-denied",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-DON",
+      "related_personas": [],
+      "journey_id": "J-DON",
+      "workflow_ids": [
+        "W-API-receipt",
+        "W-API-workspace"
+      ],
+      "requirements": [
+        "FUND-04",
+        "ORG-01"
+      ],
+      "source_original_variant_assertions": [
+        "A staff actor requesting a donor acknowledgment receives generic HTTP 403 and no receipt disclosure."
+      ],
+      "source_case_assertions": [
+        "Own history is scoped to donor identity; another donor receipt is inaccessible.",
+        "The acknowledgment route returns a generic HTTP 403 for another donor or unconfirmed receipt; staff do not gain acknowledgment access merely from ledger authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Staff ledger authority does not allow another donor acknowledgment; generic 403.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-D04-V04",
+      "case_id": "PP-D04",
+      "name": "unconfirmed-receipt-denied",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-DON",
+      "related_personas": [],
+      "journey_id": "J-DON",
+      "workflow_ids": [
+        "W-API-receipt",
+        "W-API-workspace"
+      ],
+      "requirements": [
+        "FUND-04",
+        "ORG-01"
+      ],
+      "source_original_variant_assertions": [
+        "A pending/unconfirmed gift has no acknowledgment; route returns generic HTTP 403."
+      ],
+      "source_case_assertions": [
+        "Own history is scoped to donor identity; another donor receipt is inaccessible.",
+        "The acknowledgment route returns a generic HTTP 403 for another donor or unconfirmed receipt; staff do not gain acknowledgment access merely from ledger authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Awaiting/uncertain fixture gift has no completed acknowledgment and receipt GET is generic 403.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-A01-V03",
+      "case_id": "PP-A01",
+      "name": "google-project-cookie-clear",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-OWN",
+      "related_personas": [
+        "U-FORM"
+      ],
+      "journey_id": "J-OWN",
+      "workflow_ids": [
+        "W-API-logout",
+        "W-API-workspace",
+        "W-PAGE-workspace",
+        "W-SCRIPT-qualify-isolation-ts"
+      ],
+      "requirements": [
+        "ORG-01",
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "google-project-cookie-clear: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Current session loses authorization; another session is unaffected; failure clears local credentials but reports uncertainty."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Actual Google/Supabase project cookies and app nonce are cleared/revoked; copied cookie denied while another independent session remains valid.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-P02-V01",
+      "case_id": "PP-P02",
+      "name": "new-donor",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-VIS",
+      "related_personas": [
+        "U-DON",
+        "U-OWN"
+      ],
+      "journey_id": "J-VIS",
+      "workflow_ids": [
+        "W-CMD-campaignStatus",
+        "W-API-campaigns",
+        "W-API-join",
+        "W-PAGE-campaigns",
+        "W-PAGE-join"
+      ],
+      "requirements": [
+        "ORG-02",
+        "FUND-01",
+        "FUND-04"
+      ],
+      "source_original_variant_assertions": [
+        "new-donor: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Enrollment commits membership and actor together; public campaign enrollment grants donor only.",
+        "A closed campaign or demo cannot enroll a new real identity; existing records and memberships remain intact."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Public published non-demo test campaign plus verified new Google user commits one donor-only actor/membership atomically.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-P02-V02",
+      "case_id": "PP-P02",
+      "name": "existing-member",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-VIS",
+      "related_personas": [
+        "U-DON",
+        "U-OWN"
+      ],
+      "journey_id": "J-VIS",
+      "workflow_ids": [
+        "W-CMD-campaignStatus",
+        "W-API-campaigns",
+        "W-API-join",
+        "W-PAGE-campaigns",
+        "W-PAGE-join"
+      ],
+      "requirements": [
+        "ORG-02",
+        "FUND-01",
+        "FUND-04"
+      ],
+      "source_original_variant_assertions": [
+        "existing-member: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Enrollment commits membership and actor together; public campaign enrollment grants donor only.",
+        "A closed campaign or demo cannot enroll a new real identity; existing records and memberships remain intact."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Existing campaign member re-entry reuses the same actor; never grants additional rights.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-P02-V03",
+      "case_id": "PP-P02",
+      "name": "closed-campaign",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-VIS",
+      "related_personas": [
+        "U-DON",
+        "U-OWN"
+      ],
+      "journey_id": "J-VIS",
+      "workflow_ids": [
+        "W-CMD-campaignStatus",
+        "W-API-campaigns",
+        "W-API-join",
+        "W-PAGE-campaigns",
+        "W-PAGE-join"
+      ],
+      "requirements": [
+        "ORG-02",
+        "FUND-01",
+        "FUND-04"
+      ],
+      "source_original_variant_assertions": [
+        "closed-campaign: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Enrollment commits membership and actor together; public campaign enrollment grants donor only.",
+        "A closed campaign or demo cannot enroll a new real identity; existing records and memberships remain intact."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Closed test campaign rejects a new Google identity; no partial actor/membership or loss of existing history.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-P02-V04",
+      "case_id": "PP-P02",
+      "name": "demo-enrollment-denied",
+      "original_gate": "REAL_IDENTITY_TARGET",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-VIS",
+      "related_personas": [
+        "U-DON",
+        "U-OWN"
+      ],
+      "journey_id": "J-VIS",
+      "workflow_ids": [
+        "W-CMD-campaignStatus",
+        "W-API-campaigns",
+        "W-API-join",
+        "W-PAGE-campaigns",
+        "W-PAGE-join"
+      ],
+      "requirements": [
+        "ORG-02",
+        "FUND-01",
+        "FUND-04"
+      ],
+      "source_original_variant_assertions": [
+        "The named invalid/unauthorized branch is rejected according to the source-traced case contract; no unauthorized stock, money, privilege or completed external action occurs. Permitted failed-attempt/audit bookkeeping is distinct from business effects."
+      ],
+      "source_case_assertions": [
+        "Enrollment commits membership and actor together; public campaign enrollment grants donor only.",
+        "A closed campaign or demo cannot enroll a new real identity; existing records and memberships remain intact."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Real identity cannot enroll in a seeded demo; role tour stays separate and no real membership is persisted.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-T10-V01",
+      "case_id": "PP-T10",
+      "name": "same-user-bootstrap",
+      "original_gate": "HOSTED_DATABASE",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [
+        "U-OPS",
+        "U-INT"
+      ],
+      "journey_id": "J-QA",
+      "workflow_ids": [
+        "W-SCRIPT-qualify-supabase-ts",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-supabase-sql",
+        "W-SCRIPT-verify-runtime-quota-sql",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "OPS-01",
+        "ORG-02",
+        "MONEY-01"
+      ],
+      "source_original_variant_assertions": [
+        "same-user-bootstrap: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Failed commits leave no partial enrollment or lost update; safe retry reuses confirmed identity.",
+        "Process-local serialization cannot be described as proof of hosted multi-instance money concurrency."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Concurrent same-user bootstrap on actual approved Supabase target yields one identity binding and workspace; independent readback confirms.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-T10-V02",
+      "case_id": "PP-T10",
+      "name": "invite-campaign-race",
+      "original_gate": "HOSTED_DATABASE",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [
+        "U-OPS",
+        "U-INT"
+      ],
+      "journey_id": "J-QA",
+      "workflow_ids": [
+        "W-SCRIPT-qualify-supabase-ts",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-supabase-sql",
+        "W-SCRIPT-verify-runtime-quota-sql",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "OPS-01",
+        "ORG-02",
+        "MONEY-01"
+      ],
+      "source_original_variant_assertions": [
+        "invite-campaign-race: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Failed commits leave no partial enrollment or lost update; safe retry reuses confirmed identity.",
+        "Process-local serialization cannot be described as proof of hosted multi-instance money concurrency."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Concurrent invitation/campaign enrollment is atomic under actual leases and failures retain no partial member or consumed invitation; safe retry reuses committed identity.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-T10-V05",
+      "case_id": "PP-T10",
+      "name": "direct-access-denied",
+      "original_gate": "HOSTED_DATABASE",
+      "planned_batch": "B1-IDENTITY-DB",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [
+        "U-OPS",
+        "U-INT"
+      ],
+      "journey_id": "J-QA",
+      "workflow_ids": [
+        "W-SCRIPT-qualify-supabase-ts",
+        "W-SCRIPT-qualify-isolation-ts",
+        "W-SCRIPT-verify-supabase-sql",
+        "W-SCRIPT-verify-runtime-quota-sql",
+        "W-SCRIPT-verify-enrollment-sql"
+      ],
+      "requirements": [
+        "OPS-01",
+        "ORG-02",
+        "MONEY-01"
+      ],
+      "source_original_variant_assertions": [
+        "The named invalid/unauthorized branch is rejected according to the source-traced case contract; no unauthorized stock, money, privilege or completed external action occurs. Permitted failed-attempt/audit bookkeeping is distinct from business effects."
+      ],
+      "source_case_assertions": [
+        "Failed commits leave no partial enrollment or lost update; safe retry reuses confirmed identity.",
+        "Process-local serialization cannot be described as proof of hosted multi-instance money concurrency."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Publishable and authenticated non-service clients are denied direct private table and lease/bootstrap RPC access; server-scoped APIs remain correct.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "qjuhtagioeztqsiccafy verified target/$0 check; separate browser profiles; consenting dedicated Google test identities; no existing owner workspace mutation"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    }
+  ]
+}

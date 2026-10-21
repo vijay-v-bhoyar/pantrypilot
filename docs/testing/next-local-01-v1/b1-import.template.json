@@ -1,0 +1,25 @@
+{
+  "schema_version": "b1-import-review-v1",
+  "template_only": true,
+  "runnable": false,
+  "project_ref": "<OWNER_CONFIRMED_PROJECT_REF>",
+  "authority_reference": null,
+  "source_digest": null,
+  "fixture_uuid": null,
+  "seed_constructor": "seedWorkspace(freshUUID, qualification:freshUUID) only for dedicated synthetic shared-role fixtures; use blank owner constructor through actual OAuth for first-sign-in assertions",
+  "workspace_payload": null,
+  "auth_bindings": [],
+  "invitations": [],
+  "expected_organization_role_matrix": {
+    "owner-a": "own first nonprofit",
+    "owner-b": "own second nonprofit",
+    "finance-a": "finance first nonprofit only",
+    "coordinator-a": "coordinator first nonprofit only",
+    "supplier-a": "own supplier only",
+    "donor-a": "own gifts/subscriptions only",
+    "revoked-a": "deny until valid re-enrollment",
+    "anonymous": "public projections only"
+  },
+  "before_after_readback": null,
+  "import_rule": "No SQL/bootstrap bypass for identity assertions. Review exact fixture IDs and insertion/cleanup scope before separately approving import. Existing owner/merchant/subscription/production records are forbidden."
+}

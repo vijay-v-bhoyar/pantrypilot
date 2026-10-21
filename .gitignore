@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.env*
+!.env.example
+.data/
+backups/
+coverage/
+test-results/
+playwright-report/
+.playwright-mcp/
+output/
+graphify-out/
+.graphify/
+*.tsbuildinfo
+*.log

@@ -1,0 +1,31 @@
+# Approved local repairs and workflow contract
+
+Authority: Vijay's chat instruction on October 15, 2026: “Approve all 11 local repairs. Choose owner-only correction approval and fully blank new-owner setup. Implement the approved fixes, rerun the full test gate, preserve original answers, and keep deployment on hold.” This authorizes the eleven scopes linked in the historical [handoff](../verification/testing-handoff-2026-10-15.md), the two selected workflows and their local verification. It supersedes the handoff's pending local approval statements. No further product approval is needed for this implementation. Original proposals remain historical snapshots.
+
+## Delivery scope
+
+Implement BETA-PAY-02, BETA-AUTH-01, BETA-OPS-01, BETA-PAY-01, BETA-AUTH-02, BETA-AI-01, BETA-AI-02, BETA-UI-02, BETA-DONOR-01, BETA-A11Y-01 and BETA-A11Y-02. Preserve uncertainty, payment ownership, integer cents, restrictions, exact approval and idempotency. Sign-out also prevents late workspace reads from restoring protected content. Retention additionally protects a proposed stock correction.
+
+## Coordinator → owner stock correction
+
+Inventory & kits → Corrections exposes completed distributions and received shipments. A coordinator checks the physical stock and original lot identities, selects the source, enters the corrected kit count (distribution) or total units (receipt), signed integer changes for original lots, a reason and a non-sensitive evidence reference. Positive changes restore/add stock; negative changes remove it. A required acknowledgment confirms the recount; this checkbox is not independent physical evidence.
+
+The server saves a proposed correction only. Inventory, source records and effective totals do not change. Finance can inspect; donor, supplier and other-organization views cannot read correction incidents. Only a **different owner** can explicitly approve and apply the exact displayed proposal. The owner must review every lot change and the evidence. Solo operators must invite a separate coordinator; there is no self-approval exception. Approval and application occur in one leased aggregate transaction, with an audit and actor/body-bound idempotency result. There is no separately reusable approval token or provider call.
+
+New distributions save their exact consumed lot IDs, signed quantities and component recipe snapshot. New receipts save an immutable receipt ID, timestamp and exact created-lot movements on the source order. Corrections append compensating movements and an audit. Original quantities, source records, receipt references, money and financial recoveries are preserved. Effective distribution counts use the latest applied correction only. Receipt shipment count remains a count of actual receipt events; original/effective receipt units appear separately. Proposed/rejected corrections affect neither stock nor totals.
+
+The proposal binds its source, prior applied corrections, stock quantities/versions/sites/SKUs/expiry, source-lot reservations, organizational staff membership and membership-change audit. Review expires after 15 minutes. A changed digest, stock, source, reservation, membership, expiry or unavailable site fails closed. Reject the stale proposal, recount and submit a fresh one; rejection is available to the owner or proposing coordinator and remains in history. A second pending proposal for the same source is denied. Later corrections require a fresh proposal against the current effective state.
+
+Distribution component deltas must exactly equal the change in effective kit count. Compensation uses only verified original lots; a lot cannot restore more units than the original consumption minus already applied compensation. Increased distribution counts consume additional usable unreserved stock from those lots. If another lot is needed, retain the discrepancy for a new evidence-based plan; do not guess provenance. Receipt compensation cannot reduce the effective receipt below zero, remove consumed/reserved units or imply a refund. Positive changes cannot restore expired stock. All affected lots must stay between zero and 100,000 units. Legacy records without provenance remain unresolved for manual review; there is no backfill or migration.
+
+## Fully blank new-owner setup
+
+`ownedWorkspace` creates one owner and organization with **no sites, funds, kits, stock, suppliers, catalog, campaigns or ledger**. Kit recipe/import fields are blank for non-demo workspaces. Existing workspace bindings and records are not migrated or deleted; synthetic demo defaults remain available only in their labeled demos.
+
+Overview → Add your first site → Organization → Add site → Define your first kit → Inventory & kits → Kit templates → Save kit → Create your first campaign → Campaigns → Save draft → Publish campaign. Campaign creation supplies its fund purpose, with zero balance. Publishing never creates money. Procurement and distribution remain unavailable until their required references exist; empty stock/import screens hand the user to Organization, and Analytics shows zero values without indexing missing sites/kits. Other staff are directed to their owner where owner authority is required. Non-demo simulated payment capture remains forbidden by the existing rules.
+
+## Verification and evidence boundary
+
+Required local gate: typecheck, lint, unit/full-route tests, production build and Chromium journeys against that build with provider actions disabled, simulation payments, manual AI and isolated local data. New tests cover source immutability, provenance, positive/negative correction, exact approval, cross-role/organization denials, stale state, replay, concurrent duplicate delivery, failed commit, blank constructor and all empty owner screens. The original auth 13-route oracle is rerun unchanged. Original manual suite/results/variants and incident records remain untouched.
+
+Local fixture checks do not establish physical stock accuracy, real Google bootstrap, hosted Supabase locking/RLS, PayPal/Gemini qualification, Studio hosted rights or independent human acceptance. Deployment, publication, paid services, provider credentials/calls, cleanup apply, actual data migration/deletion and outreach remain on hold.

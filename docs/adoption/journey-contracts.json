@@ -1,0 +1,1714 @@
+{
+  "version": "strict-journeys-2026-10-13-v1",
+  "date": "2026-10-13",
+  "scope": "21 complete proposed contracts; compiled/source controls separate; no persona or task validation inferred",
+  "contracts": [
+    {
+      "id": "J-VIS",
+      "participant_id": "U-VIS",
+      "need_id": "AD-N-VIS",
+      "need": "Understand a campaign before signing in",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Discover a published public campaign",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Understand a campaign before signing in",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A person evaluating a published pantry campaign before deciding whether to sign in or give. No staff access; campaign enrollment requires Google and a published non-demo campaign",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Public campaign aggregates only; no staff records"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Discover a published public campaign",
+        "Understand purpose, net giving and simulation labels",
+        "Choose the non-demo campaign join link",
+        "Authenticate and return to that link",
+        "Accept donor-only membership or understand rejection",
+        "Verify own permitted view and leave safely"
+      ],
+      "handoffs": [
+        "Published campaign -> donor enrollment; pantry owner resolves purpose/access questions."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Explain the campaign purpose and distinguish net confirmed giving from a target.",
+        "Return to inspect current purpose/progress before a later voluntary decision.",
+        "Unpublished/missing campaign or unavailable sign-in: preserve the link, stop and seek pantry help; no inferred enrollment."
+      ],
+      "exit": "Leave the page without an account or charge; signing in does not itself give money.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Explain the campaign purpose and distinguish net confirmed giving from a target.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-P01",
+        "PP-O02",
+        "PP-U01",
+        "PP-P02",
+        "PP-D06"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T07"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-OWN",
+      "participant_id": "U-OWN",
+      "need_id": "AD-N-OWN",
+      "need": "Set up the pantry, manage access and campaigns, oversee finance",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Verify own organization and empty/non-demo identity",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Set up the pantry, manage access and campaigns, oversee finance",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An authorized nonprofit administrator accountable for pantry setup, membership and campaign publication; may also perform finance/coordinator duties. Cannot access another organization or issue a supplier merchant refund",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Own organization settings, sites, invitations, membership, campaigns, financial and AI pause; all staff and finance actions"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Verify own organization and empty/non-demo identity",
+        "Set pantry details, sites, kit/campaign purpose",
+        "Draft, publish or close a campaign",
+        "Invite and manage the correct roles",
+        "Oversee finance and independent money/AI stops",
+        "Protect the last owner, revoke access and audit",
+        "Sign out and preserve other sessions"
+      ],
+      "handoffs": [
+        "Owner configures roles -> coordinator plans -> finance authorizes -> supplier fulfills; owner handles access changes."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify the correct organization, sites, published purpose and scoped member access.",
+        "Review activity, expired approvals, unresolved recovery and staff changes each operating cycle.",
+        "Revocation/expired invitation/stale session: inspect membership, protect the last owner and reenroll only by valid authority."
+      ],
+      "exit": "Sign out/revoke scoped access; future service closure retains pending money and records.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify the correct organization, sites, published purpose and scoped member access.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O01",
+        "PP-O02",
+        "PP-O03",
+        "PP-O04",
+        "PP-O05",
+        "PP-O06",
+        "PP-O07",
+        "PP-I01",
+        "PP-A01",
+        "PP-U01",
+        "PP-P02",
+        "PP-O08",
+        "PP-C10",
+        "PP-U02",
+        "PP-R01"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T01",
+        "AD-T04",
+        "AD-T07",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-FIN",
+      "participant_id": "U-FIN",
+      "need_id": "AD-N-FIN",
+      "need": "Commit the right funds and account for spending, billing and recovery",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Inspect confirmed net funds, restrictions and pending work",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Commit the right funds and account for spending, billing and recovery",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "The person authorized to approve the exact purchase basket and account for receipts, restrictions, commitments and refunds. Cannot manage members, publish campaigns, edit organization settings or perform supplier merchant actions",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Own organization staff actions; exact-basket approval, checkout, refund requests, donation refunds and simulated billing"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Inspect confirmed net funds, restrictions and pending work",
+        "Review coordinator itemized proposal",
+        "Approve exact version within 15 minutes",
+        "Create separate supplier orders and obtain payer approval",
+        "Reconcile uncertain capture without blind repeat",
+        "Request original-merchant refund and separately approve replacement",
+        "Audit balances/receipts and sign out"
+      ],
+      "handoffs": [
+        "Coordinator proposal -> finance approval/payer step -> supplier; merchant refund -> finance review -> separate replacement approval."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Inspect total, fund/purpose and source version; verify one exact approved purchase and its ledger effects.",
+        "Reconcile previous uncertainty, audit confirmed net funds and review the next basket with fresh approval.",
+        "Changed price/stock/fund/approver or uncertain capture: reject stale approval/read existing status; never blindly pay again."
+      ],
+      "exit": "Pause new financial writes if necessary; retain pending obligations and sign out.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Inspect total, fund/purpose and source version; verify one exact approved purchase and its ledger effects.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O03",
+        "PP-O04",
+        "PP-O05",
+        "PP-F01",
+        "PP-F02",
+        "PP-F03",
+        "PP-F04",
+        "PP-F05",
+        "PP-C01",
+        "PP-C05",
+        "PP-S01",
+        "PP-S02",
+        "PP-S03",
+        "PP-D01",
+        "PP-D03",
+        "PP-O07",
+        "PP-C07",
+        "PP-S04",
+        "PP-J01",
+        "PP-T03",
+        "PP-T04",
+        "PP-U01",
+        "PP-Q01",
+        "PP-F06",
+        "PP-F07",
+        "PP-F08",
+        "PP-C08",
+        "PP-C09",
+        "PP-S05",
+        "PP-S06",
+        "PP-D06",
+        "PP-X03",
+        "PP-X04",
+        "PP-T08",
+        "PP-T13",
+        "PP-T15",
+        "PP-U02",
+        "PP-U03",
+        "PP-K01",
+        "PP-S07"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T01",
+        "AD-T02",
+        "AD-T03",
+        "AD-T05",
+        "AD-T10",
+        "AD-T11",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-COO",
+      "participant_id": "U-COO",
+      "need_id": "AD-N-COO",
+      "need": "Plan supplies, maintain stock, receive shipments and record handouts",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Inspect usable, unreserved stock and kit components",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Plan supplies, maintain stock, receive shipments and record handouts",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A pantry worker or authorized volunteer who maintains stock, prepares supply requests, receives actual deliveries and records distributions. Cannot approve spending, checkout, approve refunds, manage access or publish campaigns",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Own organization stock, kit templates, purchasing requests, comparison, receipt, distribution, replacement drafts and dashboards"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Inspect usable, unreserved stock and kit components",
+        "Record lots, preview imports and transfer actual units",
+        "Draft a purpose-permitted request with budget/deadline",
+        "Explain feasible or unresolved comparison",
+        "Hand exact basket to finance",
+        "Receive only fulfilled remaining quantities",
+        "Distribute actual kits, escalate mistakes and exit"
+      ],
+      "handoffs": [
+        "Coordinator request/proposal -> finance -> supplier fulfillment -> coordinator physical receipt/distribution; discrepancies -> recovery."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify usable stock and a costed request with explicit shortages; later receive and distribute only actual units.",
+        "Repeat stock/request/receipt/distribution cycles using current lots and versioned proposals.",
+        "Bad CSV/expired stock/reserved units/short delivery: preview and correct, retain records, escalate approval/refund to finance/supplier."
+      ],
+      "exit": "Preserve the record and sign out; no household case information is collected.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify usable stock and a costed request with explicit shortages; later receive and distribute only actual units.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O03",
+        "PP-O04",
+        "PP-F01",
+        "PP-F02",
+        "PP-F04",
+        "PP-C01",
+        "PP-C02",
+        "PP-C03",
+        "PP-C04",
+        "PP-C05",
+        "PP-C06",
+        "PP-S02",
+        "PP-O07",
+        "PP-C07",
+        "PP-J01",
+        "PP-B01",
+        "PP-U01",
+        "PP-Q01",
+        "PP-F06",
+        "PP-C08",
+        "PP-C09",
+        "PP-C10",
+        "PP-S05",
+        "PP-S06",
+        "PP-U02",
+        "PP-U03"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T01",
+        "AD-T03",
+        "AD-T08",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-SUP",
+      "participant_id": "U-SUP",
+      "need_id": "AD-N-SUP",
+      "need": "Maintain offers and fulfill or recover own merchant orders",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Obtain scoped supplier invitation and understand pending merchant setup",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Maintain offers and fulfill or recover own merchant orders",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An invited representative of one supplier who maintains its offers and fulfills or recovers only its own merchant orders. Cannot act on another supplier order, approve buyer spending or access staff ledger",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Create/update own offers; act on own organization-scoped supplier orders; merchant-authorized supplier refunds"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Obtain scoped supplier invitation and understand pending merchant setup",
+        "Maintain own structured versioned offers",
+        "Inspect only own paid orders",
+        "Optionally accept then fulfill remaining quantities",
+        "Cancel valid partial or remaining paid quantities",
+        "Authorize requested refund as original merchant",
+        "Hand shipment to coordinator receipt and exit"
+      ],
+      "handoffs": [
+        "Supplier offer -> coordinator/finance; authorized paid order -> shipment -> pantry receipt; refund request -> original supplier merchant."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify own offer/version and own order, then record permitted acceptance/fulfillment without claiming pantry receipt.",
+        "Refresh stock/prices, fulfill remaining quantities and monitor merchant-authorized refund outcomes.",
+        "Wrong merchant, excessive quantity or pending/failed refund: stop, check the existing resource and coordinate safe recovery."
+      ],
+      "exit": "Cease scoped access by owner-managed revocation/sign-out; preserve unsettled order/refund obligations.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify own offer/version and own order, then record permitted acceptance/fulfillment without claiming pantry receipt.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O03",
+        "PP-F01",
+        "PP-F02",
+        "PP-F04",
+        "PP-C05",
+        "PP-S01",
+        "PP-S02",
+        "PP-S03",
+        "PP-O06",
+        "PP-S04",
+        "PP-J01",
+        "PP-T03",
+        "PP-T04",
+        "PP-U01",
+        "PP-F08",
+        "PP-C08",
+        "PP-S05",
+        "PP-S06",
+        "PP-T08",
+        "PP-U02",
+        "PP-Q02",
+        "PP-K01",
+        "PP-S07"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T01",
+        "AD-T03",
+        "AD-T10",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-DON",
+      "participant_id": "U-DON",
+      "need_id": "AD-N-DON",
+      "need": "Give to the intended purpose, inspect own history and stop future support",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Understand published campaign and giving purpose",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Give to the intended purpose, inspect own history and stop future support",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A supporter making a one-time gift or managing donor-approved monthly support and their own history. Cannot approve spending, administer campaigns, read another donor gift or use staff screens",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Published campaigns; own gift creation, payer simulation, acknowledgments, monthly activation and cancellation"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Understand published campaign and giving purpose",
+        "Enroll or use a clearly labelled synthetic donor fixture",
+        "Enter permitted one-time amount or monthly preset",
+        "Authorize payer action and inspect actual pending/confirmed state",
+        "Read own acknowledgment and net campaign giving",
+        "Cancel future support or seek finance help for refund",
+        "Preserve history and sign out"
+      ],
+      "handoffs": [
+        "Public campaign -> donor approval -> verified payment/readback -> private acknowledgment; refund concern -> pantry finance."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Inspect own confirmed gift and acknowledgment; activation alone is not a monthly billing receipt.",
+        "Inspect later confirmed billing receipts, optionally make a new gift or cancel future support.",
+        "Decline/timeout/refund pending or failed: read the existing status or contact pantry; never use another gift to retry a refund."
+      ],
+      "exit": "Cancel monthly support explicitly; sign-out/browser closure does not cancel billing, and cancellation does not refund past gifts.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Inspect own confirmed gift and acknowledgment; activation alone is not a monthly billing receipt.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O02",
+        "PP-O03",
+        "PP-O05",
+        "PP-F05",
+        "PP-D01",
+        "PP-D02",
+        "PP-D03",
+        "PP-D04",
+        "PP-T04",
+        "PP-U01",
+        "PP-Q01",
+        "PP-P02",
+        "PP-F07",
+        "PP-D05",
+        "PP-D06",
+        "PP-T14",
+        "PP-U02",
+        "PP-U03",
+        "PP-K02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T01",
+        "AD-T02",
+        "AD-T03",
+        "AD-T07",
+        "AD-T11",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-BEN",
+      "participant_id": "U-BEN",
+      "need_id": "AD-N-BEN",
+      "need": "Receive the recorded kit without unsupported safety or impact claims",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Understand offline pickup without an app account",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Receive the recorded kit without unsupported safety or impact claims",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A household affected by pantry purchasing/distribution, with no app login or recipient case record. No recipient portal, case management or proof of actual household benefit",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "No application account or recipient record in current scope; offline pantry handoff"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Understand offline pickup without an app account",
+        "Receive domain-reviewed supplies from pantry staff",
+        "Verify aggregate recorded distribution matches actual handout",
+        "Raise packing or incorrect-entry concern to coordinator",
+        "Escalate authorized correction without recipient case data",
+        "Leave without unsupported safety or impact claims"
+      ],
+      "handoffs": [
+        "Coordinator's actual physical distribution -> household; service questions remain with the pantry offline."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "NOT_RUN: receipt of an actual kit is outside the synthetic app evidence.",
+        "Future pantry visits/service choice remain offline; no repeat-use tracking of households.",
+        "Incomplete/unsuitable kit: pantry follows its approved offline escalation; product cannot infer safety from missing attributes."
+      ],
+      "exit": "Decline or leave the pantry service according to its offline process; no digital recipient account to delete.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "NOT_RUN: receipt of an actual kit is outside the synthetic app evidence.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-C06",
+        "PP-J01",
+        "PP-B01",
+        "PP-C10"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T08"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-JUD",
+      "participant_id": "U-JUD",
+      "need_id": "AD-N-JUD",
+      "need": "Trace a complete demonstration and distinguish evidence levels",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify simulation/provider/build boundaries",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Trace a complete demonstration and distinguish evidence levels",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A contest judge or independent evaluator checking a reproducible sandbox and its evidence boundaries. Cannot infer provider success, human validation, hosted readiness or real impact from a demo",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Synthetic demo role tour and authorized redacted evidence; no special production permission"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify simulation/provider/build boundaries",
+        "Start an isolated synthetic workspace",
+        "Follow coordinator, finance and merchant handoffs",
+        "Verify $222.50 and 50 synthetic distributions",
+        "Inspect donor, supplier, analytics and negative cases",
+        "Read scoped evidence and report unmet criteria",
+        "Leave safely; do not equate demo with release approval"
+      ],
+      "handoffs": [
+        "Release coordinator provides version/modes/seed disclosure -> evaluator repeats role task and failure -> independent feedback."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Repeat the synthetic 50-kit procurement/recovery journey and explain which values are simulated.",
+        "Repeat on a clean fixture and inspect a negative case without hidden operator assistance.",
+        "Provider/model/license unavailable: retain the block, inspect evidence and decline unsupported award/readiness claims."
+      ],
+      "exit": "End the evaluation; no publication/endorsement is inferred and no real money is requested.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Repeat the synthetic 50-kit procurement/recovery journey and explain which values are simulated.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-I02",
+        "PP-X01",
+        "PP-X02",
+        "PP-J01",
+        "PP-U01",
+        "PP-Q01",
+        "PP-U04"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T12"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-OPS",
+      "participant_id": "U-OPS",
+      "need_id": "AD-N-OPS",
+      "need": "Set up, diagnose, reproduce and recover without duplicate effects",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify exact target, modes and data root",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Set up, diagnose, reproduce and recover without duplicate effects",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An explicitly authorized service operator accountable for configuration, health, backup/recovery and job execution. No unrestricted support impersonation, production access, deployment or cleanup authorization in this plan",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Authorized local commands and scoped diagnostics; no operator role in the application"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify exact target, modes and data root",
+        "Verify configuration separately from connectivity",
+        "Diagnose unavailable app, quota or paused service",
+        "Contain pending work and arrange authorized readback",
+        "Rehearse isolated backup/restore and retention eligibility",
+        "Hand off current source-bound evidence",
+        "Resume or retire only with exact authority"
+      ],
+      "handoffs": [
+        "Integration setup -> operator qualified runtime -> QA check; incident -> support/finance; release decisions -> accountable owner."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Identify runtime/modes and inspect a source-bound test receipt or recoverable synthetic backup.",
+        "Review backlog age/errors, keep provider state distinct, validate current source/build and safely resume local services.",
+        "Corrupt least-scanned record, failed persistence or uncertainty: retain resources, diagnose scoped target and reconcile; no global reset."
+      ],
+      "exit": "Future authorized export/containment/closure retains pending obligations; destructive actions require their own authority.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Identify runtime/modes and inspect a source-bound test receipt or recoverable synthetic backup.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O06",
+        "PP-T01",
+        "PP-T02",
+        "PP-T03",
+        "PP-T04",
+        "PP-T05",
+        "PP-T08",
+        "PP-T09",
+        "PP-T10",
+        "PP-T15"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T05",
+        "AD-T06",
+        "AD-T09"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-FORM",
+      "participant_id": "U-FORM",
+      "need_id": "AD-N-FORM",
+      "need": "Understand that access ended and obtain help without leaking records",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Recognize expired, revoked or signed-out access",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Understand that access ended and obtain help without leaking records",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A previously authorized member or donor whose app access ended through logout, revocation or expiry; a user state, not another permission role. Reusing an old cookie or invitation must not restore authorization",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "No protected workspace access after revocation or logout; public pages remain available"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Recognize expired, revoked or signed-out access",
+        "Request protected page with old identity",
+        "Verify server denial and safe public view",
+        "Understand unconfirmed logout or failed enrollment",
+        "Ask owner for a new valid invitation when appropriate",
+        "Leave without restoring old privileges"
+      ],
+      "handoffs": [
+        "Denied session -> sign-in or owner's valid scoped invitation; support handles redacted access issues."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify old cookies/invitations do not restore protected access.",
+        "Use a new valid enrollment only after authorization is independently established.",
+        "Copied cookie/stale identity/expired invite: deny, retain private records and explain legitimate recovery."
+      ],
+      "exit": "Leave without protected access; logout does not extinguish a donor's financial subscription obligations.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify old cookies/invitations do not restore protected access.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-O04",
+        "PP-A01",
+        "PP-A02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T11"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-API",
+      "participant_id": "U-API",
+      "need_id": "AD-N-API",
+      "need": "Deliver a verified event once to the correct merchant-owned operation",
+      "classification": "TECHNICAL_CONTRACT",
+      "trigger": "Authenticate signature or dedicated job token",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Deliver a verified event once to the correct merchant-owned operation",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A nonhuman provider callback or authenticated readback client; a system participant, not a psychological persona. Cannot create ownership from untrusted payload metadata or silently retry uncertain money actions",
+        "unknown": "Provider outcome/ownership is unknown until verified readback/signature/resource checks.",
+        "control": [
+          "Only authenticated and configured sandbox contracts; no personality profile"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Authenticate signature or dedicated job token",
+        "Resolve known workspace, operation and owning merchant",
+        "Read back provider resource and validate money/state",
+        "Post only confirmed results once or retain pending state",
+        "Handle duplicate, delayed and unknown events honestly",
+        "Process bounded backlog with visible remaining work",
+        "Persist redacted audit and escalate unresolved results"
+      ],
+      "handoffs": [
+        "Provider event/readback -> verified domain settlement -> finance/operator review; wrong ownership -> rejection."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify a correct existing resource updates the appropriate state once in an authorized fixture.",
+        "Read unresolved resources in bounded durable rotation; process valid events under replay/order guards.",
+        "Forged/replayed/misrouted or uncertain event: reject/retain state and escalate. 77 full-handler fixtures pass; actual provider shapes/timing remain unqualified."
+      ],
+      "exit": "Disable future job/event intake only under scoped operator authority; retain resource IDs and unsettled events.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_APPLICABLE_WITH_REASON",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify a correct existing resource updates the appropriate state once in an authorized fixture.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-F07",
+        "PP-T03",
+        "PP-T04",
+        "PP-T05",
+        "PP-T13",
+        "PP-T14",
+        "PP-T15",
+        "PP-X03",
+        "PP-X04"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T06"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_APPLICABLE_WITH_REASON: nonhuman technical dependency",
+      "dependency_workflows": {
+        "callbacks_and_readback": [
+          "Authenticate signature or dedicated job token",
+          "Resolve known workspace, operation and owning merchant",
+          "Read back provider resource and validate money/state",
+          "Post only confirmed results once or retain pending state",
+          "Handle duplicate, delayed and unknown events honestly",
+          "Process bounded backlog with visible remaining work",
+          "Persist redacted audit and escalate unresolved results"
+        ],
+        "bounded_planner": [
+          "Authorized staff submits own-scope request",
+          "Enforce origin/session/privacy/mode/model/quotas and allowed synthetic/public projection",
+          "Obtain bounded model output and deterministic proposal validation",
+          "Preserve stop/cancel/revocation and unknown/error state",
+          "Hand editable proposal to finance; model output never approves spending"
+        ],
+        "studio_analyst": [
+          "Authorized staff chooses an approved analytical intent",
+          "Project allowed synthetic operational data and check model/admission limits",
+          "Native Studio transport returns only approved focus/validated dashboard view",
+          "Reject malformed/late/private/uncancelled output and preserve business records",
+          "Inspect/save authorized view; no financial side effects or actual Gemini success inferred"
+        ]
+      },
+      "supplemental_need": "Convey bounded planner and analyst transport outputs under authenticated staff scope and deterministic/privacy/stop/output controls; never confer financial approval.",
+      "current_local_evidence": {
+        "date": "2026-10-14",
+        "webhook_fixture_cases": 77,
+        "receipt": "docs/verification/workflow-build-2026-10-14.json",
+        "manual_provider_status": "NOT_RUN"
+      }
+    },
+    {
+      "id": "J-DEV",
+      "participant_id": "U-DEV",
+      "need_id": "AD-N-DEV",
+      "need": "Run, change and hand over the sandbox without hidden author dependencies",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Read documented scope and safe configuration",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Run, change and hand over the sandbox without hidden author dependencies",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A developer or incoming maintainer modifying the repository and handing over a reproducible sandbox. No real-owner impersonation, dependency upgrade, credentials or external write without its own scope",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Authorized repository and isolated local fixture; no extra app role"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Read documented scope and safe configuration",
+        "Set up an isolated local/manual/simulation fixture",
+        "Locate behavior through graph and source",
+        "Review a bounded dependency or code/config change",
+        "Run relevant protected regression and build checks",
+        "Record source/fixture evidence and hand over",
+        "Diagnose startup failure without reusing author secrets"
+      ],
+      "handoffs": [
+        "Requirements/source graph -> local change -> QA gates -> operator/release handoff with immutable evidence."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Run a fresh synthetic fixture and identify the actual role/tenant/payment boundaries.",
+        "Change one bounded requirement and rerun affected/final gates on the current build.",
+        "Stale graph/build, broken test or environment failure: preserve original oracle/output, diagnose and verify before claims."
+      ],
+      "exit": "Hand off code/configuration instructions without secrets; no automatic deployment or credential ownership transfer.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Run a fresh synthetic fixture and identify the actual role/tenant/payment boundaries.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-T06",
+        "PP-Q02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T09"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-INT",
+      "participant_id": "U-INT",
+      "need_id": "AD-N-INT",
+      "need": "Qualify exact provider/model contracts and handle unavailable, unsafe or uncertain outcomes",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify exact provider/model and free-only authority",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Qualify exact provider/model contracts and handle unavailable, unsafe or uncertain outcomes",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An engineer responsible for exact Supabase/OAuth/PayPal/model/Studio configuration and provider qualification. No live money, paid fallback or unapproved key/model/provider action",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Authorized mocked integration fixtures; future exact-target provider setup"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify exact provider/model and free-only authority",
+        "Check redacted configuration prerequisites",
+        "Qualify mocked contracts before actual integration",
+        "Arrange separately approved synthetic live fixture and budget",
+        "Verify IDs, ownership, output and actual state",
+        "Handle timeout, rejection, revocation and replay",
+        "Hand source-bound evidence to QA/release"
+      ],
+      "handoffs": [
+        "Account owner authority -> engineer configuration/qualification -> operator -> QA; provider gaps -> release holds."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "In fixtures, prove invalid/live/paid configuration fails before consequential effects.",
+        "Repeat exact-version provider qualification only under fresh target authorization and valid keys/model/license.",
+        "Quota/unavailable/cancellation/wrong merchant/stale model: preserve denial/uncertainty and use no paid fallback."
+      ],
+      "exit": "Revoke/rotate/retire credentials only under exact approved scope; never include secrets in support evidence.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "In fixtures, prove invalid/live/paid configuration fails before consequential effects.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-X03",
+        "PP-T07",
+        "PP-T10",
+        "PP-T13",
+        "PP-T14"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T06",
+        "AD-T09"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-QA",
+      "participant_id": "U-QA",
+      "need_id": "AD-N-QA",
+      "need": "Verify protected outcomes, reliable fixtures, oracles and current evidence",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Freeze requirements, source and fixtures",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Verify protected outcomes, reliable fixtures, oracles and current evidence",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A technical tester or evidence reviewer checking correctness, negative cases and current-source proof. No automatic replacement-oracle approval, hostile live load or production authority",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Authorized code/test/evidence inspection and controlled fixtures"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Freeze requirements, source and fixtures",
+        "Inventory every collected automated case",
+        "Review positive/negative/state assertions and oracles",
+        "Run controlled checks and preserve failures",
+        "Separate plan, library, route, provider and human coverage",
+        "Escalate missing/changed criteria to accountable owner",
+        "Record independent acceptance or unresolved status"
+      ],
+      "handoffs": [
+        "Persona need -> task/control oracle -> reproducible test -> independent review/release decision."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Reproduce the adverse case and verify expected protected outcome on the actual build.",
+        "Rerun changed boundaries; keep mock, local browser, provider, hosted and human evidence separate.",
+        "Broken fixture or obsolete assertion: preserve failure and obtain reviewed replacement; never silently weaken a gate."
+      ],
+      "exit": "Retain redacted evidence and hand off gaps; no author self-approval becomes independent acceptance.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Reproduce the adverse case and verify expected protected outcome on the actual build.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-X03",
+        "PP-X04",
+        "PP-T10",
+        "PP-T11",
+        "PP-T13",
+        "PP-U03",
+        "PP-Q02",
+        "PP-R01",
+        "PP-K02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T06",
+        "AD-T09",
+        "AD-T12"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-A11Y",
+      "participant_id": "U-A11Y",
+      "need_id": "AD-N-A11Y",
+      "need": "Verify readable, operable and understandable role journeys with appropriate tools and people",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Agree task, device, tool and informed participation",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Verify readable, operable and understandable role journeys with appropriate tools and people",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An accessibility/usability reviewer evaluating operability and participant understanding across role journeys. No fabricated assistive-tool participation or accessibility certification from axe alone",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Consenting human observation and approved browser/device fixtures"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Agree task, device, tool and informed participation",
+        "Observe discoverability without click-step coaching",
+        "Exercise keyboard, focus, labels and announcements",
+        "Inspect contrast, zoom/reflow and actual clipping",
+        "Verify error, correction and exit comprehension",
+        "Report barriers and sample limitations",
+        "Retest affected journeys with appropriate reviewers"
+      ],
+      "handoffs": [
+        "Technical browser checks -> suitable participant session -> owner repairs -> regression and human re-evaluation."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify keyboard access, labels and clipping with automation; human comprehension remains NOT_RUN.",
+        "Repeat critical purchase/giving/recovery/exit paths across relevant devices and permitted explicit preferences.",
+        "Inoperable/unclear controls: stop consequential tasks, record barriers and offer permitted assistance without bypassing authority."
+      ],
+      "exit": "Participants may skip questions/withdraw; no diagnosis, disability ranking or inferred emotion.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify keyboard access, labels and clipping with automation; human comprehension remains NOT_RUN.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-U02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T03",
+        "AD-T13"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-REL",
+      "participant_id": "U-REL",
+      "need_id": "AD-N-REL",
+      "need": "Decide readiness and prepare reproducible, accurately scoped judge/submission evidence",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Freeze scope and official submission requirements",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Decide readiness and prepare reproducible, accurately scoped judge/submission evidence",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "The accountable coordinator of readiness decisions and accurately scoped hackathon assets/submission. No deployment, source/video upload, OAuth publishing or Devpost edit without explicit target authority",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Local release artifacts; hosted/submission execution is deferred"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Freeze scope and official submission requirements",
+        "Check each mandatory evidence gate and source version",
+        "Resolve hosted OAuth/license/judge access prerequisites",
+        "Review public-safe code, README, claims and video",
+        "Plan exact release/rollback target and authority",
+        "Obtain separately authorized publication/submission",
+        "Record decision and reopening triggers"
+      ],
+      "handoffs": [
+        "QA/operator/provider evidence -> claim review -> versioned assets -> separately authorized hosted/public submission."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Produce an inspectable local evidence package with open gaps, not a production or winning claim.",
+        "Reassess claims whenever source/model/configuration changes; verify target before any later release.",
+        "Missing provider/license/human proof or contradictory claim: hold assets and correct owned drafts; no premature publication."
+      ],
+      "exit": "Keep prior evidence and unsubmitted drafts; publication/deployment/Devpost remain deferred.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Produce an inspectable local evidence package with open gaps, not a production or winning claim.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-T12",
+        "PP-R01",
+        "PP-R02",
+        "PP-R03"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T12"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-SUPP",
+      "participant_id": "U-SUPP",
+      "need_id": "AD-N-SUPP",
+      "need": "Explain an uncertain state, collect minimal evidence and hand off safe recovery",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Receive minimal user-scoped issue and operation ID",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Explain an uncertain state, collect minimal evidence and hand off safe recovery",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A support or incident responder helping explain a blocked or uncertain task using only scoped, redacted evidence. No support impersonation, unrestricted donor data or blind repeat of financial writes",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "User-authorized redacted report and scoped synthetic incident fixture"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Receive minimal user-scoped issue and operation ID",
+        "Understand actual persisted status and limits of access",
+        "Redact report and contain uncertain outcome",
+        "Assign finance/merchant/operator recovery owner",
+        "Confirm actual correction or keep incident open",
+        "Explain safe next step and no blind retry",
+        "Close only after verified user outcome"
+      ],
+      "handoffs": [
+        "User task ID/state -> scoped support triage -> owner/finance/supplier/operator recovery -> independent closure check."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Prepare a minimal incident packet and tell the user which action is safe while pending.",
+        "Track recurrence by task/state without collecting passwords, raw cookies or household data.",
+        "Uncertain money: retain references, ask operator to read existing resource, never repeat financial writes to clear an error."
+      ],
+      "exit": "Close only after verified state and user-appropriate confirmation; closure policy still needs domain approval.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Prepare a minimal incident packet and tell the user which action is safe while pending.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-C10",
+        "PP-T08",
+        "PP-K02"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T02",
+        "AD-T05",
+        "AD-T09",
+        "AD-T11"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-DATA",
+      "participant_id": "U-DATA",
+      "need_id": "AD-N-DATA",
+      "need": "Maintain current structured offer evidence and explicit unknowns",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify approved supplier and source classification",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Maintain current structured offer evidence and explicit unknowns",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A supplier/staff responsibility for maintaining structured catalog or source evidence; no extra curator app role. No new curator app permission or model inference of missing safety/provenance",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Use an assigned owner/coordinator/supplier role for its permitted action"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify approved supplier and source classification",
+        "Record units, packs, costs and explicit facts",
+        "Challenge stale/conflicting/missing attributes",
+        "Update through the owning permitted role",
+        "Verify source version invalidates approval",
+        "Keep untrusted narrative out of hosted model input",
+        "Retain evidence/history and hand off fresh comparison"
+      ],
+      "handoffs": [
+        "Source/offer -> permitted supplier or coordinator validation -> versioned catalog -> proposal -> finance review."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "Verify an offer fact has an applicable source and missing attributes remain unknown.",
+        "Update allowed facts with a new version; invalidate dependent proposal/approval when materially changed.",
+        "Stale/bad link or inferred attribute: reject/mark unknown, retain earlier evidence and seek authorized factual correction."
+      ],
+      "exit": "Retain source/version history; future data retirement cannot erase pending procurement obligations.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "Verify an offer fact has an applicable source and missing attributes remain unknown.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-C08",
+        "PP-K01"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T10"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-RET",
+      "participant_id": "U-RET",
+      "need_id": "AD-N-RET",
+      "need": "Retain unsettled obligations through future containment and shutdown",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Inventory active access and unsettled operations",
+      "entry_conditions": [
+        "source_supported_responsibility_not_customer_validated",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Retain unsettled obligations through future containment and shutdown",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A future service owner deciding containment, export and retirement while retaining unsettled obligations. No global reset, deletion, key revocation or account closure under this plan",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "Future owner-approved lifecycle review; no shutdown performed"
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Inventory active access and unsettled operations",
+        "Identify permitted export/retention obligations",
+        "Assign reconciliation and containment owners",
+        "Approve exact retirement and recovery procedure",
+        "Revoke/retire only after authorized settlement checks",
+        "Preserve necessary evidence and access boundaries",
+        "Record residual obligations and audit closure"
+      ],
+      "handoffs": [
+        "Owner -> finance/provider obligation review -> privacy/operator export plan -> separately authorized closure."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "NOT_RUN: approved end-to-end retirement/export policy is unavailable.",
+        "Periodically review pending obligations and ownership rather than deleting inactive records blindly.",
+        "Pending capture/refund/subscription or corrupt backup: block closure and obtain scoped reconciliation/recovery authority."
+      ],
+      "exit": "No closure/deletion/key revocation here; approve records/financial resolution and exit support before future shutdown.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "NOT_RUN: approved end-to-end retirement/export policy is unavailable.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "PP-R04"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T05",
+        "AD-T11"
+      ],
+      "owner": "Vijay / accountable product owner",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-BUY",
+      "participant_id": "U-BUY",
+      "need_id": "AD-N-BUY",
+      "need": "Make an informed organizational choice based on actual task evidence and complete costs, including a choice not to adopt.",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify a material pantry need and existing alternative",
+      "entry_conditions": [
+        "HYPOTHESIS_NOT_YET_INVESTIGATED",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Make an informed organizational choice based on actual task evidence and complete costs, including a choice not to adopt.",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "A director, owner or delegated decision maker who approves the organizational commitment, fit and pilot conditions; may be the same person as U-OWN in a small pantry. No purchase/deployment/publication/deletion/production permission is created by this register.",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "No extra application permission; use a separately assigned existing role if needed."
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify a material pantry need and existing alternative",
+        "Inspect a repeatable role task, limitations and negative case",
+        "Account for setup, training, licenses, operation, review and exit effort",
+        "Consult finance, staff, supplier and privacy/governance owners",
+        "Choose no change, a conventional-tool pilot, or a bounded synthetic product evaluation",
+        "Set thresholds/stops and assign implementation/support owners",
+        "Review observed first and repeat value before expanding",
+        "Hold or exit if outcomes, authority or provider/license conditions are unmet"
+      ],
+      "handoffs": [
+        "U-OWN / U-FIN / U-OPS / U-PRIV / U-BUY as applicable; actual organizational assignees remain unknown."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+        "Reassess measured repeat task, total effort and changed conditions.",
+        "Hold the pilot/rollout; request minimal authorized evidence and record contrary findings."
+      ],
+      "exit": "Choose no adoption or exit/export planning without unauthorized deletion.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "AD-T03",
+        "AD-T04"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T04",
+        "AD-T12"
+      ],
+      "owner": "Vijay; target-organization assignee UNKNOWN",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    },
+    {
+      "id": "J-PRIV",
+      "participant_id": "U-PRIV",
+      "need_id": "AD-N-PRIV",
+      "need": "Understand data/control/retention conditions and ensure only appropriate approved data and access are used.",
+      "classification": "SOURCE_SUPPORTED_RESPONSIBILITY_NEED_HYPOTHESIS",
+      "trigger": "Identify permitted data and synthetic evaluation boundary",
+      "entry_conditions": [
+        "HYPOTHESIS_NOT_YET_INVESTIGATED",
+        "Verify role/organization/fixture/current mode and authority before protected action",
+        "Human/real provider/domain-policy prerequisites remain unavailable unless independently confirmed"
+      ],
+      "inputs": [
+        "Understand data/control/retention conditions and ensure only appropriate approved data and access are used.",
+        "Current own-scope task records and source/version references; use known synthetic fixtures, never household case data or secrets"
+      ],
+      "expected_experience": {
+        "known": "An assigned organizational reviewer of access, donor-data use, provider routing, evidence sharing and retention; a required responsibility to confirm with the organization, not an added application role. No purchase/deployment/publication/deletion/production permission is created by this register.",
+        "unknown": "Actual needs/knowledge/preferences/emotions/value/effort and external qualification are unmeasured.",
+        "control": [
+          "No extra application permission; use a separately assigned existing role if needed."
+        ],
+        "visible_state": "Distinguish unstarted, pending/uncertain, confirmed and rejected/blocked outcomes; no fabricated completion."
+      },
+      "operations": [
+        "Identify permitted data and synthetic evaluation boundary",
+        "Review donor/staff/affected-household data flows and least privilege",
+        "Inspect provider/model inputs, redacted support and claim evidence",
+        "Verify invitation/revocation/isolation and review retention/export gaps",
+        "Specify consent, incident, correction and exit conditions with service owner",
+        "Allow only the bounded approved evaluation or hold it",
+        "Recheck changed source/model/provider/data purpose",
+        "Prepare correction or future scoped retirement without deleting unresolved obligations"
+      ],
+      "handoffs": [
+        "U-OWN / U-FIN / U-OPS / U-PRIV / U-BUY as applicable; actual organizational assignees remain unknown."
+      ],
+      "approval_boundary": "Current-role/current-version authority required for consequential writes. No role-tour, profile, guide, AI output or research plan grants authority.",
+      "side_effects": "Only the assigned existing role's scoped product writes under approved fixture/controls; observation/decision roles have no new app write permission. Future external action requires exact target authority.",
+      "progress_and_recovery": [
+        "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+        "Reassess measured repeat task, total effort and changed conditions.",
+        "Hold the pilot/rollout; request minimal authorized evidence and record contrary findings."
+      ],
+      "exit": "Choose no adoption or exit/export planning without unauthorized deletion.",
+      "limits": {
+        "provider_calls_in_this_review": 0,
+        "model_calls_in_this_review": 0,
+        "human_trial_status": "NOT_RUN",
+        "time_or_cost_threshold": "UNKNOWN; proposed session/task budgets are stop conditions, not proof of efficiency."
+      },
+      "completion_criteria": [
+        "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+        "Verify actual permitted state/output and downstream handoff; stop/hold/non-adoption is valid when prerequisites fail.",
+        "Do not substitute automated or scalar/source checks for human/provider/value evidence."
+      ],
+      "evidence_to_capture": [
+        "Source/configuration/fixture/role and task version",
+        "Permitted before/after states, each oracle and assistance/error",
+        "Redacted outcome and independent reviewer disposition; no secrets/raw auth traces"
+      ],
+      "test_ids": [
+        "AD-T03",
+        "AD-T04"
+      ],
+      "adoption_scenario_ids": [
+        "AD-T04",
+        "AD-T05",
+        "AD-T07",
+        "AD-T08",
+        "AD-T11"
+      ],
+      "owner": "Vijay; target-organization assignee UNKNOWN",
+      "status": "PROPOSED_CONTRACT_NOT_EXECUTED",
+      "research_gap": "NOT_RUN"
+    }
+  ]
+}

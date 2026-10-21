@@ -1,0 +1,6 @@
+variant_id,reviewer_alias,owner_alias,source_config_digest,evidence_reference,scope,pending_obligations,rollback_target_and_owner,reviewer_independent,current_rules_checked_at,license_scope_evidence,support_channel_owner_window,retention_export_policy,cancellation_authority_readback,assertion_results,decision,remaining_gap,status
+PP-T12-V01,,,,,Separate approval/reviewer/prerequisites required. Hosted/provider actions held.,,,,,,,,,,,,NOT_RUN
+PP-R01-V01,,,,,Separate approval/reviewer/prerequisites required. Hosted/provider actions held.,,,,,,,,,,,,NOT_RUN
+PP-R03-V01,,,,,Separate approval/reviewer/prerequisites required. Hosted/provider actions held.,,,,,,,,,,,,NOT_RUN
+PP-R04-V01,,,,,Separate approval/reviewer/prerequisites required. Hosted/provider actions held.,,,,,,,,,,,,NOT_RUN
+PP-R04-V02,,,,,Separate approval/reviewer/prerequisites required. Hosted/provider actions held.,,,,,,,,,,,,NOT_RUN

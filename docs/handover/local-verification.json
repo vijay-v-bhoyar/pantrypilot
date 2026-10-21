@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "run": "submission-repair-2026-10-21",
+  "sourceDigest": "6221e13b70a83fa4e729c355d67e4890538fa3749216060713204754e0071cc0",
+  "sourceDigestScope": "included executable source, tests, package/lock, config and LICENSE; excludes README and docs",
+  "buildId": "KlUnHh2lM-i80G9pWcSEZ",
+  "commands": {
+    "typecheck-final": {
+      "exit": 0,
+      "logSha256": "e7c25d3e0ec334236d1b6916ea8726947f7d009ab04722460894183a52ac6862"
+    },
+    "lint-final": {
+      "exit": 0,
+      "logSha256": "a559c519d58cd8b3693a97b3f9b6fd1debce582e8b6b8ac0213fdaf1697d716d"
+    },
+    "unit": {
+      "exit": 0,
+      "logSha256": "3929ed35d3fbb1d8c5028feb0c378baa20de0482bb3203d70feff2edfe1420cb"
+    },
+    "build": {
+      "exit": 0,
+      "logSha256": "57ff0b933d95681c0f4eea1bd82df9e4421ec87f5599ef8fdef1c610e987c2c2"
+    },
+    "browser-final": {
+      "exit": 0,
+      "logSha256": "5848ca439f5a2fe60caa1cb761b55ee59e5364c2024ffe6ad65899b35b8fa81c"
+    },
+    "original-retest": {
+      "exit": 0,
+      "logSha256": "d0f101ddc9573b149b4a6b7beb02213c459664344d5b4d7748d7e9d29979c140"
+    },
+    "graph": {
+      "exit": 0,
+      "logSha256": "55f42483f8aab17c82a559f4a87ce7aa87b89afaa1753f57323281c3563b4c49"
+    }
+  },
+  "unitTestsPassed": 501,
+  "browserJourneysPassed": 53,
+  "originalRegressionTestsPassed": 5,
+  "evidenceClass": "local synthetic simulation; provider tests use mocks/transport fixtures",
+  "externalVariantsClosed": 0,
+  "providerCallsPerformed": false,
+  "deployment": "ON_HOLD",
+  "finalSubmission": "NO_GO; provider, public artifact, submitter and judge-window license evidence remains open"
+}

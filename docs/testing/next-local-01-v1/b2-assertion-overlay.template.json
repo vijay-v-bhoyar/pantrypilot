@@ -1,0 +1,531 @@
+{
+  "schema_version": "next-local-01-template-v1",
+  "batch": "B2-HUMAN",
+  "template_only": true,
+  "authorization": "Preparation only. Separate exact target/identity/$0/participant/action authority is required before execution.",
+  "original_review_sha256": "e3613c32bcd3c51dfcf31310235405b70d95c39a675466eaf625a39b4376d04a",
+  "source_digest": null,
+  "configuration_digest": null,
+  "target_confirmed": false,
+  "approved_actions": [],
+  "cases": [
+    {
+      "variant_id": "PP-Q01-V01",
+      "case_id": "PP-Q01",
+      "name": "donor-neutral",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-JUD",
+      "related_personas": [
+        "U-DON",
+        "U-COO",
+        "U-FIN"
+      ],
+      "journey_id": "J-JUD",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "donor-neutral: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Participant evidence records comprehension and barriers, without claiming representative preference or real pantry impact.",
+        "No research performed is claimed until actual participation and consent are recorded."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Consenting donor attempts an uncoached synthetic task and explains purpose, uncertainty, gift vs monthly billing, cancellation and receipt limits; record assistance and errors.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-Q01-V02",
+      "case_id": "PP-Q01",
+      "name": "coordinator-neutral",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-JUD",
+      "related_personas": [
+        "U-DON",
+        "U-COO",
+        "U-FIN"
+      ],
+      "journey_id": "J-JUD",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "coordinator-neutral: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Participant evidence records comprehension and barriers, without claiming representative preference or real pantry impact.",
+        "No research performed is claimed until actual participation and consent are recorded."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Consenting coordinator independently finds stock/request/receipt/distribution and explains handoff, constraints and correction escalation.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-Q01-V03",
+      "case_id": "PP-Q01",
+      "name": "finance-neutral",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-JUD",
+      "related_personas": [
+        "U-DON",
+        "U-COO",
+        "U-FIN"
+      ],
+      "journey_id": "J-JUD",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "finance-neutral: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Participant evidence records comprehension and barriers, without claiming representative preference or real pantry impact.",
+        "No research performed is claimed until actual participation and consent are recorded."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Consenting finance reviewer inspects basket/purpose/fees/approval and explains uncertain recovery and owner-only stock correction authority.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-T06-V01",
+      "case_id": "PP-T06",
+      "name": "baseline",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-DEV",
+      "related_personas": [],
+      "journey_id": "J-DEV",
+      "workflow_ids": [
+        "W-API-health"
+      ],
+      "requirements": [
+        "OPS-01",
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "Setup instructions identify secrets, modes, licenses, fixtures, startup failures and recovery without depending on the original author session.",
+        "A new build/configuration never inherits unsupported provider or human acceptance."
+      ],
+      "source_case_assertions": [
+        "Setup instructions identify secrets, modes, licenses, fixtures, startup failures and recovery without depending on the original author session.",
+        "A new build/configuration never inherits unsupported provider or human acceptance."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Incoming authorized maintainer, distinct from author, uses the versioned credential-free bundle and documented Webpack fallback to run/recover the local sandbox without hidden author help.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-T11-V01",
+      "case_id": "PP-T11",
+      "name": "baseline",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [],
+      "journey_id": "J-QA",
+      "workflow_ids": [],
+      "requirements": [
+        "OPS-01",
+        "UI-01",
+        "PAY-01"
+      ],
+      "source_original_variant_assertions": [
+        "Tests retain meaningful guards and negative/state assertions; replacement oracles require independent acceptance review.",
+        "Manual, automation, mocked provider, actual provider and hosted/human results remain separate."
+      ],
+      "source_case_assertions": [
+        "Tests retain meaningful guards and negative/state assertions; replacement oracles require independent acceptance review.",
+        "Manual, automation, mocked provider, actual provider and hosted/human results remain separate."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Independent reviewer inspects all collected unit/browser oracles, original failures/selector repairs, arithmetic and source freshness; accepts/rejects amended contracts explicitly.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-U02-V01",
+      "case_id": "PP-U02",
+      "name": "screen-reader",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-A11Y",
+      "related_personas": [
+        "U-DON",
+        "U-FIN",
+        "U-COO",
+        "U-OWN",
+        "U-SUP"
+      ],
+      "journey_id": "J-A11Y",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "screen-reader: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Consequential status and errors are perceivable, navigation and exit remain operable, and critical controls are not clipped.",
+        "Missing assistive-tool/human coverage remains a gap rather than an accessibility certification."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Consenting operator/reviewer tests an actual installed named screen reader and version on critical status/error/approval/navigation/exit; notes cannot be inferred from axe.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-U02-V02",
+      "case_id": "PP-U02",
+      "name": "200-percent-zoom",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-A11Y",
+      "related_personas": [
+        "U-DON",
+        "U-FIN",
+        "U-COO",
+        "U-OWN",
+        "U-SUP"
+      ],
+      "journey_id": "J-A11Y",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "200-percent-zoom: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Consequential status and errors are perceivable, navigation and exit remain operable, and critical controls are not clipped.",
+        "Missing assistive-tool/human coverage remains a gap rather than an accessibility certification."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Human reviewer tests real browser 200% zoom and operation, including new setup/correction screens; viewport emulation is not zoom proof.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-U02-V03",
+      "case_id": "PP-U02",
+      "name": "400-percent-reflow",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-A11Y",
+      "related_personas": [
+        "U-DON",
+        "U-FIN",
+        "U-COO",
+        "U-OWN",
+        "U-SUP"
+      ],
+      "journey_id": "J-A11Y",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "400-percent-reflow: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Consequential status and errors are perceivable, navigation and exit remain operable, and critical controls are not clipped.",
+        "Missing assistive-tool/human coverage remains a gap rather than an accessibility certification."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Human reviewer tests 400% reflow at the specified desktop viewport and completes controls without clipping/lost function.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-U02-V04",
+      "case_id": "PP-U02",
+      "name": "focus-and-errors",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-A11Y",
+      "related_personas": [
+        "U-DON",
+        "U-FIN",
+        "U-COO",
+        "U-OWN",
+        "U-SUP"
+      ],
+      "journey_id": "J-A11Y",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01"
+      ],
+      "source_original_variant_assertions": [
+        "focus-and-errors: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Consequential status and errors are perceivable, navigation and exit remain operable, and critical controls are not clipped.",
+        "Missing assistive-tool/human coverage remains a gap rather than an accessibility certification."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Human keyboard/assistive review checks validation/error focus, modal/async recovery, sign-out warning and corrections; document comprehension separately.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-Q02-V01",
+      "case_id": "PP-Q02",
+      "name": "supplier-neutral",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [
+        "U-SUP",
+        "U-DEV"
+      ],
+      "journey_id": "J-QA",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01",
+        "OPS-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "supplier-neutral: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Comprehension and task completion are observed separately from coached regression success.",
+        "No invented interviews, demographic personality inference or statistically representative claim is made."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Consenting supplier completes first offer/fulfillment/refund handoff without click coaching and explains merchant limits and receipt separation.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-Q02-V02",
+      "case_id": "PP-Q02",
+      "name": "maintainer-neutral",
+      "original_gate": "HUMAN_REVIEW_OR_DEVICE",
+      "planned_batch": "B2-HUMAN",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-QA",
+      "related_personas": [
+        "U-SUP",
+        "U-DEV"
+      ],
+      "journey_id": "J-QA",
+      "workflow_ids": [],
+      "requirements": [
+        "UI-01",
+        "OPS-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "maintainer-neutral: verify the applicable expected outcome in this case and all protected invariants; unrelated branch outcomes are not asserted for this run."
+      ],
+      "source_case_assertions": [
+        "Comprehension and task completion are observed separately from coached regression success.",
+        "No invented interviews, demographic personality inference or statistically representative claim is made."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Distinct incoming maintainer executes first setup/recovery/evidence task from the handover bundle; all assistance is recorded.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner-provided consenting participants; actual named tools; independent reviewer; no agent outreach"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    }
+  ]
+}

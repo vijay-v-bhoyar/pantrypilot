@@ -1,0 +1,616 @@
+{
+  "schema_version": "maintainer-personas-v1",
+  "scope": "Source-supported responsibilities and workflow contracts; no private original answers or observed validation",
+  "profiles": [
+    {
+      "persona_id": "U-VIS",
+      "name": "Public visitor / prospective donor",
+      "definition": "A person evaluating a published pantry campaign before deciding whether to sign in or give.",
+      "app_permission_existing": [
+        "Public campaign aggregates only; no staff records"
+      ],
+      "authority_limit_existing": "No staff access; campaign enrollment requires Google and a published non-demo campaign",
+      "journey_id": "J-VIS",
+      "end_to_end_operations_reviewed": [
+        "Discover a published public campaign",
+        "Understand purpose, net giving and simulation labels",
+        "Choose the non-demo campaign join link",
+        "Authenticate and return to that link",
+        "Accept donor-only membership or understand rejection",
+        "Verify own permitted view and leave safely"
+      ],
+      "current_workflow_addendum": [
+        "Existing mapped operations retained; actual role/provider/domain evidence remains scoped."
+      ],
+      "handoff": "Published campaign -> donor enrollment; pantry owner resolves purpose/access questions.",
+      "first_value": "Explain the campaign purpose and distinguish net confirmed giving from a target.",
+      "repeat_value": "Return to inspect current purpose/progress before a later voluntary decision.",
+      "failure_recovery": "Unpublished/missing campaign or unavailable sign-in: preserve the link, stop and seek pantry help; no inferred enrollment.",
+      "exit": "Leave the page without an account or charge; signing in does not itself give money.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-OWN",
+      "name": "Organization owner / administrator",
+      "definition": "An authorized nonprofit administrator accountable for pantry setup, membership and campaign publication; may also perform finance/coordinator duties.",
+      "app_permission_existing": [
+        "Own organization settings, sites, invitations, membership, campaigns, financial and AI pause; all staff and finance actions"
+      ],
+      "authority_limit_existing": "Cannot access another organization or issue a supplier merchant refund",
+      "journey_id": "J-OWN",
+      "end_to_end_operations_reviewed": [
+        "Verify own organization and empty/non-demo identity",
+        "Set pantry details, sites, kit/campaign purpose",
+        "Draft, publish or close a campaign",
+        "Invite and manage the correct roles",
+        "Oversee finance and independent money/AI stops",
+        "Protect the last owner, revoke access and audit",
+        "Sign out and preserve other sessions"
+      ],
+      "current_workflow_addendum": [
+        "Start new owned workspace with no sites/funds/kits; add first site, then kit, then draft/publish campaign/fund; confirm zero real money.",
+        "Review a different coordinator's stock correction evidence and exact original-lot changes; approve/apply once or reject stale proposal; never self-approve."
+      ],
+      "handoff": "Owner configures roles -> coordinator plans -> finance authorizes -> supplier fulfills; owner handles access changes.",
+      "first_value": "Verify the correct organization, sites, published purpose and scoped member access.",
+      "repeat_value": "Review activity, expired approvals, unresolved recovery and staff changes each operating cycle.",
+      "failure_recovery": "Revocation/expired invitation/stale session: inspect membership, protect the last owner and reenroll only by valid authority.",
+      "exit": "Sign out/revoke scoped access; future service closure retains pending money and records.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-FIN",
+      "name": "Finance approver / bookkeeper",
+      "definition": "The person authorized to approve the exact purchase basket and account for receipts, restrictions, commitments and refunds.",
+      "app_permission_existing": [
+        "Own organization staff actions; exact-basket approval, checkout, refund requests, donation refunds and simulated billing"
+      ],
+      "authority_limit_existing": "Cannot manage members, publish campaigns, edit organization settings or perform supplier merchant actions",
+      "journey_id": "J-FIN",
+      "end_to_end_operations_reviewed": [
+        "Inspect confirmed net funds, restrictions and pending work",
+        "Review coordinator itemized proposal",
+        "Approve exact version within 15 minutes",
+        "Create separate supplier orders and obtain payer approval",
+        "Reconcile uncertain capture without blind repeat",
+        "Request original-merchant refund and separately approve replacement",
+        "Audit balances/receipts and sign out"
+      ],
+      "current_workflow_addendum": [
+        "Inspect stock corrections and unchanged money. Stock correction proposals are coordinator-only; application is owner-only. Finance cannot substitute its spending approval."
+      ],
+      "handoff": "Coordinator proposal -> finance approval/payer step -> supplier; merchant refund -> finance review -> separate replacement approval.",
+      "first_value": "Inspect total, fund/purpose and source version; verify one exact approved purchase and its ledger effects.",
+      "repeat_value": "Reconcile previous uncertainty, audit confirmed net funds and review the next basket with fresh approval.",
+      "failure_recovery": "Changed price/stock/fund/approver or uncertain capture: reject stale approval/read existing status; never blindly pay again.",
+      "exit": "Pause new financial writes if necessary; retain pending obligations and sign out.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-COO",
+      "name": "Pantry coordinator / inventory volunteer",
+      "definition": "A pantry worker or authorized volunteer who maintains stock, prepares supply requests, receives actual deliveries and records distributions.",
+      "app_permission_existing": [
+        "Own organization stock, kit templates, purchasing requests, comparison, receipt, distribution, replacement drafts and dashboards"
+      ],
+      "authority_limit_existing": "Cannot approve spending, checkout, approve refunds, manage access or publish campaigns",
+      "journey_id": "J-COO",
+      "end_to_end_operations_reviewed": [
+        "Inspect usable, unreserved stock and kit components",
+        "Record lots, preview imports and transfer actual units",
+        "Draft a purpose-permitted request with budget/deadline",
+        "Explain feasible or unresolved comparison",
+        "Hand exact basket to finance",
+        "Receive only fulfilled remaining quantities",
+        "Distribute actual kits, escalate mistakes and exit"
+      ],
+      "current_workflow_addendum": [
+        "After physical recount, propose original-linked distribution/receipt correction with exact signed lot changes/reason/evidence; hand to a different owner; reject/recount stale proposals. Do not approve corrections."
+      ],
+      "handoff": "Coordinator request/proposal -> finance -> supplier fulfillment -> coordinator physical receipt/distribution; discrepancies -> recovery.",
+      "first_value": "Verify usable stock and a costed request with explicit shortages; later receive and distribute only actual units.",
+      "repeat_value": "Repeat stock/request/receipt/distribution cycles using current lots and versioned proposals.",
+      "failure_recovery": "Bad CSV/expired stock/reserved units/short delivery: preview and correct, retain records, escalate approval/refund to finance/supplier.",
+      "exit": "Preserve the record and sign out; no household case information is collected.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-SUP",
+      "name": "Supplier representative",
+      "definition": "An invited representative of one supplier who maintains its offers and fulfills or recovers only its own merchant orders.",
+      "app_permission_existing": [
+        "Create/update own offers; act on own organization-scoped supplier orders; merchant-authorized supplier refunds"
+      ],
+      "authority_limit_existing": "Cannot act on another supplier order, approve buyer spending or access staff ledger",
+      "journey_id": "J-SUP",
+      "end_to_end_operations_reviewed": [
+        "Obtain scoped supplier invitation and understand pending merchant setup",
+        "Maintain own structured versioned offers",
+        "Inspect only own paid orders",
+        "Optionally accept then fulfill remaining quantities",
+        "Cancel valid partial or remaining paid quantities",
+        "Authorize requested refund as original merchant",
+        "Hand shipment to coordinator receipt and exit"
+      ],
+      "current_workflow_addendum": [
+        "Existing mapped operations retained; actual role/provider/domain evidence remains scoped."
+      ],
+      "handoff": "Supplier offer -> coordinator/finance; authorized paid order -> shipment -> pantry receipt; refund request -> original supplier merchant.",
+      "first_value": "Verify own offer/version and own order, then record permitted acceptance/fulfillment without claiming pantry receipt.",
+      "repeat_value": "Refresh stock/prices, fulfill remaining quantities and monitor merchant-authorized refund outcomes.",
+      "failure_recovery": "Wrong merchant, excessive quantity or pending/failed refund: stop, check the existing resource and coordinate safe recovery.",
+      "exit": "Cease scoped access by owner-managed revocation/sign-out; preserve unsettled order/refund obligations.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-DON",
+      "name": "Donor: one-time and monthly lifecycle",
+      "definition": "A supporter making a one-time gift or managing donor-approved monthly support and their own history.",
+      "app_permission_existing": [
+        "Published campaigns; own gift creation, payer simulation, acknowledgments, monthly activation and cancellation"
+      ],
+      "authority_limit_existing": "Cannot approve spending, administer campaigns, read another donor gift or use staff screens",
+      "journey_id": "J-DON",
+      "end_to_end_operations_reviewed": [
+        "Understand published campaign and giving purpose",
+        "Enroll or use a clearly labelled synthetic donor fixture",
+        "Enter permitted one-time amount or monthly preset",
+        "Authorize payer action and inspect actual pending/confirmed state",
+        "Read own acknowledgment and net campaign giving",
+        "Cancel future support or seek finance help for refund",
+        "Preserve history and sign out"
+      ],
+      "current_workflow_addendum": [
+        "Use a published campaign, inspect own acknowledgment after refund, and stop with the pantry-owner handoff when no campaign is open.",
+        "If membership ends, retain private support/provider cancellation instructions; app access loss and sign-out do not cancel monthly billing. The actual off-app route is not yet qualified."
+      ],
+      "handoff": "Public campaign -> donor approval -> verified payment/readback -> private acknowledgment; refund concern -> pantry finance.",
+      "first_value": "Inspect own confirmed gift and acknowledgment; activation alone is not a monthly billing receipt.",
+      "repeat_value": "Inspect later confirmed billing receipts, optionally make a new gift or cancel future support.",
+      "failure_recovery": "Decline/timeout/refund pending or failed: read the existing status or contact pantry; never use another gift to retry a refund.",
+      "exit": "Cancel monthly support explicitly; sign-out/browser closure does not cancel billing, and cancellation does not refund past gifts.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-BEN",
+      "name": "Pantry recipient / affected household",
+      "definition": "A household affected by pantry purchasing/distribution, with no app login or recipient case record.",
+      "app_permission_existing": [
+        "No application account or recipient record in current scope; offline pantry handoff"
+      ],
+      "authority_limit_existing": "No recipient portal, case management or proof of actual household benefit",
+      "journey_id": "J-BEN",
+      "end_to_end_operations_reviewed": [
+        "Understand offline pickup without an app account",
+        "Receive domain-reviewed supplies from pantry staff",
+        "Verify aggregate recorded distribution matches actual handout",
+        "Raise packing or incorrect-entry concern to coordinator",
+        "Escalate authorized correction without recipient case data",
+        "Leave without unsupported safety or impact claims"
+      ],
+      "current_workflow_addendum": [
+        "Have an accountable pantry operator validate actual stock/receipt/handout correction procedure with no recipient data collection; do not infer benefited households from synthetic kit counts."
+      ],
+      "handoff": "Coordinator's actual physical distribution -> household; service questions remain with the pantry offline.",
+      "first_value": "NOT_RUN: receipt of an actual kit is outside the synthetic app evidence.",
+      "repeat_value": "Future pantry visits/service choice remain offline; no repeat-use tracking of households.",
+      "failure_recovery": "Incomplete/unsuitable kit: pantry follows its approved offline escalation; product cannot infer safety from missing attributes.",
+      "exit": "Decline or leave the pantry service according to its offline process; no digital recipient account to delete.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-JUD",
+      "name": "Judge / evaluator / independent tester",
+      "definition": "A contest judge or independent evaluator checking a reproducible sandbox and its evidence boundaries.",
+      "app_permission_existing": [
+        "Synthetic demo role tour and authorized redacted evidence; no special production permission"
+      ],
+      "authority_limit_existing": "Cannot infer provider success, human validation, hosted readiness or real impact from a demo",
+      "journey_id": "J-JUD",
+      "end_to_end_operations_reviewed": [
+        "Identify simulation/provider/build boundaries",
+        "Start an isolated synthetic workspace",
+        "Follow coordinator, finance and merchant handoffs",
+        "Verify $222.50 and 50 synthetic distributions",
+        "Inspect donor, supplier, analytics and negative cases",
+        "Read scoped evidence and report unmet criteria",
+        "Leave safely; do not equate demo with release approval"
+      ],
+      "current_workflow_addendum": [
+        "Existing mapped operations retained; actual role/provider/domain evidence remains scoped."
+      ],
+      "handoff": "Release coordinator provides version/modes/seed disclosure -> evaluator repeats role task and failure -> independent feedback.",
+      "first_value": "Repeat the synthetic 50-kit procurement/recovery journey and explain which values are simulated.",
+      "repeat_value": "Repeat on a clean fixture and inspect a negative case without hidden operator assistance.",
+      "failure_recovery": "Provider/model/license unavailable: retain the block, inspect evidence and decline unsupported award/readiness claims.",
+      "exit": "End the evaluation; no publication/endorsement is inferred and no real money is requested.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-OPS",
+      "name": "Operator / developer / support maintainer",
+      "definition": "An explicitly authorized service operator accountable for configuration, health, backup/recovery and job execution.",
+      "app_permission_existing": [
+        "Authorized local commands and scoped diagnostics; no operator role in the application"
+      ],
+      "authority_limit_existing": "No unrestricted support impersonation, production access, deployment or cleanup authorization in this plan",
+      "journey_id": "J-OPS",
+      "end_to_end_operations_reviewed": [
+        "Identify exact target, modes and data root",
+        "Verify configuration separately from connectivity",
+        "Diagnose unavailable app, quota or paused service",
+        "Contain pending work and arrange authorized readback",
+        "Rehearse isolated backup/restore and retention eligibility",
+        "Hand off current source-bound evidence",
+        "Resume or retire only with exact authority"
+      ],
+      "current_workflow_addendum": [
+        "Use source-bound local compiler/runtime profiles and isolated data; current accepted local production build uses Webpack. Qualify remote DB/providers only under new exact-target authority."
+      ],
+      "handoff": "Integration setup -> operator qualified runtime -> QA check; incident -> support/finance; release decisions -> accountable owner.",
+      "first_value": "Identify runtime/modes and inspect a source-bound test receipt or recoverable synthetic backup.",
+      "repeat_value": "Review backlog age/errors, keep provider state distinct, validate current source/build and safely resume local services.",
+      "failure_recovery": "Corrupt least-scanned record, failed persistence or uncertainty: retain resources, diagnose scoped target and reconcile; no global reset.",
+      "exit": "Future authorized export/containment/closure retains pending obligations; destructive actions require their own authority.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-FORM",
+      "name": "Revoked member / signed-out user",
+      "definition": "A previously authorized member or donor whose app access ended through logout, revocation or expiry; a user state, not another permission role.",
+      "app_permission_existing": [
+        "No protected workspace access after revocation or logout; public pages remain available"
+      ],
+      "authority_limit_existing": "Reusing an old cookie or invitation must not restore authorization",
+      "journey_id": "J-FORM",
+      "end_to_end_operations_reviewed": [
+        "Recognize expired, revoked or signed-out access",
+        "Request protected page with old identity",
+        "Verify server denial and safe public view",
+        "Understand unconfirmed logout or failed enrollment",
+        "Ask owner for a new valid invitation when appropriate",
+        "Leave without restoring old privileges"
+      ],
+      "current_workflow_addendum": [
+        "Retain denial of stale app access while using a separately verified donor-safe support/provider cancellation route; do not restore staff/donor app privileges as a cancellation workaround."
+      ],
+      "handoff": "Denied session -> sign-in or owner's valid scoped invitation; support handles redacted access issues.",
+      "first_value": "Verify old cookies/invitations do not restore protected access.",
+      "repeat_value": "Use a new valid enrollment only after authorization is independently established.",
+      "failure_recovery": "Copied cookie/stale identity/expired invite: deny, retain private records and explain legitimate recovery.",
+      "exit": "Leave without protected access; logout does not extinguish a donor's financial subscription obligations.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-API",
+      "name": "Provider callbacks / automation clients",
+      "definition": "A nonhuman provider callback or authenticated readback client; a system participant, not a psychological persona.",
+      "app_permission_existing": [
+        "Only authenticated and configured sandbox contracts; no personality profile"
+      ],
+      "authority_limit_existing": "Cannot create ownership from untrusted payload metadata or silently retry uncertain money actions",
+      "journey_id": "J-API",
+      "end_to_end_operations_reviewed": [
+        "Authenticate signature or dedicated job token",
+        "Resolve known workspace, operation and owning merchant",
+        "Read back provider resource and validate money/state",
+        "Post only confirmed results once or retain pending state",
+        "Handle duplicate, delayed and unknown events honestly",
+        "Process bounded backlog with visible remaining work",
+        "Persist redacted audit and escalate unresolved results"
+      ],
+      "current_workflow_addendum": [
+        "Existing mapped operations retained; actual role/provider/domain evidence remains scoped."
+      ],
+      "handoff": "Provider event/readback -> verified domain settlement -> finance/operator review; wrong ownership -> rejection.",
+      "first_value": "Verify a correct existing resource updates the appropriate state once in an authorized fixture.",
+      "repeat_value": "Read unresolved resources in bounded durable rotation; process valid events under replay/order guards.",
+      "failure_recovery": "Forged/replayed/misrouted or uncertain event: reject/retain state and escalate. 77 full-handler fixtures pass; actual provider shapes/timing remain unqualified.",
+      "exit": "Disable future job/event intake only under scoped operator authority; retain resource IDs and unsettled events.",
+      "human_validation": "NOT_APPLICABLE_WITH_REASON: nonhuman dependency",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-DEV",
+      "name": "Developer / incoming maintainer",
+      "definition": "A developer or incoming maintainer modifying the repository and handing over a reproducible sandbox.",
+      "app_permission_existing": [
+        "Authorized repository and isolated local fixture; no extra app role"
+      ],
+      "authority_limit_existing": "No real-owner impersonation, dependency upgrade, credentials or external write without its own scope",
+      "journey_id": "J-DEV",
+      "end_to_end_operations_reviewed": [
+        "Read documented scope and safe configuration",
+        "Set up an isolated local/manual/simulation fixture",
+        "Locate behavior through graph and source",
+        "Review a bounded dependency or code/config change",
+        "Run relevant protected regression and build checks",
+        "Record source/fixture evidence and hand over",
+        "Diagnose startup failure without reusing author secrets"
+      ],
+      "current_workflow_addendum": [
+        "Obtain a credential-free, versioned local source bundle and checksum; repo currently has no valid HEAD. Reproduce from it without the author's env/session and record all setup assistance."
+      ],
+      "handoff": "Requirements/source graph -> local change -> QA gates -> operator/release handoff with immutable evidence.",
+      "first_value": "Run a fresh synthetic fixture and identify the actual role/tenant/payment boundaries.",
+      "repeat_value": "Change one bounded requirement and rerun affected/final gates on the current build.",
+      "failure_recovery": "Stale graph/build, broken test or environment failure: preserve original oracle/output, diagnose and verify before claims.",
+      "exit": "Hand off code/configuration instructions without secrets; no automatic deployment or credential ownership transfer.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-INT",
+      "name": "Integration and AI configuration engineer",
+      "definition": "An engineer responsible for exact Supabase/OAuth/PayPal/model/Studio configuration and provider qualification.",
+      "app_permission_existing": [
+        "Authorized mocked integration fixtures; future exact-target provider setup"
+      ],
+      "authority_limit_existing": "No live money, paid fallback or unapproved key/model/provider action",
+      "journey_id": "J-INT",
+      "end_to_end_operations_reviewed": [
+        "Identify exact provider/model and free-only authority",
+        "Check redacted configuration prerequisites",
+        "Qualify mocked contracts before actual integration",
+        "Arrange separately approved synthetic live fixture and budget",
+        "Verify IDs, ownership, output and actual state",
+        "Handle timeout, rejection, revocation and replay",
+        "Hand source-bound evidence to QA/release"
+      ],
+      "current_workflow_addendum": [
+        "Before actual Gemini, repair evaluation diagnostic output and approve/enforce input/output/request/run/time budgets against the exact free model/account. No provider enabled by this review."
+      ],
+      "handoff": "Account owner authority -> engineer configuration/qualification -> operator -> QA; provider gaps -> release holds.",
+      "first_value": "In fixtures, prove invalid/live/paid configuration fails before consequential effects.",
+      "repeat_value": "Repeat exact-version provider qualification only under fresh target authorization and valid keys/model/license.",
+      "failure_recovery": "Quota/unavailable/cancellation/wrong merchant/stale model: preserve denial/uncertainty and use no paid fallback.",
+      "exit": "Revoke/rotate/retire credentials only under exact approved scope; never include secrets in support evidence.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-QA",
+      "name": "Automation QA / security and evidence reviewer",
+      "definition": "A technical tester or evidence reviewer checking correctness, negative cases and current-source proof.",
+      "app_permission_existing": [
+        "Authorized code/test/evidence inspection and controlled fixtures"
+      ],
+      "authority_limit_existing": "No automatic replacement-oracle approval, hostile live load or production authority",
+      "journey_id": "J-QA",
+      "end_to_end_operations_reviewed": [
+        "Freeze requirements, source and fixtures",
+        "Inventory every collected automated case",
+        "Review positive/negative/state assertions and oracles",
+        "Run controlled checks and preserve failures",
+        "Separate plan, library, route, provider and human coverage",
+        "Escalate missing/changed criteria to accountable owner",
+        "Record independent acceptance or unresolved status"
+      ],
+      "current_workflow_addendum": [
+        "Independently review amended selectors/oracles, original failures, required negatives and source hashes; compare scope before accepting local versus provider/human evidence."
+      ],
+      "handoff": "Persona need -> task/control oracle -> reproducible test -> independent review/release decision.",
+      "first_value": "Reproduce the adverse case and verify expected protected outcome on the actual build.",
+      "repeat_value": "Rerun changed boundaries; keep mock, local browser, provider, hosted and human evidence separate.",
+      "failure_recovery": "Broken fixture or obsolete assertion: preserve failure and obtain reviewed replacement; never silently weaken a gate.",
+      "exit": "Retain redacted evidence and hand off gaps; no author self-approval becomes independent acceptance.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-A11Y",
+      "name": "Accessibility / usability reviewer",
+      "definition": "An accessibility/usability reviewer evaluating operability and participant understanding across role journeys.",
+      "app_permission_existing": [
+        "Consenting human observation and approved browser/device fixtures"
+      ],
+      "authority_limit_existing": "No fabricated assistive-tool participation or accessibility certification from axe alone",
+      "journey_id": "J-A11Y",
+      "end_to_end_operations_reviewed": [
+        "Agree task, device, tool and informed participation",
+        "Observe discoverability without click-step coaching",
+        "Exercise keyboard, focus, labels and announcements",
+        "Inspect contrast, zoom/reflow and actual clipping",
+        "Verify error, correction and exit comprehension",
+        "Report barriers and sample limitations",
+        "Retest affected journeys with appropriate reviewers"
+      ],
+      "current_workflow_addendum": [
+        "Review five retained incomplete contrast findings and actual screen reader/zoom/reflow/error focus, including new blank setup and correction handoffs; rendered axe checks do not establish human acceptance."
+      ],
+      "handoff": "Technical browser checks -> suitable participant session -> owner repairs -> regression and human re-evaluation.",
+      "first_value": "Verify keyboard access, labels and clipping with automation; human comprehension remains NOT_RUN.",
+      "repeat_value": "Repeat critical purchase/giving/recovery/exit paths across relevant devices and permitted explicit preferences.",
+      "failure_recovery": "Inoperable/unclear controls: stop consequential tasks, record barriers and offer permitted assistance without bypassing authority.",
+      "exit": "Participants may skip questions/withdraw; no diagnosis, disability ranking or inferred emotion.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-REL",
+      "name": "Release / submission coordinator",
+      "definition": "The accountable coordinator of readiness decisions and accurately scoped hackathon assets/submission.",
+      "app_permission_existing": [
+        "Local release artifacts; hosted/submission execution is deferred"
+      ],
+      "authority_limit_existing": "No deployment, source/video upload, OAuth publishing or Devpost edit without explicit target authority",
+      "journey_id": "J-REL",
+      "end_to_end_operations_reviewed": [
+        "Freeze scope and official submission requirements",
+        "Check each mandatory evidence gate and source version",
+        "Resolve hosted OAuth/license/judge access prerequisites",
+        "Review public-safe code, README, claims and video",
+        "Plan exact release/rollback target and authority",
+        "Obtain separately authorized publication/submission",
+        "Record decision and reopening triggers"
+      ],
+      "current_workflow_addendum": [
+        "Keep an actual hosted test and public upload/Devpost steps on hold; a scoped NO_GO review may be completed without granting GO or publication authority."
+      ],
+      "handoff": "QA/operator/provider evidence -> claim review -> versioned assets -> separately authorized hosted/public submission.",
+      "first_value": "Produce an inspectable local evidence package with open gaps, not a production or winning claim.",
+      "repeat_value": "Reassess claims whenever source/model/configuration changes; verify target before any later release.",
+      "failure_recovery": "Missing provider/license/human proof or contradictory claim: hold assets and correct owned drafts; no premature publication.",
+      "exit": "Keep prior evidence and unsubmitted drafts; publication/deployment/Devpost remain deferred.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-SUPP",
+      "name": "Support / incident responder",
+      "definition": "A support or incident responder helping explain a blocked or uncertain task using only scoped, redacted evidence.",
+      "app_permission_existing": [
+        "User-authorized redacted report and scoped synthetic incident fixture"
+      ],
+      "authority_limit_existing": "No support impersonation, unrestricted donor data or blind repeat of financial writes",
+      "journey_id": "J-SUPP",
+      "end_to_end_operations_reviewed": [
+        "Receive minimal user-scoped issue and operation ID",
+        "Understand actual persisted status and limits of access",
+        "Redact report and contain uncertain outcome",
+        "Assign finance/merchant/operator recovery owner",
+        "Confirm actual correction or keep incident open",
+        "Explain safe next step and no blind retry",
+        "Close only after verified user outcome"
+      ],
+      "current_workflow_addendum": [
+        "Validate a real support route for an access-revoked monthly donor using minimum identity evidence, original merchant authority and verified cancellation readback; never impersonate the donor."
+      ],
+      "handoff": "User task ID/state -> scoped support triage -> owner/finance/supplier/operator recovery -> independent closure check.",
+      "first_value": "Prepare a minimal incident packet and tell the user which action is safe while pending.",
+      "repeat_value": "Track recurrence by task/state without collecting passwords, raw cookies or household data.",
+      "failure_recovery": "Uncertain money: retain references, ask operator to read existing resource, never repeat financial writes to clear an error.",
+      "exit": "Close only after verified state and user-appropriate confirmation; closure policy still needs domain approval.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-DATA",
+      "name": "Catalog / evidence curator",
+      "definition": "A supplier/staff responsibility for maintaining structured catalog or source evidence; no extra curator app role.",
+      "app_permission_existing": [
+        "Use an assigned owner/coordinator/supplier role for its permitted action"
+      ],
+      "authority_limit_existing": "No new curator app permission or model inference of missing safety/provenance",
+      "journey_id": "J-DATA",
+      "end_to_end_operations_reviewed": [
+        "Identify approved supplier and source classification",
+        "Record units, packs, costs and explicit facts",
+        "Challenge stale/conflicting/missing attributes",
+        "Update through the owning permitted role",
+        "Verify source version invalidates approval",
+        "Keep untrusted narrative out of hosted model input",
+        "Retain evidence/history and hand off fresh comparison"
+      ],
+      "current_workflow_addendum": [
+        "Existing mapped operations retained; actual role/provider/domain evidence remains scoped."
+      ],
+      "handoff": "Source/offer -> permitted supplier or coordinator validation -> versioned catalog -> proposal -> finance review.",
+      "first_value": "Verify an offer fact has an applicable source and missing attributes remain unknown.",
+      "repeat_value": "Update allowed facts with a new version; invalidate dependent proposal/approval when materially changed.",
+      "failure_recovery": "Stale/bad link or inferred attribute: reject/mark unknown, retain earlier evidence and seek authorized factual correction.",
+      "exit": "Retain source/version history; future data retirement cannot erase pending procurement obligations.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-RET",
+      "name": "Retirement / service owner",
+      "definition": "A future service owner deciding containment, export and retirement while retaining unsettled obligations.",
+      "app_permission_existing": [
+        "Future owner-approved lifecycle review; no shutdown performed"
+      ],
+      "authority_limit_existing": "No global reset, deletion, key revocation or account closure under this plan",
+      "journey_id": "J-RET",
+      "end_to_end_operations_reviewed": [
+        "Inventory active access and unsettled operations",
+        "Identify permitted export/retention obligations",
+        "Assign reconciliation and containment owners",
+        "Approve exact retirement and recovery procedure",
+        "Revoke/retire only after authorized settlement checks",
+        "Preserve necessary evidence and access boundaries",
+        "Record residual obligations and audit closure"
+      ],
+      "current_workflow_addendum": [
+        "Approve retention/export/containment and revoked-donor cancellation policy with named accountable owners; no account/key/resource closure and no deletion of unsettled obligations."
+      ],
+      "handoff": "Owner -> finance/provider obligation review -> privacy/operator export plan -> separately authorized closure.",
+      "first_value": "NOT_RUN: approved end-to-end retirement/export policy is unavailable.",
+      "repeat_value": "Periodically review pending obligations and ownership rather than deleting inactive records blindly.",
+      "failure_recovery": "Pending capture/refund/subscription or corrupt backup: block closure and obtain scoped reconciliation/recovery authority.",
+      "exit": "No closure/deletion/key revocation here; approve records/financial resolution and exit support before future shutdown.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Map complete for documented scope; outcome/human/provider evidence incomplete"
+    },
+    {
+      "persona_id": "U-BUY",
+      "name": "Buyer / nonprofit adoption approver",
+      "definition": "A director, owner or delegated decision maker who approves the organizational commitment, fit and pilot conditions; may be the same person as U-OWN in a small pantry.",
+      "app_permission_existing": [
+        "No extra application permission; use a separately assigned existing role if needed."
+      ],
+      "authority_limit_existing": "No purchase/deployment/publication/deletion/production permission is created by this register.",
+      "journey_id": "J-BUY",
+      "end_to_end_operations_reviewed": [
+        "Identify a material pantry need and existing alternative",
+        "Inspect a repeatable role task, limitations and negative case",
+        "Account for setup, training, licenses, operation, review and exit effort",
+        "Consult finance, staff, supplier and privacy/governance owners",
+        "Choose no change, a conventional-tool pilot, or a bounded synthetic product evaluation",
+        "Set thresholds/stops and assign implementation/support owners",
+        "Review observed first and repeat value before expanding",
+        "Hold or exit if outcomes, authority or provider/license conditions are unmet"
+      ],
+      "current_workflow_addendum": [
+        "Assign an actual accountable adoption approver and compare full setup/review/support/exit effort with a conventional spreadsheet baseline; demand/value remain hypotheses."
+      ],
+      "handoff": "U-OWN / U-FIN / U-OPS / U-PRIV / U-BUY as applicable; actual organizational assignees remain unknown.",
+      "first_value": "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+      "repeat_value": "Reassess measured repeat task, total effort and changed conditions.",
+      "failure_recovery": "Hold the pilot/rollout; request minimal authorized evidence and record contrary findings.",
+      "exit": "Choose no adoption or exit/export planning without unauthorized deletion.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Hypothesis and accountable assignee unconfirmed"
+    },
+    {
+      "persona_id": "U-PRIV",
+      "name": "Privacy / governance reviewer",
+      "definition": "An assigned organizational reviewer of access, donor-data use, provider routing, evidence sharing and retention; a required responsibility to confirm with the organization, not an added application role.",
+      "app_permission_existing": [
+        "No extra application permission; use a separately assigned existing role if needed."
+      ],
+      "authority_limit_existing": "No purchase/deployment/publication/deletion/production permission is created by this register.",
+      "journey_id": "J-PRIV",
+      "end_to_end_operations_reviewed": [
+        "Identify permitted data and synthetic evaluation boundary",
+        "Review donor/staff/affected-household data flows and least privilege",
+        "Inspect provider/model inputs, redacted support and claim evidence",
+        "Verify invitation/revocation/isolation and review retention/export gaps",
+        "Specify consent, incident, correction and exit conditions with service owner",
+        "Allow only the bounded approved evaluation or hold it",
+        "Recheck changed source/model/provider/data purpose",
+        "Prepare correction or future scoped retirement without deleting unresolved obligations"
+      ],
+      "current_workflow_addendum": [
+        "Assign an actual reviewer for permitted test data, donor evidence, access, provider routing, retention/export and consent; no new app role or legal-compliance claim."
+      ],
+      "handoff": "U-OWN / U-FIN / U-OPS / U-PRIV / U-BUY as applicable; actual organizational assignees remain unknown.",
+      "first_value": "NOT_RUN: accurate evaluation/hold decision after evidence inspection.",
+      "repeat_value": "Reassess measured repeat task, total effort and changed conditions.",
+      "failure_recovery": "Hold the pilot/rollout; request minimal authorized evidence and record contrary findings.",
+      "exit": "Choose no adoption or exit/export planning without unauthorized deletion.",
+      "human_validation": "NOT_RUN; zero participants in retained adoption register",
+      "decision": "Hypothesis and accountable assignee unconfirmed"
+    }
+  ]
+}

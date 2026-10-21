@@ -1,0 +1,53 @@
+{
+  "name": "pantrypilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3100",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3100",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build",
+    "graph": "graphify update . --no-cluster",
+    "backup": "tsx --env-file-if-exists=.env.local scripts/backup.ts",
+    "restore": "tsx --env-file-if-exists=.env.local scripts/restore.ts",
+    "cleanup": "tsx --env-file-if-exists=.env.local scripts/cleanup.ts",
+    "eval:live": "tsx --env-file-if-exists=.env.local scripts/live-eval.ts",
+    "check:providers": "tsx --env-file-if-exists=.env.local scripts/check-providers.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "4.0.93",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.99.0",
+    "ag-grid-community": "36.2.0",
+    "ag-grid-react": "36.2.0",
+    "ag-studio-react": "3.0.0",
+    "ai": "7.0.137",
+    "lucide-react": "^0.577.0",
+    "next": "16.4.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/test": "^1.58.2",
+    "@tailwindcss/postcss": "^4.2.0",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

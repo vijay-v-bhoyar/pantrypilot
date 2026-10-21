@@ -1,0 +1,241 @@
+{
+  "schema_version": "next-local-01-template-v1",
+  "batch": "B5-DECISIONS-ARTIFACTS",
+  "template_only": true,
+  "authorization": "Preparation only. Separate exact target/identity/$0/participant/action authority is required before execution.",
+  "original_review_sha256": "e3613c32bcd3c51dfcf31310235405b70d95c39a675466eaf625a39b4376d04a",
+  "source_digest": null,
+  "configuration_digest": null,
+  "target_confirmed": false,
+  "approved_actions": [],
+  "cases": [
+    {
+      "variant_id": "PP-T12-V01",
+      "case_id": "PP-T12",
+      "name": "baseline",
+      "original_gate": "RELEASE_POLICY_OR_ARTIFACT",
+      "planned_batch": "B5-DECISIONS-ARTIFACTS",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-REL",
+      "related_personas": [],
+      "journey_id": "J-REL",
+      "workflow_ids": [],
+      "requirements": [
+        "OPS-01",
+        "PAY-01",
+        "SUB-01"
+      ],
+      "source_original_variant_assertions": [
+        "Configuration and application versions are promoted/reverted together with explicit authority.",
+        "Rollback does not duplicate provider work, silently delete pending history or count local restore as hosted proof."
+      ],
+      "source_case_assertions": [
+        "Configuration and application versions are promoted/reverted together with explicit authority.",
+        "Rollback does not duplicate provider work, silently delete pending history or count local restore as hosted proof."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Independent controlled review/rehearsal binds code/config/model/secret references and pending obligations to an approved rollback plan; no actual hosted rollback/deploy. Remains partial if oracle requires unperformed target evidence.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner policy decisions and independent reviewer; exact artifact or tabletop; upstream missing proof stays blocking"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-R01-V01",
+      "case_id": "PP-R01",
+      "name": "baseline",
+      "original_gate": "RELEASE_POLICY_OR_ARTIFACT",
+      "planned_batch": "B5-DECISIONS-ARTIFACTS",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-REL",
+      "related_personas": [
+        "U-QA",
+        "U-OWN"
+      ],
+      "journey_id": "J-REL",
+      "workflow_ids": [],
+      "requirements": [
+        "SUB-01",
+        "OPS-01",
+        "PAY-01",
+        "AI-01"
+      ],
+      "source_original_variant_assertions": [
+        "A local simulated demo pass cannot become full provider, hosted, human or release approval.",
+        "Mandatory evidence gaps remain visible and prevent unsupported full-readiness claims."
+      ],
+      "source_case_assertions": [
+        "A local simulated demo pass cannot become full provider, hosted, human or release approval.",
+        "Mandatory evidence gaps remain visible and prevent unsupported full-readiness claims."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Independent requirement-by-requirement review records the correct scoped NO_GO where external/human proof is missing; a completed decision test is not a GO or release approval.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner policy decisions and independent reviewer; exact artifact or tabletop; upstream missing proof stays blocking"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-R03-V01",
+      "case_id": "PP-R03",
+      "name": "baseline",
+      "original_gate": "RELEASE_POLICY_OR_ARTIFACT",
+      "planned_batch": "B5-DECISIONS-ARTIFACTS",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-REL",
+      "related_personas": [],
+      "journey_id": "J-REL",
+      "workflow_ids": [],
+      "requirements": [
+        "SUB-01",
+        "STUDIO-01",
+        "AI-01"
+      ],
+      "source_original_variant_assertions": [
+        "The submission can be reproduced and every material claim points to correctly scoped evidence.",
+        "Unmeasured households, unexecuted integrations, trial rights and hypothetical award odds are not presented as proven."
+      ],
+      "source_case_assertions": [
+        "The submission can be reproduced and every material claim points to correctly scoped evidence.",
+        "Unmeasured households, unexecuted integrations, trial rights and hypothetical award odds are not presented as proven."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Review an actual reproducible credential-free local source/demo/video candidate, current rules, licenses and scoped claims with an independent reviewer; no upload or Devpost edit. No artifact or missing sponsor evidence means partial, not pass.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner policy decisions and independent reviewer; exact artifact or tabletop; upstream missing proof stays blocking"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-R04-V01",
+      "case_id": "PP-R04",
+      "name": "baseline",
+      "original_gate": "RELEASE_POLICY_OR_ARTIFACT",
+      "planned_batch": "B5-DECISIONS-ARTIFACTS",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-RET",
+      "related_personas": [],
+      "journey_id": "J-RET",
+      "workflow_ids": [],
+      "requirements": [
+        "OPS-01",
+        "PAY-01",
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "Unsettled obligations survive containment and retirement; no global reset deletes necessary history.",
+        "User access, provider configuration and private exports are handled by accountable owners with explicit authority."
+      ],
+      "source_case_assertions": [
+        "Unsettled obligations survive containment and retirement; no global reset deletes necessary history.",
+        "User access, provider configuration and private exports are handled by accountable owners with explicit authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Owner-reviewed containment/retention/export/obligation inventory and controlled tabletop preserve pending stock/money/provider states; no shutdown/deletion.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner policy decisions and independent reviewer; exact artifact or tabletop; upstream missing proof stays blocking"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    },
+    {
+      "variant_id": "PP-R04-V02",
+      "case_id": "PP-R04",
+      "name": "revoked-donor-cancellation-path",
+      "original_gate": "RELEASE_POLICY_OR_ARTIFACT",
+      "planned_batch": "B5-DECISIONS-ARTIFACTS",
+      "original_answer_status": "not_run",
+      "execution_status": "NOT_RUN",
+      "approval_status": "NOT_AUTHORIZED_BY_NEXT_LOCAL_01",
+      "primary_persona": "U-RET",
+      "related_personas": [],
+      "journey_id": "J-RET",
+      "workflow_ids": [],
+      "requirements": [
+        "OPS-01",
+        "PAY-01",
+        "ORG-02"
+      ],
+      "source_original_variant_assertions": [
+        "Deny stale app access but provide a qualified legitimate cancellation/support route before any real monthly pilot. Revocation/logout never implies billing cancellation. BLOCKED_POLICY until the off-app/support procedure is approved; no cancellation or deletion occurs here."
+      ],
+      "source_case_assertions": [
+        "Unsettled obligations survive containment and retirement; no global reset deletes necessary history.",
+        "User access, provider configuration and private exports are handled by accountable owners with explicit authority."
+      ],
+      "closure_criteria_addendum_preserving_original_oracle": "Owner approves and validates a reachable donor-safe off-app/support cancellation route and identity verification for revoked donors; no stale app privilege, fake cancellation or assumed billing stop. Hold full acceptance if required provider/channel evidence is absent.",
+      "prerequisites": [
+        "Fresh target/fixture/identity confirmation and this batch approval",
+        "Owner policy decisions and independent reviewer; exact artifact or tabletop; upstream missing proof stays blocking"
+      ],
+      "evidence_required": [
+        "Per-assertion expected/actual and exact target/config/source digest",
+        "Redacted before/after readback and relevant role/session identity aliases",
+        "Negative/contradictory evidence, resource manifest and cleanup disposition",
+        "No raw cookies, keys, tokens or OAuth traces"
+      ],
+      "result_write_policy": "New append-only execution overlay; never edit canonical original answers",
+      "stop_rule": "Stop the dependent branch on unapproved target/spend/contact/deployment/destruction, secret exposure, unsafe identity mutation or unknown provider outcome; keep NOT_RUN/BLOCKED/PARTIAL truthfully",
+      "observation": null,
+      "assertion_results": [],
+      "artifact_sha256": null,
+      "resource_disposition": null,
+      "reviewer_alias": null
+    }
+  ]
+}
