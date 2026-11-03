@@ -46,7 +46,7 @@ for (const width of [1280, 390]) {
         }
       }
       if (name === "Analytics studio") {
-        await page.getByRole("button", { name: "Open AG Studio canvas", exact: true }).click();
+        // Community cards are rendered directly; no native canvas is opened.
         await expect(page.locator(".studio-widget").filter({ hasText: "Complete kits on hand" })).toContainText("0");
         await expect(page.locator(".studio-widget").filter({ hasText: "Available purpose-aware funds" })).toContainText("$0.00");
       }

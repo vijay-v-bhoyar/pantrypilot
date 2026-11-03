@@ -9,9 +9,12 @@ import { evaluationConfigDigest } from "../scripts/lib/planner-evaluation";
 import { expect, it } from "vitest";
 
 const run = promisify(execFile);
+const cleanEnv = (): NodeJS.ProcessEnv => ({ NODE_ENV: "test", ...Object.fromEntries(
+  ["SystemRoot", "WINDIR", "SystemDrive", "ComSpec", "PATH", "PATHEXT", "TEMP", "TMP"]
+    .flatMap((key) => process.env[key] ? [[key, process.env[key]!]] : [])) });
 it.each([undefined, "   "])("live evaluation refuses model %s before creating a workspace", async (model) => {
   const root = await mkdtemp(path.join(os.tmpdir(), "pantrypilot-model-eval-"));
-  const env = { ...process.env, APP_ENV: "local", VERCEL: "", STORAGE_MODE: "local",
+  const env = { ...cleanEnv(), APP_ENV: "local", VERCEL: "", STORAGE_MODE: "local",
     AI_MODE: "gemini", PROVIDER_ACTIONS_ENABLED: "true", RUN_LIVE_EVAL: "true",
     PAYMENTS_MODE: "simulation", FINANCIAL_ACTIONS_ENABLED: "false",
     AI_MAX_HTTP_REQUESTS: "2", AI_MAX_INPUT_BYTES: "32768", AI_MAX_OUTPUT_TOKENS: "512", AI_TIMEOUT_MS: "60000",
@@ -50,7 +53,7 @@ it.each([
   const tsx = pathToFileURL(path.resolve("node_modules/tsx/dist/loader.mjs")).href;
   const runId = randomUUID();
   const limits = { maxHttpRequests: 2, maxInputBytes: 32768, maxOutputTokens: 512, timeoutMs: 60000 };
-  const env = { ...process.env, APP_ENV: "local", VERCEL: "", STORAGE_MODE: "local",
+  const env = { ...cleanEnv(), APP_ENV: "local", VERCEL: "", STORAGE_MODE: "local",
     AI_MODE: "gemini", PROVIDER_ACTIONS_ENABLED: "true", RUN_LIVE_EVAL: "true",
     PAYMENTS_MODE: "simulation", FINANCIAL_ACTIONS_ENABLED: "false",
     GEMINI_API_KEY: "fake-key-PRIVATE_DIAGNOSTIC", GEMINI_MODEL: "fixture-model",

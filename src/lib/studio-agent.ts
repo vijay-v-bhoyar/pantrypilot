@@ -1,4 +1,4 @@
-import type { AgAiAgentRunner, AgAiRunOutcome } from "ag-studio";
+import type { DashboardAgentRunner, DashboardAgentOutcome } from "./dashboard-agent-contract";
 import { z } from "zod";
 import { analysisPrompts, type Focus } from "./dashboard";
 import { analystResponseSchema, evidenceBrief } from "./dashboard-evidence";
@@ -29,12 +29,12 @@ class AnalystError extends Error {
   }
 }
 
-// Studio owns the native chat/harness. Our runner delegates model work to the
-// authenticated server and never exports Studio data, history, tools or context.
+// Application-owned adapter delegates model work to the authenticated server.
+// Community rendering needs no Studio SDK, chat history, tools or context export.
 export function pantryStudioAgent(
   applyFocus: (focus: Focus) => void,
   request: typeof fetch = fetch,
-): AgAiAgentRunner {
+): DashboardAgentRunner {
   return {
     id: "pantry-analyst",
     name: "Pantry dashboard analyst",
@@ -51,7 +51,7 @@ export function pantryStudioAgent(
       const prompt = question.safeParse(
         input.messages.filter((m) => m.role === "user").at(-1)?.content,
       );
-      let status: AgAiRunOutcome = "error";
+      let status: DashboardAgentOutcome = "error";
       ctx.emit?.({
         type: "run_started",
         trace,

@@ -1,12 +1,22 @@
-# PantryPilot local judge and maintainer handover
+# PantryPilot Community-only source and local demo
 
-This MIT-licensed source candidate includes the root LICENSE, bounded procurement and dashboard assistance, manual operation and regression tests. It is not a published release, provider qualification or independent human acceptance. Original answers, private workspaces, historical trace artifacts and personal account setup documents are deliberately excluded. The manifest binds each included file; the adjacent ZIP SHA-256 binds the archive. Never copy .env.local or private source-workspace data into this directory. Read `docs/handover/submission-packet.md` from the source root for prepared entry text, claim boundaries, judge walkthrough and the external completion checklist.
+PantryPilot links nonprofit giving, inventory, reviewed supplier purchasing, recovery and distribution. This source export includes the MIT license, application, scripts, migrations, maintained tests and synthetic evaluation assets. The default local demo uses manual planning and simulated payments. It does not send money or invoke an AI provider.
 
-The included executable subject passed typecheck, lint, 501 unit/route tests, Webpack build and 53 Chromium journeys in a local synthetic simulation profile. `docs/handover/local-verification.json` records its source scope, build ID and log hashes. These counts are local evidence; model routes use mocks/transport fixtures, and none of the 58 external variants was closed. Re-run the gate on the judge's actual environment rather than assuming the original build transfers.
+## Owner-attended planner evaluations
 
-Requires Node >=22.9, npm and Python >=3.10 (available as `python`; for the credential-free packaging regressions). In a fresh extracted directory, run `npm.cmd ci --no-audit --no-fund` to install the exact lockfile dependencies; `npm ci` runs package install scripts. Use `--offline` when the exact versions are already cached. Install the matching Chromium with `npx.cmd --no-install playwright install chromium` if it is not cached. These commands download free dependencies/browser files; they do not invoke PayPal or Gemini. Do not change dependency versions to get a green result. On other platforms omit `.cmd`. Do not infer browser installation from a green build.
+`scripts/owner-planner-stage.ps1` and `scripts/owner-planner-runtime.ts` provide a separate, fail-closed diagnostic/H3 launcher. They are not part of the credential-free demo setup. A run requires an exact approved scope and source inventory, an initialized preserved project journal, current usage/quiet evidence and a fresh process-bound grant. The exported source includes no usable scope, approval, activation or credentials. Missing or expired records refuse execution.
 
-PowerShell local profile (set in this fresh directory; no credentials):
+The owner enters the selected key in a hidden local PowerShell prompt before activation. It remains in that process's memory for at most the approved fifteen-minute staging wait, then passes through a private stdin pipe only after credential-free checks of the actual Node PID, nonce and grant. The launcher never reads an environment file, saves the key or fingerprints it. Disposal reduces retention; it does not guarantee memory erasure. Staging and dispatch records prevent automatic replay. Counting and generation obey the absolute approval deadline as well as their existing request and time limits. Safe failure phases and preserved journals require readback; a zero exit code alone is not qualification.
+
+## Prerequisites and setup
+
+Use Node.js >=22.9, npm and Python >=3.10 available as `python` for packaging tests. Windows commands below use `npm.cmd`; on other systems omit `.cmd`. Dependency installation executes package lifecycle scripts. Install only the exact lockfile versions in a fresh directory; use an existing exact-version cache for offline installation.
+
+```powershell
+npm.cmd ci --no-audit --no-fund
+```
+
+A fresh terminal must have no inherited provider credentials or hosted configuration. Select this local synthetic process profile; it requires no credential file:
 
 ```powershell
 $env:APP_ENV='local'
@@ -18,12 +28,11 @@ $env:PROVIDER_ACTIONS_ENABLED='false'
 $env:FINANCIAL_ACTIONS_ENABLED='true'
 $env:PANTRYPILOT_DATA_DIR='.data/maintainer-first-run'
 $env:NEXT_TELEMETRY_DISABLED='1'
-$env:NEXT_PUBLIC_AG_STUDIO_LICENSE=''
 ```
 
-Copy `.env.example` to `.env.local` only if needed, leaving all credential/model-budget fields blank and provider actions false. The listed environment profile overrides its port. Keep local simulated financial actions enabled for the full role journeys. The app never supports live money. Use a fresh data directory for every independent run.
+Financial actions in this profile are synthetic operations needed by the demo journeys. Never add live-money credentials. Keep `.env.local`, workspace data, cookies and logs outside source publication. The example environment file is a template, not provider admission; its older evaluation-cap comment does not describe the H2 campaign policy in `docs/planning/contracts.md`.
 
-Required local gate:
+## Local checks and startup
 
 ```powershell
 npm.cmd run lint
@@ -33,21 +42,44 @@ npm.cmd run typecheck
 npm.cmd run start -- --port 3102
 ```
 
-In a second terminal with the same profile:
+Build and typecheck run sequentially because Next regenerates types. Webpack is the documented local build path; default Turbopack previously failed in the Windows environment. From a second terminal with the same profile, run:
 
 ```powershell
 $env:PANTRYPILOT_TEST_ORIGIN='http://127.0.0.1:3102'
 npm.cmd run test:browser
 ```
 
-Build and typecheck run sequentially because Next regenerates `.next/types`. The verified local build path is Webpack; default Turbopack previously failed in this Windows environment. Windows isolation can also deny Next prerender filesystem writes or temporary junction tests; record the error and seek authorized host execution rather than weakening assertions. Health must identify PantryPilot local/local/simulation/manual/providers-disabled before tests. The browser suite exercises synthetic app roles, not verified Google identity. The native Studio canvas can be evaluated locally without bundling a license key; hosted rights remain unresolved.
+The matching Chromium must already be installed for offline browser verification. If downloading it is separately permitted, use `npx.cmd --no-install playwright install chromium`. A green build does not establish browser availability. Health must report local storage, simulated payments, manual AI and disabled providers before the tour. Use one Node process and a fresh synthetic workspace. The local role tour is not Google identity qualification.
 
-Preserve full logs, command exit codes, source manifest, build ID, target/configuration and actual test counts in a new evidence directory. Do not archive protected responses, cookies, API keys or user data. Source/config drift invalidates prior gate evidence. Root source package has no assumed Git history or remote.
+## Demo journey
 
-Model controls: all four `AI_MAX_HTTP_REQUESTS`, `AI_MAX_INPUT_BYTES`, `AI_MAX_OUTPUT_TOKENS`, `AI_TIMEOUT_MS` must be explicit before any separately authorized model run. Ceilings are 10 HTTP attempts/run, 32768 serialized UTF-8 bytes/request, 1024 output tokens/request, and 300000 ms. Actual Google generation transports are counted across SDK steps, failed sends count, redirects/changed targets are denied, retries are zero. Counters are run/process bounded, not provider account usage, billing, or proof of $0 access. The legacy daily hosted run quota remains separate. Provider output remains untrusted and deterministically recomputed.
+Request kits and compare approved offers; have finance approve the exact proposal and simulate checkout. Have the supplier cancel an item, review the resulting recovery, simulate the merchant-authorized refund, receive remaining supplies and approve a fresh replacement. Record receipts before distributing kits. Analytics distinguishes planned, purchased, received and distributed quantities. Giving also supports synthetic one-time gifts and recurring-gift workflows.
 
-The 12-case live evaluator additionally needs a fresh UUID, exactly `.data/ai-evals/<UUID>`, local simulation, financial actions disabled, `EVAL_MAX_HTTP_REQUESTS` <=120 and `EVAL_APPROVED_CONFIG_SHA256` matching the reviewed model/per-run/session limits. This ceiling is not permission to spend or call providers. Under separate later approval the digest is computed by `evaluationConfigDigest(model, limits, session)`; the session uses the same byte/token/time limits and explicit evaluation HTTP cap. No command in this handover enables it. Append-only receipts go to `output/live-evals/<UUID>/receipt.json`. Missing/invalid/unauthorized profiles deny before creating a workspace or sending a request. The planner evaluator alone never proves analyst, human, hostile-input, hosted or live cancellation qualification.
+## Maintenance and limitations
 
-Read `docs/planning/README.md`, `docs/handover/persona-workflows.json`, `docs/adoption/journey-contracts.json` and staged worksheets in `docs/testing/next-local-01-v1`. All 21 responsibility profiles are hypotheses supported by source, with no actual user acceptance implied. The 58 provider/identity/human/decision/hosted variants remain NOT_RUN. Staged templates preserve their original assertions but contain no actual identity UUIDs, secrets or observations. No Supabase fixture import, Google sign-in, PayPal/Gemini call, user recruitment, retention/deletion, source publication, video or Devpost submission is authorized by this bundle.
+Read `docs/planning/README.md` and `docs/planning/contracts.md` for exported contracts and source/test entry points. The 21 responsibility profiles and journey specifications are hypotheses, not observed customer acceptance. Staged evaluation worksheets retain their assertions and start unexecuted.
 
-Beta remains NO_GO. Keep deployment on hold. Independent maintainer review and a fresh official rules/license/claims review remain required before any later publication. For a short local walkthrough, start a fresh synthetic demo, inspect Giving, use the coordinator's request/proposal flow, finance's approval and simulated checkout, supplier cancellation, owner recovery, receipt/distribution, then Analytics. The in-app role guides supply exact actions. In Analytics, inspect the manual operational explanation and focus selector before opening Studio. An AI control denied in this profile is an expected boundary, not evidence of a successful model run. Judge participation should use synthetic data only.
+`HANDOVER-MANIFEST.json` binds included bytes; the adjacent checksum binds the archive. Neither is a test receipt. Run the local gate on the exact extracted candidate and retain source/configuration/build identity and complete results outside publication. Do not transfer earlier test counts to changed candidates.
+
+Actual Gemini and PayPal behavior, hosted identity/storage, independent human acceptance and measured impact remain unqualified by the local demo. This submission/judging milestone uses AG Grid Community and includes no native Studio runtime or dependency. Native Studio UI/layout/chat remains deferred until rights are confirmed and is not a delivered feature of this candidate. No license key is bundled. Local file storage and process-local controls do not establish distributed hosted reliability. There is no qualified production or live-money release.
+
+Model evaluation and provider-readiness scripts can consume quota or use credentials; they are outside the local setup commands above. Do not run `eval:live`, `check:providers` or `scripts/planner-probe.ts` initialization/execution as a setup check. The separate initial Gemini probe has a three-pair/six-request ceiling and does not replace the full twelve-case campaign. Its project quota, quiet-window coordination and runtime admission must be reviewed before any authorized run. All provider tests require separate exact authorization, non-secret admission records and private credential handling. Publishing this source grants no provider, hosted, payment or participant-contact authority.
+
+
+## Community milestone verification
+
+Run `npx --no-install tsx scripts/verify-community-build.ts` after the production build. It must find an actual build and verify dependency, source-import and emitted-artifact boundaries. Keep the normal type/lint/unit/build/browser gate. The five explicitly named native Studio browser cases remain unchanged in the source but are excluded from this milestone and reported as deferred NOT_RUN. Community browser cases retain saved focus, numeric/financial invariants, filtering/reset, accessibility, analyst denial, safe output, cancellation and legacy-view preservation checks. Native deferral is not a native test pass or provider proof.
+
+## Separate PF-01 hackathon qualification gate
+
+`scripts/hackathon-eval.ts` implements H3 independently from the H2 CLI. It does not load an environment file. H3 uses all twelve original synthetic cases and the original verdict (at least eleven PASS, unchanged protected financial arrays, no infrastructure failure). A passing case needs durable generation evidence. Limits are six count/generation pairs per case,144combined campaign requests and20project-wide requests per Pacific date. These are ceilings, not mandatory calls or sample repetitions. Same-day completed cases require a fresh exact per-case grant and twelve-request headroom; insufficient headroom returns read-only DEFER. A started/poisoned/uncertain case is never replayed or resumed.
+
+Initialization requires separate approval and an already existing clean canonical project journal; H3 exposes no new-origin/reset route. A runtime grant binds the actual source/build/manifest/configuration, project/model/operator/credential reference, next case, quota head, PID/nonce, fresh usage and quiet evidence, single-case12-request scope and exact window. A matching activation record and process-only runtime profile are required before any key read. Both the original60-second AI timeout and the approval-window cancellation apply. Counts, generation attempts, external-use deltas and uncertainty are accounted conservatively. Qualification must end before November12,2026 at20:00UTC under this event-specific policy.
+
+H3 is locally tested, not provider-qualified. Its final receipt separates `hackathonGateAccepted` from `fullCampaignAccepted:false`. The unchanged H2 schema2/ten-pair/240-ceiling/twelve-distinct-date mechanism remains pending for later qualification. An initial diagnostic probe is neither H3 acceptance nor H2 full qualification. See `docs/planning/contracts.md` for both contracts. No provider call, real campaign initialization, paid fallback or credential use is authorized by these instructions.
+
+## Verified local candidate — November 3, 2026
+
+The H3 and owner-launcher source passed an offline exact-lockfile install and790unit/route tests across41files,55selected Chromium journeys, clean lint, post-build typecheck, a production Webpack build and the Community artifact boundary check. Five native Studio cases remain deferred NOT_RUN. No dependency junction was used. Installation used the existing exact-version npm cache; an uncached network install and other operating systems were not tested. Locked ESLint deprecation and pending lifecycle-script warnings, plus existing SDK fixture warnings, are retained without dependency/configuration changes.
+
+These checks prove the local synthetic profile only. Source publication does not establish PayPal/Gemini qualification, hosted behavior or independent human acceptance. The export excludes private evidence, failed ledgers, credentials and operational data. No successful provider campaign or deployed application is claimed.

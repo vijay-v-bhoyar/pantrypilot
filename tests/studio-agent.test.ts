@@ -1,10 +1,10 @@
 import { expect, it, vi } from "vitest";
 import type {
-  AgAiAgentRunner,
-  AgAiAgentRunContext,
-  AgAiEvent,
-  AgAiRunInput,
-} from "ag-studio";
+  DashboardAgentRunner as AgAiAgentRunner,
+  DashboardAgentContext as AgAiAgentRunContext,
+  DashboardAgentEvent as AgAiEvent,
+  DashboardAgentInput as AgAiRunInput,
+} from "@/lib/dashboard-agent-contract";
 import { pantryStudioAgent } from "@/lib/studio-agent";
 import { analysisPrompts } from "@/lib/dashboard";
 

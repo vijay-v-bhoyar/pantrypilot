@@ -65,3 +65,21 @@ it("refuses linked evaluation directory ancestry", async () => {
     await expect(reserveEvaluationDirectories(root, randomUUID())).rejects.toThrow("isolated directories");
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+it("IMP-T01/02 preserves all twelve H2 inputs and the complete verdict truth table", async () => {
+  const { plannerCases, plannerVerdict } = await import("../scripts/lib/planner-evaluation");
+  const cases = plannerCases(Date.UTC(2026, 9, 27));
+  expect(cases.map((c) => c.case)).toEqual(Array.from({ length: 12 }, (_, i) => i + 1));
+  expect(cases.map((c) => c.target)).toEqual([20,23,26,29,32,35,38,41,44,47,50,53]);
+  expect(cases.map((c) => c.budget)).toEqual([1,60000,60000,60000,1,60000,60000,60000,1,60000,60000,60000]);
+  expect(new Set(cases.map((c) => c.deadline)).size).toBe(1);
+  const rows = cases.map((c) => ({ case: c.case, status: "PASS" as const }));
+  expect(plannerVerdict(rows, true, false)).toBe(true);
+  expect(plannerVerdict(rows.map((r, i) => i === 11 ? { ...r, status: "FAIL" as const } : r), true, false)).toBe(true);
+  expect(plannerVerdict(rows.map((r, i) => i >= 10 ? { ...r, status: "FAIL" as const } : r), true, false)).toBe(false);
+  expect(plannerVerdict(rows.map((r, i) => i === 11 ? { ...r, status: "BLOCKED" as const } : r), true, false)).toBe(false);
+  expect(plannerVerdict(rows.slice(0, 11), true, false)).toBe(false);
+  expect(plannerVerdict([...rows].reverse(), true, false)).toBe(false);
+  expect(plannerVerdict(rows, false, false)).toBe(false);
+  expect(plannerVerdict(rows, true, true)).toBe(false);
+});

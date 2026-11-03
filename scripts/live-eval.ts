@@ -1,91 +1,107 @@
 import { randomUUID } from "node:crypto";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { configuration } from "../src/lib/config";
 import { seedWorkspace } from "../src/lib/seed";
-import { createWorkspace, loadWorkspace, withWorkspace } from "../src/lib/storage";
-import { execute } from "../src/lib/commands";
+import { withWorkspace } from "../src/lib/storage";
 import { aiProposal } from "../src/lib/ai";
 import { plan } from "../src/lib/planner";
 import { requiredGeminiModel } from "../src/lib/gemini-model";
 import { createModelBudget, requiredModelLimits, validateModelLimits } from "../src/lib/model-budget";
-import { ensure } from "../src/lib/errors";
-import { comparePlannerBaseline, evaluatePlannerCase, evaluationConfigDigest, evaluationSourceDigest,
-  reserveEvaluationDirectories, writeEvaluationReceipt, type EvaluationRow } from "./lib/planner-evaluation";
-import type { PurchaseRequest, Workspace } from "../src/lib/types";
+import { comparePlannerBaseline, evaluatePlannerCase } from "./lib/planner-evaluation";
+import { assertCurrentSubject, campaignPaths, finalizeCampaign, initializeCampaign, readCampaign,
+  runCampaignBlock, validateBinding, type CampaignBinding } from "./lib/planner-campaign";
+import { H2Journal, createH2Policy, h2Assert, initializeQuota, pacificDay, readRecord,
+  sha, type QuotaOrigin } from "./lib/planner-quota";
 
-async function main() {
-  let admitted: Awaited<ReturnType<typeof admission>>;
-  try { admitted = await admission(); } catch {
-    console.log("BLOCKED: live model evaluation requires explicit authorization, an isolated local synthetic profile, key, explicit qualified model and matching approved budgets. No provider request was sent.");
-    process.exitCode = 1; return;
+const refusal = "BLOCKED: live model evaluation requires explicit authorization, an isolated local synthetic profile, key, explicit qualified model and matching approved budgets. No provider request was sent by this refused admission.";
+let executionBegan = false;
+async function main(args: string[]) {
+  const root = process.cwd(), [operation, id, project] = args;
+  if (operation === "init") {
+    h2Assert(args.length === 2 && id.endsWith(".json"));
+    const input = await readRecord<CampaignBinding & { id: string; quotaOrigin?: QuotaOrigin }>(path.resolve(id));
+    h2Assert(Object.keys(input).every((key) => ["id", "model", "project", "credentialReference", "operator",
+      "limits", "session", "quotaOrigin"].includes(key)));
+    const binding: CampaignBinding = { model: input.model, project: input.project,
+      credentialReference: input.credentialReference, operator: input.operator, limits: input.limits, session: input.session };
+    validateBinding(binding); const paths = campaignPaths(root, input.id, input.project);
+    if (input.quotaOrigin) {
+      h2Assert(input.quotaOrigin.project === input.project && input.quotaOrigin.day === pacificDay(Date.now()));
+      await initializeQuota(paths.quota, input.quotaOrigin);
+    } else { h2Assert((await new H2Journal(paths.quota).read()).length > 0); }
+    const manifest = await initializeCampaign(root, input.id, binding, seedWorkspace(randomUUID()));
+    console.log(JSON.stringify({ id: manifest.id, manifestHash: sha(manifest), configDigest: manifest.configDigest,
+      status: "INITIALIZED_NOT_EXECUTED" })); return;
   }
-  const { model, limits, session, runId, configDigest, sourceDigest, evidence } = admitted;
-  const budget = createModelBudget(session, "evaluation");
-  const rows: EvaluationRow[] = [];
-  const w = seedWorkspace(randomUUID());
-  const financial = (state: Workspace) => JSON.stringify([state.ledger, state.orders, state.donations,
-    state.recoveries, state.inventory, state.distributions, state.approvals]);
-  const before = financial(w);
-  let sideEffectsUnchanged = false;
-  let infrastructureFailed = false;
-  try {
-    await createWorkspace(w);
-    for (let index = 0; index < 12; index++) {
-      if (index > 0) await new Promise((resolve) => setTimeout(resolve, 10000));
-      try { budget.assertCapacity(); } catch {
-        rows.push(...Array.from({ length: 12 - index }, (_, offset): EvaluationRow => ({ case: index + offset + 1, status: "BLOCKED" })));
-        break;
-      }
-      let comparison: EvaluationRow["comparison"];
-      const row = await evaluatePlannerCase(index, async () => {
-        const { r, baseline } = await withWorkspace(w.id, (state) => {
-          const r = execute(state, "owner-a", "request", {
-          siteId: "hope-main", kitId: "kit-hope", fundId: "hope-kits", target: 20 + index * 3,
-          budget: index % 4 === 0 ? 1 : 60000,
-          deadline: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10), notes: "",
-          }, randomUUID()) as PurchaseRequest;
-          return { r, baseline: plan(state, r) };
-        });
-        const candidate = await aiProposal({ workspaceId: w.id, actorId: "owner-a", expiresAt: Date.now() + 100000,
-          nonce: "local-eval" }, r.id, budget);
-        comparison = comparePlannerBaseline(baseline, candidate);
-        return candidate;
+  h2Assert(args.length === 3 && ["status", "finalize", "run-block"].includes(operation));
+  if (operation === "status") {
+    const state = await readCampaign(root, id, project);
+    console.log(JSON.stringify({ completed: state.outcomes.length, total: 12,
+      status: state.outcomes.some((o) => o.infrastructureFailed) ? "INFRASTRUCTURE_STOP" :
+        state.outcomes.length === 12 ? "READY_FOR_FINALIZE" : "PAUSED_UNTIL_NEXT_APPROVED_QUOTA_DAY" })); return;
+  }
+  if (operation === "finalize") {
+    const result = await finalizeCampaign(root, id, project);
+    console.log(JSON.stringify({ accepted: result.accepted, cases: result.rows.length }));
+    process.exitCode = result.accepted ? 0 : 1; return;
+  }
+  // No key/provider configuration is read for init/status/finalize or invalid/legacy CLI.
+  let admitted: Awaited<ReturnType<typeof admission>>;
+  try { admitted = await admission(root, id, project); } catch { console.log(refusal); process.exitCode = 1; return; }
+  const { state, binding, approval } = admitted;
+  const shared = createModelBudget(binding.session, "evaluation");
+  executionBegan = true;
+  const finish = await runCampaignBlock(root, id, project, binding, approval, async (manifest, caseId, active, signal) => {
+    const paths = campaignPaths(root, id, project);
+    const policy = createH2Policy({ root: paths.quota, project, campaign: id, caseId, model: binding.model,
+      day: approval.day, approvedDay: approval.day, knownProjectUseReference: approval.quotaReference,
+      signal, assertActive: () => { active(); shared.assertActive(); } });
+    let comparison: ReturnType<typeof comparePlannerBaseline> | undefined;
+    const row = await evaluatePlannerCase(caseId - 1, async () => {
+      active(); const fixture = manifest.cases[caseId - 1];
+      const { request, baseline } = await withWorkspace(manifest.workspaceId, (w) => {
+        const request = w.requests.find((r) => r.id === fixture.requestId);
+        h2Assert(request && sha(request) === fixture.requestDigest);
+        return { request, baseline: plan(w, request, undefined, manifest.fixtureTime) };
       });
-      rows.push({ ...row, ...(comparison && { comparison }) });
-    }
-    sideEffectsUnchanged = financial(await loadWorkspace(w.id)) === before;
-  } catch { infrastructureFailed = true; }
-  while (rows.length < 12) rows.push({ case: rows.length + 1, status: "BLOCKED" });
-  const passed = rows.filter((row) => row.status === "PASS").length;
-  const accepted = passed >= 11 && sideEffectsUnchanged && !infrastructureFailed && !rows.some((row) => row.status === "BLOCKED");
-  await writeEvaluationReceipt(evidence, { schemaVersion: 1, runId, timestamp: new Date().toISOString(),
-    model, configDigest, sourceDigest, limits, session, httpAttempts: budget.attempts,
-    counterScope: "this evaluation in this process; not account-wide usage or billing",
-    rows, passed, accepted, sideEffectsUnchanged, infrastructureFailed,
-    evidenceClass: "provider evaluation; human, analyst and hosted qualification remain separate" });
-  console.log(`${passed}/12 live planning cases passed; evaluation ${accepted ? "accepted" : "not accepted"}. No payment was executed.`);
-  process.exitCode = accepted ? 0 : 1;
+      const candidate = await aiProposal({ workspaceId: manifest.workspaceId, actorId: "owner-a",
+        expiresAt: Date.now() + 100000, nonce: "local-eval" }, request.id, shared,
+      { fixtureTime: manifest.fixtureTime, transportPolicy: policy });
+      active(); comparison = comparePlannerBaseline(baseline, candidate); return candidate;
+    });
+    const quotaEvents = await new H2Journal(paths.quota).read();
+    const infrastructureFailed = quotaEvents.some((event) => event.value.kind === "poison");
+    return { row: { ...row, ...(comparison && { comparison }) }, infrastructureFailed };
+  });
+  console.log(JSON.stringify({ case: finish.caseId, status: finish.row.status,
+    infrastructureFailed: finish.infrastructureFailed, campaignAccepted: false,
+    manifestHash: sha(state.manifest) }));
+  process.exitCode = finish.row.status === "PASS" && !finish.infrastructureFailed ? 0 : 1;
 }
-async function admission() {
+async function admission(root: string, id: string, project: string) {
+  h2Assert(path.resolve(root) === path.resolve(fileURLToPath(new URL("../", import.meta.url))));
   const config = configuration();
-  ensure(process.env.RUN_LIVE_EVAL === "true" && process.env.APP_ENV === "local" && !config.hosted &&
+  h2Assert(process.env.RUN_LIVE_EVAL === "true" && process.env.APP_ENV === "local" && !config.hosted &&
     config.storage === "local" && config.payments === "simulation" && !config.financialActions &&
-    config.providerActions && config.ai === "gemini" && process.env.GEMINI_API_KEY,
-    "EVAL_CONFIG", "Evaluation is not authorized/configured.");
+    config.providerActions && config.ai === "gemini" && process.env.GEMINI_API_KEY);
   const model = requiredGeminiModel();
-  const limits = requiredModelLimits();
-  const raw = process.env.EVAL_MAX_HTTP_REQUESTS || "";
+  const limits = requiredModelLimits(); const raw = process.env.EVAL_MAX_HTTP_REQUESTS || "";
   const session = validateModelLimits({ ...limits, maxHttpRequests: /^[1-9][0-9]*$/.test(raw) ? Number(raw) : NaN }, "evaluation");
-  const configDigest = evaluationConfigDigest(model, limits, session);
-  ensure(process.env.EVAL_APPROVED_CONFIG_SHA256 === configDigest, "EVAL_CONFIG", "Approved evaluation budgets do not match.");
-  const runId = process.env.EVAL_RUN_ID || "";
-  ensure(process.env.PANTRYPILOT_DATA_DIR && path.resolve(process.env.PANTRYPILOT_DATA_DIR) ===
-    path.resolve(".data", "ai-evals", runId), "EVAL_CONFIG", "Use the dedicated fresh evaluation data directory.");
-  const sourceDigest = await evaluationSourceDigest(process.cwd());
-  const { evidence } = await reserveEvaluationDirectories(process.cwd(), runId);
-  return { model, limits, session, runId, configDigest, sourceDigest, evidence };
+  const state = await readCampaign(root, id, project);
+  const binding: CampaignBinding = { model, project, limits, session,
+    credentialReference: process.env.EVAL_CREDENTIAL_REFERENCE || "", operator: process.env.EVAL_OPERATOR || "" };
+  await assertCurrentSubject(root, state.manifest, binding);
+  const paths = campaignPaths(root, id, project);
+  h2Assert(process.env.EVAL_RUN_ID === id && process.env.EVAL_APPROVED_CONFIG_SHA256 === state.manifest.configDigest &&
+    process.env.PANTRYPILOT_DATA_DIR && path.resolve(process.env.PANTRYPILOT_DATA_DIR) === paths.data &&
+    model === "gemini-3.8-flash");
+  const approval = { manifestHash: process.env.EVAL_APPROVED_MANIFEST_SHA256 || "",
+    day: process.env.EVAL_APPROVED_PACIFIC_DAY || "", quotaReference: process.env.EVAL_KNOWN_USAGE_REFERENCE || "" };
+  h2Assert(approval.manifestHash === sha(state.manifest) && approval.day === pacificDay(Date.now()));
+  return { state, binding, approval };
 }
-main().catch(() => {
-  console.log("Evaluation could not complete. No successful result is claimed. Inspect the isolated receipt if available.");
+main(process.argv.slice(2)).catch(() => {
+  console.log(executionBegan ? "Campaign stopped. Preserve the existing journal, lock and outcomes; no successful result is claimed." : refusal);
   process.exitCode = 1;
 });

@@ -72,7 +72,8 @@ for (const width of [1280, 390]) {
     await expect(page.getByText("Original recorded count: 5. Corrections retain the original history.", { exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await nav(page, "Overview"); await expect(page.locator(".stats-grid")).toContainText("3");
-    await nav(page, "Analytics studio"); await page.getByRole("button", { name: "Open AG Studio canvas", exact: true }).click(); await expect(page.locator(".studio-widget").filter({ hasText: "Recorded kit distributions" })).toContainText("3");
+    await nav(page, "Analytics studio"); // Community cards are rendered directly; no native canvas is opened.
+    await expect(page.locator(".studio-widget").filter({ hasText: "Recorded kit distributions" })).toContainText("3");
     await page.reload(); await nav(page, "Inventory & kits"); await page.getByRole("button", { name: "Corrections", exact: true }).click();
     await expect(page.getByRole("heading", { name: "distribution correction · applied", exact: true })).toBeVisible();
     await page.screenshot({ path: `output/approved-repairs-2026-10-15/distribution-correction-${width}.png`, fullPage: true });

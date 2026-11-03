@@ -3,7 +3,7 @@ import { lstat, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { ensure } from "../../src/lib/errors";
 import type { ModelLimits } from "../../src/lib/model-budget";
-import type { Proposal } from "../../src/lib/types";
+import type { Proposal, Workspace } from "../../src/lib/types";
 
 type ComparedPlan = Pick<Proposal, "source" | "digest" | "total" | "shortages">;
 export function comparePlannerBaseline(baseline: ComparedPlan, candidate: ComparedPlan) {
@@ -71,7 +71,7 @@ export async function writeEvaluationReceipt(directory: string, receipt: unknown
   await writeFile(path.join(directory, "receipt.json"), JSON.stringify(receipt, null, 2) + "\n", { flag: "wx" });
 }
 export async function evaluationSourceDigest(root: string) {
-  const files = ["package.json", "package-lock.json", "tsconfig.json"];
+  const files = ["package.json", "package-lock.json", "tsconfig.json", "vitest.config.ts", "playwright.config.ts"];
   const visit = async (relative: string) => {
     for (const entry of await readdir(path.join(root, relative), { withFileTypes: true })) {
       ensure(!entry.isSymbolicLink(), "EVAL_CONFIG", "Evaluation source must not contain linked files.");
@@ -80,8 +80,26 @@ export async function evaluationSourceDigest(root: string) {
       else if (/\.tsx?$/.test(entry.name)) files.push(file);
     }
   };
-  await visit("src"); await visit("scripts");
+  await visit("src"); await visit("scripts"); await visit("tests");
   const digest = createHash("sha256");
   for (const file of files.sort()) digest.update(file + "\0").update(await readFile(path.join(root, file)));
   return digest.digest("hex");
+}
+
+// H2 reuses the original ordered inputs and infeasibility oracle without reductions.
+export function plannerCases(fixtureTime: number) {
+  ensure(Number.isFinite(fixtureTime), "EVAL_CONFIG", "Invalid fixture time.");
+  return Array.from({ length: 12 }, (_, index) => ({ case: index + 1, slot: index,
+    target: 20 + index * 3, budget: index % 4 === 0 ? 1 : 60000,
+    deadline: new Date(fixtureTime + 7 * 86400000).toISOString().slice(0, 10),
+    siteId: "hope-main", kitId: "kit-hope", fundId: "hope-kits", notes: "" }));
+}
+export function financialSnapshot(state: Workspace) {
+  return JSON.stringify([state.ledger, state.orders, state.donations, state.recoveries,
+    state.inventory, state.distributions, state.approvals]);
+}
+export function plannerVerdict(rows: EvaluationRow[], sideEffectsUnchanged: boolean, infrastructureFailed: boolean) {
+  return rows.length === 12 && rows.every((row, index) => row.case === index + 1 &&
+    ["PASS", "FAIL"].includes(row.status)) && rows.filter((row) => row.status === "PASS").length >= 11 &&
+    sideEffectsUnchanged && !infrastructureFailed;
 }

@@ -40,6 +40,7 @@ export function plan(
   w: Workspace,
   request: PurchaseRequest,
   preferredIds?: string[],
+  evaluationTime?: number,
 ): Proposal {
   const kit = w.kits.find(
     (k) =>
@@ -64,9 +65,11 @@ export function plan(
     "LIMIT",
     "At most eight component types per kit.",
   );
-  const today = new Date().toISOString().slice(0, 10);
+  ensure(evaluationTime === undefined || Number.isFinite(evaluationTime), "EVAL_CONFIG", "Invalid planning timestamp.");
+  const planningTime = evaluationTime ?? Date.now();
+  const today = new Date(planningTime).toISOString().slice(0, 10);
   const days = Math.floor(
-    (Date.parse(request.deadline + "T23:59:59Z") - Date.now()) / 86400000,
+    (Date.parse(request.deadline + "T23:59:59Z") - planningTime) / 86400000,
   );
   const shortages: string[] = [];
   const explanations: string[] = [];
@@ -188,7 +191,7 @@ export function plan(
     source: "deterministic" as const,
     stockDigest: stockDigest(w, request),
     digest: "",
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(planningTime).toISOString(),
   };
   result.digest = digest({
     request,

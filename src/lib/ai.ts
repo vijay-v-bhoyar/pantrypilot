@@ -11,13 +11,19 @@ import type { Session } from "./types";
 import { admitAgent, agentController, agentPaused } from "./agent-control";
 import { quotaLimit, reserveHostedAiRun } from "./runtime-quota";
 import { requiredGeminiModel } from "./gemini-model";
-import { budgetedModelFetch, createModelBudget, requiredModelLimits, type ModelBudget } from "./model-budget";
+import { budgetedModelFetch, createModelBudget, requiredModelLimits, type ModelBudget, type EvaluationTransportPolicy } from "./model-budget";
 const output = z.object({
   catalogIds: z.array(z.string()).max(48),
   reasoning: z.string().max(3000),
   infeasible: z.boolean(),
 });
-export async function aiProposal(session: Session, requestId: string, evaluationBudget?: ModelBudget) {
+export type PlannerEvaluationContext = Readonly<{
+  fixtureTime: number; transportPolicy: EvaluationTransportPolicy;
+}>;
+export async function aiProposal(session: Session, requestId: string, evaluationBudget?: ModelBudget,
+  evaluation?: PlannerEvaluationContext) {
+  ensure(!evaluation || (evaluationBudget && Number.isFinite(evaluation.fixtureTime)),
+    "EVAL_CONFIG", "Internal evaluation context requires explicit budgets and fixture time.");
   ensure(
     configuration().ai === "gemini" && configuration().providerActions,
     "AI_DISABLED",
@@ -110,7 +116,7 @@ export async function aiProposal(session: Session, requestId: string, evaluation
             s.organizationIds.includes(actor.organizationId),
         ),
       ),
-      proposal: plan(w, request),
+      proposal: plan(w, request, undefined, evaluation?.fixtureTime),
     };
   });
   let calls = 0;
@@ -121,7 +127,7 @@ export async function aiProposal(session: Session, requestId: string, evaluation
   try {
     const model = createGoogleGenerativeAI({
       apiKey: process.env.GEMINI_API_KEY,
-      fetch: budgetedModelFetch(modelId, budget, signal, evaluationBudget),
+      fetch: budgetedModelFetch(modelId, budget, signal, evaluationBudget, undefined, evaluation?.transportPolicy),
     })(modelId);
     const result = await generateText({
       model,
@@ -185,7 +191,7 @@ export async function aiProposal(session: Session, requestId: string, evaluation
       );
       const request = scoped(w.requests, requestId, actor);
       ensure(
-        plan(w, request).stockDigest === source.proposal.stockDigest,
+        plan(w, request, undefined, evaluation?.fixtureTime).stockDigest === source.proposal.stockDigest,
         "STALE",
         "Stock changed during the AI run. Try a fresh request.",
         409,
@@ -203,7 +209,7 @@ export async function aiProposal(session: Session, requestId: string, evaluation
         "AI_CATALOG",
         "The model invented an offer.",
       );
-      const proposal = plan(w, request, selection.catalogIds);
+      const proposal = plan(w, request, selection.catalogIds, evaluation?.fixtureTime);
       proposal.source = "gemini";
       proposal.explanations.push(
         `Model reasoning (untrusted, validated basket): ${selection.reasoning}`,

@@ -19,6 +19,28 @@ it("packages only allowlisted source/docs/tests with exact hashes, without overw
     expect(names).toContain("src/lib/model-budget.ts");
     expect(names).toContain("tests/model-budget.test.ts");
     expect(names).toContain("docs/handover/persona-workflows.json");
+    for (const name of ["scripts/lib/planner-campaign.ts", "scripts/lib/planner-quota.ts",
+      "tests/planner-campaign-cli.test.ts", "tests/planner-campaign.test.ts",
+      "tests/planner-clock.test.ts", "tests/planner-quota.test.ts"]) {
+      expect(names).toContain(name);
+      expect(manifest.files[name]).toBe(createHash("sha256").update(await readFile(name)).digest("hex"));
+    }
+    for (const [target, source] of Object.entries({
+      "README.md": "docs/public-source/README.md",
+      "docs/planning/README.md": "docs/public-source/planning-index.md",
+      "docs/planning/contracts.md": "docs/public-source/contracts.md",
+      "docs/testing/next-local-01-v1/README.md": "docs/public-source/worksheets.md",
+    })) {
+      expect(names).toContain(source);
+      expect(manifest.files[target]).toBe(createHash("sha256").update(await readFile(source)).digest("hex"));
+      expect(manifest.files[source]).toBe(manifest.files[target]);
+    }
+    expect(names.filter((name) => name.startsWith("docs/planning/"))).toEqual([
+      "docs/planning/README.md", "docs/planning/contracts.md",
+    ]);
+    expect(names.filter((name) => name.startsWith("docs/handover/"))).toEqual([
+      "docs/handover/persona-workflows.json",
+    ]);
     expect(names).toContain("package-lock.json");
     expect(names).toContain(".env.example");
     expect(names).toContain("LICENSE");
@@ -28,6 +50,8 @@ it("packages only allowlisted source/docs/tests with exact hashes, without overw
     for (const name of names) {
       expect(name).not.toMatch(/(^|\/)(?:\.data|output|node_modules|\.next|\.git|backups|test-results|playwright-report)(\/|$)/);
       expect(name === ".env.example" || !name.includes(".env")).toBe(true);
+      expect(name).not.toMatch(/(^|\/)(?:\.loop|\.hackops|__pycache__|videos)(\/|$)|\.pyc$/);
+      expect(name).not.toMatch(/^docs\/(?:hackathon|verification)\//);
       expect(name).not.toMatch(/account-setup|google-oauth|manual-test-results|manual-test-variants|persona-suite|personas-and-operations\.json/);
       expect(manifest.files[name]).toMatch(/^[a-f0-9]{64}$/);
     }

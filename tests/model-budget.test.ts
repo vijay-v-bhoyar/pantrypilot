@@ -93,3 +93,18 @@ it("caps real SDK multi-step model HTTP attempts, without retries/fallback", asy
   })).rejects.toThrow("request budget");
   expect(transport).toHaveBeenCalledTimes(2); expect(budget.attempts).toBe(2);
 });
+
+it("IMP-T12/13 rechecks original budgets after internal policy waits without charging counts as generations", async () => {
+  const transport = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({}));
+  const control = new AbortController(), budget = createModelBudget(limits);
+  const request = budgetedModelFetch("fixture-model", budget, control.signal, undefined, transport,
+    { dispatch: async ({ send }) => { control.abort(); return send(); } });
+  await expect(request(url, init())).rejects.toThrow();
+  expect(budget.attempts).toBe(0); expect(transport).not.toHaveBeenCalled();
+});
+it("IMP-T13 preserves the generation allowlist even with an evaluation policy", async () => {
+  const dispatch = vi.fn(), transport = vi.fn<typeof fetch>();
+  await expect(budgetedModelFetch("fixture-model", createModelBudget(limits), new AbortController().signal,
+    undefined, transport, { dispatch })(url.replace(":generateContent", ":countTokens"), init())).rejects.toThrow();
+  expect(dispatch).not.toHaveBeenCalled(); expect(transport).not.toHaveBeenCalled();
+});

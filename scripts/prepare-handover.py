@@ -10,12 +10,18 @@ import zipfile
 
 ROOT_FILES = ["LICENSE", "package.json", "package-lock.json", "tsconfig.json", "next-env.d.ts",
               "next.config.ts", "postcss.config.mjs", "eslint.config.mjs",
-              "vitest.config.ts", "playwright.config.ts", ".gitignore", "AGENTS.md", "AGENT-SECURITY.md", ".env.example"]
+              "vitest.config.ts", "playwright.config.ts", ".gitignore", "AGENTS.md", "AGENT-SECURITY.md", ".env.example",
+              "scripts/owner-planner-stage.ps1"]
 TREES = {"src": {".ts", ".tsx", ".css", ".ico"}, "scripts": {".ts", ".sql", ".py"},
-         "tests": {".ts"}, "supabase/migrations": {".sql"}, "docs/planning": {".md"},
-         "docs/handover": {".md", ".json"}, "docs/testing/next-local-01-v1": {".md", ".json", ".csv"}}
-DOCS = ["docs/adoption/journey-contracts.json", "docs/adoption/journey-contracts.md",
-        "docs/testing/approved-workflow-test-addendum-2026-10-15.md"]
+         "tests": {".ts"}, "supabase/migrations": {".sql"},
+         "docs/testing/next-local-01-v1": {".json", ".csv"}}
+DOCS = ["docs/adoption/journey-contracts.json", "docs/handover/persona-workflows.json"]
+PUBLIC_DOCS = {
+    "README.md": "docs/public-source/README.md",
+    "docs/planning/README.md": "docs/public-source/planning-index.md",
+    "docs/planning/contracts.md": "docs/public-source/contracts.md",
+    "docs/testing/next-local-01-v1/README.md": "docs/public-source/worksheets.md",
+}
 PATTERNS = [r"AIza[0-9A-Za-z_-]{20,}", r"eyJ[A-Za-z0-9_-]{20,}\.eyJ[A-Za-z0-9_-]{20,}",
             r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----", r"\[TRIAL\]_this_",
             r"[A-Za-z0-9._%+-]+@(?:gmail|outlook|hotmail)\.com"]
@@ -43,9 +49,11 @@ def plan_files(root):
             if file.is_file() and file.suffix in extensions:
                 names.add(file.relative_to(root).as_posix())
     files = {name: checked_file(root, name) for name in sorted(names)}
-    # Replace historical index/root README with a self-contained local handover.
-    files["README.md"] = checked_file(root, "docs/handover/README.md")
-    files["docs/planning/README.md"] = checked_file(root, "docs/handover/planning-index.md")
+    # Include each public document's source so exported source can package itself.
+    # Private planning, submission and verification records stay outside the export.
+    for target, source in PUBLIC_DOCS.items():
+        files[source] = checked_file(root, source)
+        files[target] = files[source]
     return dict(sorted(files.items()))
 
 def validate_content(name, data):

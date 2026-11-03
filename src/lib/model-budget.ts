@@ -54,12 +54,26 @@ export function createModelBudget(limits: ModelLimits, scope: "run" | "evaluatio
 }
 export type ModelBudget = ReturnType<typeof createModelBudget>;
 
+// Extra approval expiry must reach transport without snapshotting live counters.
+export function bindModelBudgetSignal(base: ModelBudget, approvalSignal: AbortSignal): ModelBudget {
+  const signal = AbortSignal.any([base.signal, approvalSignal]);
+  return { limits: base.limits, signal, get attempts() { return base.attempts; },
+    assertActive() { signal.throwIfAborted(); base.assertActive(); },
+    assertCapacity() { this.assertActive(); base.assertCapacity(); },
+    charge() { this.assertActive(); base.charge(); } };
+}
+
+export type EvaluationTransportPolicy = Readonly<{
+  dispatch(request: { modelId: string; body: string; init: RequestInit;
+    signal: AbortSignal; send(): Promise<Response> }): Promise<Response>;
+}>;
+
 /** Counts actual outbound HTTP attempts, including SDK continuation steps and failures.
  * Counters live only in this run/process. Durable hosted run quotas remain separate.
  */
 export function budgetedModelFetch(
   modelId: string, budget: ModelBudget, signal: AbortSignal,
-  shared?: ModelBudget, transport: typeof fetch = fetch,
+  shared?: ModelBudget, transport: typeof fetch = fetch, policy?: EvaluationTransportPolicy,
 ): typeof fetch {
   return async (input, init) => {
     const combined = AbortSignal.any([signal, budget.signal,
@@ -79,9 +93,14 @@ export function budgetedModelFetch(
     ensure(typeof tokens === "number" && Number.isSafeInteger(tokens) && tokens > 0 &&
       tokens <= budget.limits.maxOutputTokens && (!shared || tokens <= shared.limits.maxOutputTokens),
       "AI_BUDGET", "The model output limit exceeds the approved budget.", 503);
-    // Check both before charging either. No awaits before counters are charged.
-    budget.charge(); shared?.charge();
-    const response = await transport(input, { ...init, signal: combined, redirect: "error" });
+    const body = init.body;
+    const send = async () => {
+      // Policy waits/counting never extend the original generation budgets.
+      combined.throwIfAborted(); budget.assertCapacity(); shared?.assertCapacity();
+      budget.charge(); shared?.charge();
+      return transport(input, { ...init, body, signal: combined, redirect: "error" });
+    };
+    const response = policy ? await policy.dispatch({ modelId, body, init: { ...init, body }, signal: combined, send }) : await send();
     combined.throwIfAborted(); budget.assertActive(); shared?.assertActive();
     return response;
   };
