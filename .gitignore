@@ -13,3 +13,6 @@ graphify-out/
 .graphify/
 *.tsbuildinfo
 *.log
+
+__pycache__/
+*.py[cod]

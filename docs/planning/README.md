@@ -1,12 +1,12 @@
 # PantryPilot exported source contracts
 
-Start with the root README for credential-free setup and the local gate. `docs/planning/contracts.md` summarizes the supported architecture, authority boundaries and H2 synthetic campaign contract. Source and negative tests define observable behavior; this summary does not amend separately approved product requirements.
+Start with the root README for credential-free setup and the local gate. `docs/planning/contracts.md` summarizes the supported architecture, authority boundaries, original H2 full campaign and separate H3 hackathon qualification gate. Source and negative tests define observable behavior; this summary does not amend separately approved product requirements.
 
 ## Source and checks
 
 - `src/lib/commands.ts`, domain schemas and route handlers enforce operation inputs, permissions and state transitions.
 - `src/lib/planner.ts` implements deterministic allocation. `src/lib/ai.ts` adds bounded provider-assisted proposals; `src/lib/model-budget.ts` enforces request, byte, output and time budgets.
-- `scripts/lib/planner-evaluation.ts`, `scripts/lib/planner-campaign.ts` and `scripts/lib/planner-quota.ts` implement synthetic cases, frozen campaign identity and durable project accounting. `scripts/live-eval.ts` exposes separate campaign operations.
+- `scripts/lib/planner-evaluation.ts`, `scripts/lib/planner-campaign.ts` and `scripts/lib/planner-quota.ts` implement synthetic cases, frozen campaign identity and durable project accounting. `scripts/live-eval.ts` exposes H2 operations; `scripts/hackathon-eval.ts` and `scripts/lib/planner-hackathon.ts` implement the separate H3 gate. Neither campaign is provider-qualified by local checks.
 - `tests/` retains maintained unit, route, security, packaging, planner and browser checks. H2 tests include all twelve original cases and negative admission/accounting checks.
 - `supabase/migrations/` retains the database migration chain. An included migration is not proof it ran against a hosted database.
 - `AGENT-SECURITY.md` records model/tool permissions and residual risks.

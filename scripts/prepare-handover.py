@@ -94,7 +94,7 @@ def build_bundle(root, destination):
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
     source_digest = hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     manifest = {"schema_version": "pantrypilot-handover-v1", "source_digest": source_digest,
-                "scope": "credential-free local candidate; provider/deployment/publication held", "files": hashes}
+                "scope": "credential-free source export; no provider or deployment authorization", "files": hashes}
     manifest_data = (json.dumps(manifest, indent=2) + "\n").encode()
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, "x", compression=zipfile.ZIP_DEFLATED) as archive:
