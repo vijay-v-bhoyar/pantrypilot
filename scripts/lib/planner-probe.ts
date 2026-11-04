@@ -18,6 +18,13 @@ import { H2, H2Journal, auditCampaignQuota, contained, createH2Policy, h2Assert,
 export const INITIAL_PROBE = Object.freeze({ id: "PP-FEAS-01-INITIAL-PROBE-01",
   project: "gen-lang-client-0107804522", model: "gemini-3.8-flash", pairs: 3, http: 6,
   quietSettleMs: 900000, observationAgeMs: 60000, windowMs: H2.blockTimeoutMs });
+// Separate explicit model binding; the original3.8policy/hash remains unchanged.
+export const GEMINI_36_PROBE = Object.freeze({ ...INITIAL_PROBE,
+  id: "PP-FEAS-01-GEMINI-36-PROBE-01", model: "gemini-3.6-flash" });
+export function probePolicyForModel(model: string) {
+  h2Assert(model === INITIAL_PROBE.model || model === GEMINI_36_PROBE.model);
+  return model === INITIAL_PROBE.model ? INITIAL_PROBE : GEMINI_36_PROBE;
+}
 export const probeLimits = Object.freeze({ maxHttpRequests: 3, maxInputBytes: H2.maxInputBytes,
   maxOutputTokens: H2.maxOutputTokens, timeoutMs: H2.blockTimeoutMs });
 const uuid = /^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/;
@@ -27,7 +34,7 @@ export type ProbeBinding = { canonicalRoot: string; project: string; model: stri
   credentialReference: string; operator: string };
 type FrozenCase = { case: 1 | 2; workspaceId: string; requestId: string;
   initialHash: string; initialFinancial: string; requestDigest: string };
-export type ProbeManifest = { version: 1; policy: typeof INITIAL_PROBE; id: string;
+export type ProbeManifest = { version: 1; policy: typeof INITIAL_PROBE | typeof GEMINI_36_PROBE; id: string;
   binding: ProbeBinding; fixtureTime: number; allCasesDigest: string;
   sourceDigest: string; buildId: string; cases: FrozenCase[] };
 export type ProbeApproval = { manifestHash: string; quotaHead: string; day: string;
@@ -41,8 +48,9 @@ export function probePaths(root: string, id: string) {
     quota: campaignPaths(root, id, INITIAL_PROBE.project).quota };
 }
 function validateBinding(root: string, binding: ProbeBinding) {
+  const policy = probePolicyForModel(binding.model);
   h2Assert(path.resolve(binding.canonicalRoot) === path.resolve(root) &&
-    binding.project === INITIAL_PROBE.project && binding.model === INITIAL_PROBE.model &&
+    binding.project === policy.project && binding.model === policy.model &&
     reference.test(binding.credentialReference) && reference.test(binding.operator));
 }
 export async function initializeProbe(root: string, id: string, binding: ProbeBinding, quotaOrigin?: QuotaOrigin) {
@@ -79,7 +87,7 @@ export async function initializeProbe(root: string, id: string, binding: ProbeBi
       await writeOnce(path.join(paths.data, `${workspace.id}.json`), workspace);
       await writeOnce(path.join(paths.evidence, `initial-${index + 1}.json`), workspace);
     }
-    const manifest: ProbeManifest = { version: 1, policy: INITIAL_PROBE, id, binding, fixtureTime,
+    const manifest: ProbeManifest = { version: 1, policy: probePolicyForModel(binding.model), id, binding, fixtureTime,
       allCasesDigest: sha(fixtures), sourceDigest, buildId, cases };
     await writeOnce(path.join(paths.evidence, "manifest.json"), manifest);
     return manifest;
@@ -89,7 +97,7 @@ export async function readProbe(root: string, id: string) {
   const paths = probePaths(root, id);
   const manifest = await readRecord<ProbeManifest>(path.join(paths.evidence, "manifest.json"));
   validateBinding(root, manifest.binding);
-  h2Assert(manifest.version === 1 && manifest.id === id && sha(manifest.policy) === sha(INITIAL_PROBE) &&
+  h2Assert(manifest.version === 1 && manifest.id === id && sha(manifest.policy) === sha(probePolicyForModel(manifest.binding.model)) &&
     manifest.allCasesDigest === sha(plannerCases(manifest.fixtureTime)) &&
     await evaluationSourceDigest(root) === manifest.sourceDigest &&
     (await readFile(contained(root, ".next", "BUILD_ID"), "utf8")).trim() === manifest.buildId &&
@@ -129,6 +137,8 @@ export function validateProbeApproval(manifest: ProbeManifest, approval: ProbeAp
 }
 export async function createProbePolicy(root: string, manifest: ProbeManifest, approval: ProbeApproval,
   signal: AbortSignal, clock: SafetyClock = safetyClock, transport: typeof fetch = fetch) {
+  validateBinding(root, manifest.binding);
+  h2Assert(sha(manifest.policy) === sha(probePolicyForModel(manifest.binding.model)));
   validateProbeApproval(manifest, approval, clock); const paths = probePaths(root, manifest.id);
   const journal = new H2Journal(paths.quota), baseline = await journal.read();
   const origin = await readRecord<QuotaOrigin>(path.join(paths.quota, "origin.json"));

@@ -1,3 +1,7 @@
+# Explicit diagnostic model registry — locally verified
+
+The separate `PP-FEAS-01-GEMINI-36-PROBE-01` policy binds `gemini-3.6-flash`; the original `PP-FEAS-01-INITIAL-PROBE-01` binds `gemini-3.8-flash`. Both retain the same three count/three generation ceiling. Initialization, manifest reads, direct policy creation and owner scope reject crossed model/policy records. No default model, fallback or persistent configuration changes are introduced. All original twelve-case fixtures, financial/request checks, H2 and H3 budgets and verdicts remain unchanged. Local verification is not model access, successful generation or qualification. Failed histories/locks must be preserved and separately reconciled before any later admitted run.
+
 # PF-01 qualification contracts
 
 ## H3 separate hackathon gate — implemented, provider qualification pending

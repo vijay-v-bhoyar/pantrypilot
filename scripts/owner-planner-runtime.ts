@@ -3,7 +3,7 @@ import { readFile, lstat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { H2Journal, contained, h2Assert, readRecord, safetyClock, sha, writeOnce } from "./lib/planner-quota";
-import { INITIAL_PROBE, admitProbeRuntimeSettings, createProbePolicy, probePaths,
+import { INITIAL_PROBE, admitProbeRuntimeSettings, createProbePolicy, probePaths, probePolicyForModel,
   readProbe, runInitialProbe, type ProbeApproval } from "./lib/planner-probe";
 import { campaignPaths } from "./lib/planner-campaign";
 import { H3, inspectHackathonAdmission, readHackathon, type HackathonGrant } from "./lib/planner-hackathon";
@@ -23,9 +23,10 @@ const uuid = /^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/;
 const keys = ["version", "mode", "canonicalRoot", "id", "project", "model", "operator", "credentialReference",
   "sourceDigest", "buildId", "manifestHash", "maxHttpRequests", "expiresAt", "stageScriptSha256", "sourceInventorySha256"];
 export function validateOwnerScope(scope: OwnerScope, root: string, now: number) {
+  const policy = probePolicyForModel(scope.model);
   h2Assert(Object.keys(scope).sort().join() === [...keys].sort().join() && scope.version === 1 &&
     ["diagnostic", "h3"].includes(scope.mode) && path.resolve(scope.canonicalRoot) === path.resolve(root) &&
-    uuid.test(scope.id) && scope.project === INITIAL_PROBE.project && scope.model === INITIAL_PROBE.model &&
+    uuid.test(scope.id) && scope.project === INITIAL_PROBE.project && scope.model === policy.model &&
     /^[a-zA-Z0-9._-]{1,100}$/.test(scope.operator) && /^[a-zA-Z0-9._-]{1,100}$/.test(scope.credentialReference) &&
     [scope.sourceDigest, scope.manifestHash, scope.stageScriptSha256, scope.sourceInventorySha256].every(h => hash.test(h)) &&
     /^[a-zA-Z0-9_-]{1,120}$/.test(scope.buildId) && scope.maxHttpRequests === (scope.mode === "diagnostic" ? 6 : 12) &&
