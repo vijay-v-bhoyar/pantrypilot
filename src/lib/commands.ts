@@ -6,7 +6,7 @@ import { balances, cents } from "./money";
 import { campaignReceived } from "./campaign-funding";
 import { digest, kitReadiness, plan, stockDigest } from "./planner";
 import { dashboardDefinition } from "./dashboard";
-import { freeLot } from "./inventory";
+import { eligibleLot, freeLot } from "./inventory";
 import { agentPaused, stopAgents } from "./agent-control";
 import { validDate } from "./dates";
 import { approveCorrection, proposeCorrection } from "./stock-corrections";
@@ -15,6 +15,7 @@ import type {
   AppView,
   LedgerEntry,
   Order,
+  Proposal,
   Role,
   Workspace,
   StockMovement,
@@ -85,6 +86,7 @@ const schemas = {
       name: text.max(120),
       quantity,
       expiresAt: date.optional(),
+      attributes: z.array(z.enum(["shelf-stable", "household"])).max(2).optional(),
     })
     .strict(),
   import: z
@@ -98,6 +100,7 @@ const schemas = {
               name: text.max(120),
               quantity,
               expiresAt: date.optional(),
+              attributes: z.array(z.enum(["shelf-stable", "household"])).max(2).optional(),
             })
             .strict(),
         )
@@ -106,7 +109,9 @@ const schemas = {
     })
     .strict(),
   adjust: z
-    .object({ id, quantity: z.number().int().min(0).max(100000), reason: text })
+    .object({ id, quantity: z.number().int().min(0).max(100000), reason: text,
+      attributes: z.array(z.enum(["shelf-stable", "household"])).max(2).optional(),
+      version: z.number().int().positive().optional() })
     .strict(),
   transfer: z.object({ id, siteId: id, quantity }).strict(),
   kit: z
@@ -298,17 +303,14 @@ function consumeStock(
   siteId: string,
   sku: string,
   count: number,
+  requiredAttributes: readonly string[],
 ) {
   let remaining = count;
   const movements: StockMovement[] = [];
   const today = new Date().toISOString().slice(0, 10);
   const lots = w.inventory
     .filter(
-      (l) =>
-        l.organizationId === actor.organizationId &&
-        l.siteId === siteId &&
-        l.sku === sku &&
-        (!l.expiresAt || l.expiresAt >= today),
+      (l) => eligibleLot(l, actor.organizationId, siteId, sku, today, requiredAttributes),
     )
     .sort((a, b) =>
       (a.expiresAt ?? "9999").localeCompare(b.expiresAt ?? "9999"),
@@ -352,6 +354,14 @@ export function cancelUnpaidOrder(w: Workspace, o: Order) {
     c.version++;
   }
   releaseStock(w, o.proposalId);
+}
+function requireCurrentBasket(w: Workspace, request: Workspace["requests"][number], proposal: Proposal) {
+  // A stable record digest does not notice stock expiry or an elapsed delivery window.
+  // Recompute the approved offer set at the effect boundary, without mutating it.
+  const current = plan(w, request, proposal.lines.map(line => line.catalogId));
+  const basket = (p: Proposal) => ({ lines: p.lines, shipping: p.shipping, total: p.total });
+  ensure(!current.shortages.length && digest(basket(current)) === digest(basket(proposal)),
+    "STALE", "Stock, delivery or product eligibility changed. Generate a fresh proposal and approval.", 409);
 }
 export function execute(
   w: Workspace,
@@ -516,6 +526,7 @@ export function execute(
         "FUNDS",
         "Insufficient available funds.",
       );
+      requireCurrentBasket(w, r, p);
       const a = {
         id: randomUUID(),
         organizationId: actor.organizationId,
@@ -564,6 +575,7 @@ export function execute(
         "Another purchase reserved these funds.",
         409,
       );
+      requireCurrentBasket(w, r, p);
       const orders: Order[] = [
         ...new Set(p.lines.map((l) => l.supplierId)),
       ].map((supplierId) => {
@@ -607,11 +619,7 @@ export function execute(
         let need = r.target * component.quantity;
         for (const lot of w.inventory
           .filter(
-            (l) =>
-              l.organizationId === actor.organizationId &&
-              l.siteId === r.siteId &&
-              l.sku === component.sku &&
-              (!l.expiresAt || l.expiresAt >= now.slice(0, 10)),
+            (l) => eligibleLot(l, actor.organizationId, r.siteId, component.sku, now.slice(0, 10), component.attributes),
           )
           .sort((a, b) =>
             (a.expiresAt ?? "9999").localeCompare(b.expiresAt ?? "9999"),
@@ -940,12 +948,15 @@ export function execute(
       permission(actor, staff);
       const d = schemas.adjust.parse(raw);
       const lot = scoped(w.inventory, d.id, actor);
+      ensure(d.attributes === undefined || d.version === lot.version,
+        "STALE", "The lot changed. Review its current records before verifying attributes.", 409);
       ensure(
         d.quantity >= lot.quantity - freeLot(w, lot),
         "RESERVED_STOCK",
         "This lot is reserved for an approved purchase.",
       );
       lot.quantity = d.quantity;
+      if (d.attributes !== undefined) lot.attributes = d.attributes;
       lot.version++;
       result = lot;
       break;
@@ -1001,11 +1012,11 @@ export function execute(
         "Not enough complete kits at this site.",
       );
       const movements = k.components.flatMap(c =>
-        consumeStock(w, actor, d.siteId, c.sku, c.quantity * d.quantity));
+        consumeStock(w, actor, d.siteId, c.sku, c.quantity * d.quantity, c.attributes));
       const dist = {
         ...d,
         movements,
-        components: k.components.map(c => ({ sku: c.sku, quantity: c.quantity })),
+        components: k.components.map(c => ({ sku: c.sku, quantity: c.quantity, attributes: [...c.attributes] })),
         id: randomUUID(),
         organizationId: actor.organizationId,
         createdAt: now,
@@ -1215,7 +1226,6 @@ export function execute(
       );
       const movements: StockMovement[] = [];
       for (const l of o.lines.filter((l) => l.units > 0)) {
-        const c = w.catalog.find((c) => c.id === l.catalogId)!;
         const lotId = randomUUID();
         w.inventory.push({
           id: lotId,
@@ -1224,7 +1234,8 @@ export function execute(
           sku: l.sku,
           name: l.name,
           quantity: l.units,
-          expiresAt: c.expiresAt,
+          expiresAt: l.expiresAt,
+          attributes: [...(l.attributes ?? [])],
           version: 1,
         });
         movements.push({ lotId, sku: l.sku, quantity: l.units });

@@ -1,0 +1,56 @@
+import { test, expect, type Page } from "@playwright/test";
+import type { AppView } from "@/lib/types";
+const origin = process.env.PANTRYPILOT_TEST_ORIGIN || "http://127.0.0.1:3100";
+async function state(page: Page): Promise<AppView> { const r = await page.request.get("/api/workspace"); expect(r.status()).toBe(200); return r.json(); }
+async function command(page: Page, command: string, data: unknown) {
+  const r = await page.request.post("/api/command", { headers: { Origin: origin }, data: { command, data, key: crypto.randomUUID() } });
+  expect(r.status()).toBe(200); return r.json();
+}
+for (const width of [1280, 390]) test(`unknown stock requires explicit verified attributes before distribution at ${width}px`, async ({ page }) => {
+  const errors: string[] = []; page.on("pageerror", error => errors.push(error.message));
+  const external: string[] = []; page.on("request", request => { if (!request.url().startsWith(origin + "/")) external.push(request.url()); });
+  await page.setViewportSize({ width, height: 844 });
+  expect(await (await page.request.get("/api/health")).json()).toMatchObject({ app: "PantryPilot", payments: "simulation", ai: "manual", providerActions: false });
+  const r = await page.request.post("/api/demo", { headers: { Origin: origin, "x-forwarded-for": `eligibility-${crypto.randomUUID()}` }, data: {} });
+  expect(r.status()).toBe(200);
+  const kit = await command(page, "kit", { name: "Verified rice kit", components: [{ sku: "proof-rice", name: "Rice", quantity: 1, attributes: ["shelf-stable"] }] });
+  await page.goto("/workspace");
+  await expect(page.getByRole("combobox", { name: "Demo role", exact: true })).toBeVisible();
+  if (width === 390) await page.getByRole("button", { name: "Open navigation", exact: true }).click();
+  await page.locator(".sidebar").getByRole("button", { name: "Inventory & kits", exact: true }).click();
+  const add = page.getByRole("button", { name: "Add lot", exact: true }).locator("..");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await add.getByRole("textbox", { name: "SKU", exact: true }).fill("proof-rice");
+  await add.getByRole("textbox", { name: "Supply name", exact: true }).fill("Unverified rice lot");
+  await add.getByRole("spinbutton", { name: "Units", exact: true }).fill("10");
+  await add.getByRole("button", { name: "Add lot", exact: true }).click();
+  await expect.poll(async () => (await state(page)).inventory.filter(l => l.sku === "proof-rice").length).toBe(1);
+  const unknown = (await state(page)).inventory.find(l => l.sku === "proof-rice")!;
+  expect(unknown.attributes).toEqual([]);
+  await page.getByRole("button", { name: "Distribute", exact: true }).click();
+  await page.getByRole("combobox", { name: "Kit", exact: true }).selectOption(kit.id);
+  await page.getByRole("spinbutton", { name: "Kits handed out", exact: true }).fill("1");
+  await page.getByRole("button", { name: "Record distribution", exact: true }).click();
+  await expect(page.getByRole("main").getByRole("alert")).toContainText("Not enough complete kits");
+  expect((await state(page)).distributions).toEqual([]);
+  await page.getByRole("button", { name: "Stock & lots", exact: true }).click();
+  const row = page.getByRole("row").filter({ hasText: "Unverified rice lot" });
+  await row.getByText("Verify product attributes", { exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await row.getByRole("checkbox", { name: "Shelf-stable for Unverified rice lot", exact: true }).check();
+  await row.getByRole("textbox", { name: "Adjustment reason for Unverified rice lot", exact: true }).fill("Synthetic product records explicitly verified");
+  await row.getByRole("button", { name: "Adjust", exact: true }).click();
+  await expect.poll(async () => (await state(page)).inventory.find(l => l.id === unknown.id)?.attributes).toEqual(["shelf-stable"]);
+  await page.getByRole("button", { name: "Distribute", exact: true }).click();
+  await page.getByRole("combobox", { name: "Kit", exact: true }).selectOption(kit.id);
+  await page.getByRole("spinbutton", { name: "Kits handed out", exact: true }).fill("1");
+  await page.getByRole("button", { name: "Record distribution", exact: true }).click();
+  await expect(page.getByText("1 kits distributed", { exact: true })).toBeVisible();
+  const after = await state(page);
+  expect(after.inventory.find(l => l.id === unknown.id)?.quantity).toBe(9);
+  expect(after.distributions[0].movements).toEqual([{ lotId: unknown.id, sku: "proof-rice", quantity: -1 }]);
+  expect(after.ledger.filter(l => l.kind !== "opening")).toEqual([]);
+  expect(errors).toEqual([]); expect(external).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: `output/stock-eligibility/distribution-${width}.png`, fullPage: true });
+});

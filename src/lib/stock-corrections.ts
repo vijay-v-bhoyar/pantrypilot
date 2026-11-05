@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { ensure } from "./errors";
 import { digest } from "./planner";
-import { freeLot } from "./inventory";
+import { eligibleLot, freeLot } from "./inventory";
 import type { Actor, StockCorrection, StockMovement, Workspace } from "./types";
 
 type Input = Pick<StockCorrection, "kind" | "sourceId" | "quantity" | "reason" | "evidence"> & {
@@ -50,6 +50,11 @@ function validate(w: Workspace, actor: Actor, d: Input): StockMovement[] {
     const base = original.find(b => b.lotId === m.lotId);
     const lot = w.inventory.find(l => l.id === m.lotId && l.organizationId === actor.organizationId && l.siteId === source.siteId);
     ensure(base && lot && lot.sku === base.sku, "PROVENANCE", "Choose a lot recorded on the original source.", 409);
+    if ("kitId" in source && m.quantity < 0) {
+      const component = source.components?.find(c => c.sku === lot.sku);
+      ensure(component?.attributes && eligibleLot(lot, actor.organizationId, source.siteId, lot.sku,
+        undefined, component.attributes), "STOCK", "Additional distribution requires verified product attributes on the exact source lot.", 409);
+    }
     ensure(m.quantity !== 0 && Number.isSafeInteger(m.quantity), "CORRECTION", "Lot changes must be nonzero whole units.", 422);
     const effective = base.quantity + previous.reduce((s, c) => s + (c.movements.find(x => x.lotId === m.lotId)?.quantity ?? 0), 0) + m.quantity;
     ensure(d.kind === "distribution" ? effective <= 0 : effective >= 0,

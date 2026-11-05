@@ -1,3 +1,11 @@
+## Stock eligibility and approval validity — v152
+
+Inventory lots may record explicit shelf-stable/household attributes. Missing legacy/import attributes remain unknown and cannot satisfy a kit that requires them. Quantity-only adjustments preserve metadata; explicit attribute verification requires the current lot version and an adjustment reason. The same lot-eligibility predicate governs planning, readiness, reservations and consumption. CSV keeps its original four columns and accepts an optional attributes column with pipe-separated supported values. No automatic relabeling of existing workspaces occurs.
+
+Proposal lines snapshot the selected offer's attributes and expiry; receipt uses those approved snapshots rather than a subsequently edited catalog. Legacy order lines lacking attributes receive unknown attributes. Distribution provenance records required attributes; extra consumption through correction must satisfy those recorded requirements. Transfers and compensating corrections retain the original lot metadata.
+
+Approval and checkout retain original scope, digest, funding and expiry checks, then recompute the selected basket against current time and stock eligibility. A stock-expiry or delivery-window transition invalidating that basket requires a new proposal and approval before any reservation/order mutation. A still-feasible basket is not rejected merely because UTC midnight passed. No provider, policy, private environment or persisted operational record migration is part of this local repair.
+
 # Explicit diagnostic model registry — locally verified
 
 The separate `PP-FEAS-01-GEMINI-36-PROBE-01` policy binds `gemini-3.6-flash`; the original `PP-FEAS-01-INITIAL-PROBE-01` binds `gemini-3.8-flash`. Both retain the same three count/three generation ceiling. Initialization, manifest reads, direct policy creation and owner scope reject crossed model/policy records. No default model, fallback or persistent configuration changes are introduced. All original twelve-case fixtures, financial/request checks, H2 and H3 budgets and verdicts remain unchanged. Local verification is not model access, successful generation or qualification. Failed histories/locks must be preserved and separately reconciled before any later admitted run.

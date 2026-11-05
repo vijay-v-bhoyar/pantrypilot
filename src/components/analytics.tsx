@@ -22,6 +22,7 @@ function values(w: AppView) {
               w.actor.organizationId,
               w.organizations[0].sites[0].id,
               c.sku,
+              undefined, c.attributes,
             ) / c.quantity,
           ),
         ),

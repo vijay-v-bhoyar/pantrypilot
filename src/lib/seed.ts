@@ -292,6 +292,7 @@ export function seedWorkspace(
     inventory: [
       {
         id: "rice-stock",
+        attributes: ["shelf-stable"],
         organizationId: "hope",
         siteId: "hope-main",
         sku: "rice",
@@ -302,6 +303,7 @@ export function seedWorkspace(
       },
       {
         id: "beans-stock",
+        attributes: ["shelf-stable"],
         organizationId: "hope",
         siteId: "hope-main",
         sku: "beans",
@@ -312,6 +314,7 @@ export function seedWorkspace(
       },
       {
         id: "oats-stock",
+        attributes: ["shelf-stable"],
         organizationId: "hope",
         siteId: "hope-main",
         sku: "oats",
@@ -322,6 +325,7 @@ export function seedWorkspace(
       },
       {
         id: "soap-stock",
+        attributes: ["household"],
         organizationId: "hope",
         siteId: "hope-main",
         sku: "soap",

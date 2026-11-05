@@ -510,6 +510,7 @@ function Overview({
               w.actor.organizationId,
               w.organizations[0].sites[0].id,
               c.sku,
+              undefined, c.attributes,
             ) / c.quantity,
           ),
         ),
@@ -842,7 +843,7 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
   const [siteId, setSite] = useState(w.organizations[0].sites[0]?.id ?? ""),
     [tab, setTab] = useState("stock"),
     [csv, setCsv] = useState(
-      w.demo ? "sku,name,quantity,expiresAt\nrice,Rice,12,2027-12-31" : "",
+      w.demo ? "sku,name,quantity,expiresAt,attributes\nrice,Rice,12,2027-12-31,shelf-stable" : "",
     ),
     [preview, setPreview] = useState<ReturnType<typeof previewInventoryCsv>>(
       [],
@@ -911,6 +912,7 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
                           <strong>{l.name}</strong>
                           <small className="cell-note">
                             Lot {l.id.slice(0, 8)} · v{l.version}
+                            <br />Attributes: {l.attributes?.join(", ") || "Unverified"}
                           </small>
                         </td>
                         <td>{l.sku}</td>
@@ -934,6 +936,8 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
                                   id: l.id,
                                   quantity: Number(f.get("quantity")),
                                   reason: String(f.get("reason")),
+                                  attributes: f.getAll("attributes"),
+                                  version: l.version,
                                 }),
                               );
                             }}
@@ -953,6 +957,11 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
                               required
                             />
                             <button className="secondary small">Adjust</button>
+                            <details key={l.version}><summary>Verify product attributes</summary>
+                              <label><input aria-label={`Shelf-stable for ${l.name}`} type="checkbox" name="attributes" value="shelf-stable" defaultChecked={l.attributes?.includes("shelf-stable")} /> Shelf-stable</label>
+                              <label><input aria-label={`Household for ${l.name}`} type="checkbox" name="attributes" value="household" defaultChecked={l.attributes?.includes("household")} /> Household</label>
+                              <small>Check only attributes supported by this lot’s records; explain the verification in the adjustment reason.</small>
+                            </details>
                           </form>
                           {sites.length > 1 && (
                             <form
@@ -1019,6 +1028,7 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
                     name: f.get("name"),
                     quantity: Number(f.get("quantity")),
                     expiresAt: f.get("expires") || undefined,
+                    attributes: f.getAll("attributes"),
                   }),
                 );
               }}
@@ -1036,6 +1046,11 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
                 <input name="expires" type="date" />
               </Field>
               <button className="primary">Add lot</button>
+              <fieldset><legend>Verified product attributes</legend>
+                <label><input type="checkbox" name="attributes" value="shelf-stable" /> Shelf-stable</label>
+                <label><input type="checkbox" name="attributes" value="household" /> Household</label>
+                <p className="fine">Leave unsupported attributes unchecked. Unknown lots cannot satisfy a kit that requires them.</p>
+              </fieldset>
             </form>
           </Panel>
         </>
@@ -1043,7 +1058,7 @@ function Inventory({ w, run, navigate }: { w: AppView; run: Run; navigate: (s: S
       {tab === "import" && !!sites.length && (
         <Panel
           title="Review before importing"
-          subtitle="CSV format: sku,name,quantity,expiresAt. Up to 100 lots; formula prefixes rejected."
+          subtitle="CSV: sku,name,quantity,expiresAt with optional attributes column (shelf-stable|household). Omitted attributes stay unverified. Up to 100 lots; formula prefixes rejected."
         >
           <Field label="Paste inventory CSV">
             <textarea

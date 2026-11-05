@@ -30,7 +30,7 @@ export function kitReadiness(
   ensure(kit && kit.components.length, "KIT", "Kit not found.");
   return Math.min(
     ...kit.components.map((c) =>
-      Math.floor(usableUnits(w, organizationId, siteId, c.sku) / c.quantity),
+      Math.floor(usableUnits(w, organizationId, siteId, c.sku, undefined, c.attributes) / c.quantity),
     ),
   );
 }
@@ -87,6 +87,7 @@ export function plan(
         request.siteId,
         c.sku,
         today,
+        c.attributes,
       );
       const required = Math.max(0, request.target * c.quantity - stocked);
       explanations.push(
@@ -141,6 +142,7 @@ export function plan(
             catalogId: item.id, supplierId: item.supplierId, sku: item.sku, name: item.name,
             packs, units: packs * item.packSize, unitPrice: item.price, cost: packs * item.price,
             version: item.version,
+            attributes: [...item.attributes], expiresAt: item.expiresAt,
           };
           allocate(index + 1, remaining - line.units, packs ? [...lines, line] : lines, cost + line.cost);
         }

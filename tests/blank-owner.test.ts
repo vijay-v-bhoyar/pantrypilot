@@ -30,7 +30,7 @@ it("supports first site then kit then campaign/fund without inventing money, sup
   const kit = run<{ id: string }>("kit", { name: "Our food kit", components: [{ sku: "rice", name: "Rice", quantity: 2, attributes: ["shelf-stable"] }] });
   const campaign = run<{ id: string; fundId: string }>("campaign", { title: "Our campaign", description: "Food support", goal: 10000, targetKits: 10, kitId: kit.id, restricted: true });
   run("campaignStatus", { id: campaign.id, status: "published" });
-  run("inventory", { siteId: site.id, sku: "rice", name: "Rice", quantity: 10 });
+  run("inventory", { siteId: site.id, sku: "rice", name: "Rice", quantity: 10, attributes: ["shelf-stable"] });
   run("distribute", { siteId: site.id, kitId: kit.id, quantity: 1 });
   expect(w.funds).toHaveLength(1); expect(w.funds[0].purpose).toBe(kit.id);
   expect(w.ledger).toEqual([]); expect(w.orders).toEqual([]); expect(w.suppliers).toEqual([]); expect(w.donations).toEqual([]);

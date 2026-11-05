@@ -78,7 +78,13 @@ Initialization requires separate approval and an already existing clean canonica
 
 H3 is locally tested, not provider-qualified. Its final receipt separates `hackathonGateAccepted` from `fullCampaignAccepted:false`. The unchanged H2 schema2/ten-pair/240-ceiling/twelve-distinct-date mechanism remains pending for later qualification. An initial diagnostic probe is neither H3 acceptance nor H2 full qualification. See `docs/planning/contracts.md` for both contracts. No provider call, real campaign initialization, paid fallback or credential use is authorized by these instructions.
 
-## Verified local candidate — November 3, 2026
+## Current local verification — November 4, 2026
+
+The current source adds explicit inventory suitability checks and approval-time expiry revalidation. Lots with missing or mismatched attributes cannot satisfy a restricted kit. Approval and checkout recheck whether the selected basket remains sufficient before reserving money or creating orders. Approved offer metadata follows receipt and later inventory use; existing unknown lots are not automatically relabeled.
+
+This candidate passed an offline exact-lockfile install, **817 unit/route tests across 43 files**, **57 selected Chromium journeys**, lint, typecheck, a production Webpack build and the Community artifact boundary check. The seventeen new unit checks cover expiry and inventory eligibility; the two added browser journeys cover the corresponding desktop/mobile workflow. Evaluation source digest: `e309ac52007e95634c140c42eaf3f9c3000ca7f96e0819bddc9c202b9c2f21c7`; build `4kvcBNfpijY1pM7BFE5aO`. Five native Studio cases remain deferred NOT_RUN. These are November 4 local synthetic results, not a fresh rerun from repackaging, provider qualification, hosted behavior or human acceptance.
+
+## Earlier verified local candidate — November 3, 2026
 
 The explicit Gemini 3.6 diagnostic binding, H3 and owner-launcher source passed an offline exact-lockfile install, **800 unit/route tests across 42 files**, **173 focused checks**, **55 selected Chromium journeys**, lint, post-build typecheck, a production Webpack build and the Community artifact boundary check. Evaluation source digest: `487f5bd845f1d96757cdb79cadb16f9c92437e54a88ceb3fcfbf8d8365ea60a8`; build `ONkysz9LN0vG_XipQ6LYv`. Five native Studio cases remain deferred NOT_RUN. No dependency junction was used. These results were produced on November 3; refreshing documentation does not rerun or refresh their timestamps.
 

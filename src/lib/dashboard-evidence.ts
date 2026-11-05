@@ -36,7 +36,7 @@ export function dashboardEvidence(w: AppView): DashboardEvidence {
     pendingRecoveryCents: pending.reduce((s, r) => s + r.amount, 0),
     pendingRecoveryCases: pending.length,
     readyKits: site && kit?.components.length ? Math.min(...kit.components.map(c =>
-      Math.floor(usableUnits(w, w.actor.organizationId, site.id, c.sku) / c.quantity))) : 0,
+      Math.floor(usableUnits(w, w.actor.organizationId, site.id, c.sku, undefined, c.attributes) / c.quantity))) : 0,
     receivedShipments: w.orders.filter(o => o.status === "received").length,
     recordedKits: w.distributions.reduce((s, d) => s + effectiveDistribution(d, w.stockCorrections), 0),
     unreceivedOrders: w.orders.filter(o => !["received", "cancelled"].includes(o.status)).length,

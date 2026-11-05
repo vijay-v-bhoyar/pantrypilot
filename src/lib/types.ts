@@ -81,6 +81,8 @@ export type StockLot = {
   quantity: number;
   expiresAt?: string;
   version: number;
+  // Absent on legacy lots: do not infer required product suitability.
+  attributes?: string[];
 };
 export type Kit = {
   id: string;
@@ -116,6 +118,8 @@ export type ProposalLine = {
   unitPrice: number;
   cost: number;
   version: number;
+  attributes?: string[];
+  expiresAt?: string;
 };
 export type Proposal = {
   id: string;
@@ -236,7 +240,7 @@ export type Audit = {
 };
 export type Distribution = {
   movements?: StockMovement[];
-  components?: { sku: string; quantity: number }[];
+  components?: { sku: string; quantity: number; attributes?: string[] }[];
   id: string;
   organizationId: string;
   siteId: string;
