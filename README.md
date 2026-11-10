@@ -55,6 +55,14 @@ The matching Chromium must already be installed for offline browser verification
 
 Request kits and compare approved offers; have finance approve the exact proposal and simulate checkout. Have the supplier cancel an item, review the resulting recovery, simulate the merchant-authorized refund, receive remaining supplies and approve a fresh replacement. Record receipts before distributing kits. Analytics distinguishes planned, purchased, received and distributed quantities. Giving also supports synthetic one-time gifts and recurring-gift workflows.
 
+## How PantryPilot uses PayPal
+
+PantryPilot integrates PayPal Checkout through the Orders v2 API for supplier purchases and one-time donations. For purchases, finance approves the basket first. The sandbox checkout path creates a PayPal order for the supplier's merchant account, sends the buyer to PayPal for approval, and captures the approved order on the server. If a supplier cancels part of a paid order, finance requests a refund. Only the original supplier merchant can issue it against the original capture through the Payments v2 API. PantryPilot credits the purchasing fund only when the refund is confirmed. Recurring donations use a separate PayPal Subscriptions API path for configured monthly plans.
+
+**Local judge demo (verified):** **Simulate payer approval** and **Simulate merchant-authorized refund** write synthetic results to PantryPilot's local ledger. You can exercise checkout, cancellation and recovery without a PayPal login. The demo sends no PayPal requests, creates no PayPal transactions and moves no money.
+
+**PayPal Sandbox (implemented; end-to-end verification pending):** This separate path sends requests to PayPal's test environment and requires configured sandbox merchant accounts and a sandbox buyer account. Sandbox transactions use test funds only. The local rehearsal did not verify buyer approval, capture, refund settlement or webhook delivery against PayPal Sandbox. No live payments are supported.
+
 ## Maintenance and limitations
 
 Read `docs/planning/README.md` and `docs/planning/contracts.md` for exported contracts and source/test entry points. The 21 responsibility profiles and journey specifications are hypotheses, not observed customer acceptance. Staged evaluation worksheets retain their assertions and start unexecuted.

@@ -1,6 +1,6 @@
 {
   "schema_version": "pantrypilot-handover-v1",
-  "source_digest": "b4abb3d675b274238080145f2bf557570b8caa6a294762c1ca4df5da965844ee",
+  "source_digest": "707e30133cb6130b8e357b609414de7f2a7a01aa82b1e35176f135abe15c1843",
   "scope": "credential-free source export; no provider or deployment authorization",
   "files": {
     ".env.example": "08bb994b3e291b930822be94daf1fb130f9d20b83755a5f940d0b75420e7b310",
@@ -8,12 +8,12 @@
     "AGENT-SECURITY.md": "ee4190b6423e5629994d5fa5524603a48cff1e59ee78d2d25fe036a59f14a582",
     "AGENTS.md": "4521dfe101d4356783ed443d0e7040f3f02ab7a8189216012ede31723e82c00e",
     "LICENSE": "ff1f0a23c91b3fd02330c900454199e70a14a9b66450e575c7cb598d345a25d7",
-    "README.md": "caed98edbb9fc81167d6b87156100732d166540933ce4f1821d306c0c472c255",
+    "README.md": "a3d8eb791f00780881c7082e05530c31500afa2b2c73c380282d6c5a09316304",
     "docs/adoption/journey-contracts.json": "94d926b282d833c7668df9ab809209594dedaf17075b2c160e1db374ae7c5d1e",
     "docs/handover/persona-workflows.json": "17bdaff9f374cea7561cd07c07c2567919ead65aa3cf4895f607cd392cec6438",
     "docs/planning/README.md": "9156912f03a7243d93199196dd8d9ee3e3765ac184ffb678e969654a7756628b",
     "docs/planning/contracts.md": "73e43a01cfc4d8599888bc86c19459fbca7c8a7fcfafcdeefbbcbf27d166a56e",
-    "docs/public-source/README.md": "caed98edbb9fc81167d6b87156100732d166540933ce4f1821d306c0c472c255",
+    "docs/public-source/README.md": "a3d8eb791f00780881c7082e05530c31500afa2b2c73c380282d6c5a09316304",
     "docs/public-source/contracts.md": "73e43a01cfc4d8599888bc86c19459fbca7c8a7fcfafcdeefbbcbf27d166a56e",
     "docs/public-source/planning-index.md": "9156912f03a7243d93199196dd8d9ee3e3765ac184ffb678e969654a7756628b",
     "docs/public-source/worksheets.md": "78cbafe41f1ed0c87a14c6c63385a6c3279c90391485d09573dedc13b4ec81bc",
