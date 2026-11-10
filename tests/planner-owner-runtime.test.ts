@@ -1,3 +1,4 @@
+import { SESSION_A1 } from "../scripts/lib/gemini-session-admission";
 import { createHash, randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
@@ -137,7 +138,8 @@ it("owner PowerShell inspection validates pinned files without a prompt or proce
   await expect(readFile(path.join(f.release, "ready.json"))).rejects.toThrow();
 });
 
-it.each(["diagnostic", "h3"] as const)("owner runtime completes the actual %s planner with a fake private pipe and locally intercepted transport", async mode => {
+it.each([["diagnostic", false], ["h3", false], ["diagnostic", true], ["h3", true]] as const)(
+  "owner runtime completes the actual%s planner with A1=%s and a fake private pipe", async (mode, useSession) => {
   const f = await fixture();
   if (mode === "h3") {
     const id = randomUUID(), limits = { maxHttpRequests: 6, maxInputBytes: 32768, maxOutputTokens: 1024, timeoutMs: 300000 };
@@ -149,6 +151,22 @@ it.each(["diagnostic", "h3"] as const)("owner runtime completes the actual %s pl
     await writeFile(path.join(f.release, "staging-authority.json"), JSON.stringify({ scopeSha256: f.scopeHash, approved: true }));
   }
   const runtimePaths = mode === "diagnostic" ? f.paths : campaignPaths(f.root, f.s.id, f.s.project);
+  if (useSession) {
+    const now = Date.now(), plan = { policy: SESSION_A1.id, day: pacificDay(now), knownPriorHttp: 1,
+      laterExternalReservedHttp: 0, usageObservedAt: now - 120000, usageReference: "offline-partial-ui",
+      evidenceBasis: "OWNER_ATTESTED_PARTIAL_UI", quotaHead: (await new H2Journal(runtimePaths.quota).read()).at(-1)!.hash,
+      manifestHash: f.s.manifestHash, sourceDigest: f.s.sourceDigest, buildId: f.s.buildId,
+      maxHttpRequests: f.s.maxHttpRequests, expiresAt: f.s.expiresAt };
+    const bytes = JSON.stringify(plan); f.s.session = { policy: SESSION_A1.id, planSha256: hash(bytes) };
+    await writeFile(path.join(f.release, "session-plan.json"), bytes);
+    const scopeBytes = JSON.stringify(f.s); f.scopeHash = hash(scopeBytes);
+    await writeFile(path.join(f.release, "scope.json"), scopeBytes);
+    await writeFile(path.join(f.release, "staging-authority.json"), JSON.stringify({ scopeSha256: f.scopeHash, approved: true }));
+    await writeFile(path.join(f.release, "owner-ready.json"), JSON.stringify({ scopeSha256: f.scopeHash,
+      planSha256: f.s.session.planSha256, atMs: now, day: plan.day, knownPriorHttp: 1,
+      exclusive: true, completeHistoryConfirmed: true }));
+    await expect(readFile(path.join(f.release, "activation.json"))).rejects.toThrow();
+  }
   const workspace = JSON.parse(await readFile(path.join(f.paths.data, f.manifest.cases[1].workspaceId + ".json"), "utf8"));
   const selection = { catalogIds: mode === "h3" ? [] : workspace.catalog.map((item: { id: string }) => item.id),
     reasoning: "offline-synthetic", infeasible: mode === "h3" };
@@ -175,6 +193,7 @@ it.each(["diagnostic", "h3"] as const)("owner runtime completes the actual %s pl
   }
   try {
     const ready = await waitJson("ready.json"), now = Date.now();
+    if (!useSession) {
     const common = { manifestHash: f.s.manifestHash, quotaHead: (await new H2Journal(runtimePaths.quota).read()).at(-1)!.hash,
       day: pacificDay(now), quietSince: now - 901000, usageObservedAt: now - 1000,
       windowStart: now, windowEnd: Math.min(now + 30000, f.s.expiresAt), knownPriorHttp: 0,
@@ -189,7 +208,13 @@ it.each(["diagnostic", "h3"] as const)("owner runtime completes the actual %s pl
       JSON.stringify({ approvalHash: sha(grant), ...(mode === "h3" ? { nonce: ready.nonce, pid: ready.pid } : {}), exclusive: true, unaccountedUse: false }));
     await writeFile(path.join(f.release, "activation.json"), JSON.stringify({ scopeSha256: f.scopeHash, grantSha256: sha(grant),
       pid: ready.pid, nonce: ready.nonce, approved: true }));
+    }
     const request = await waitJson("key-request.json"); expect(request.pid).toBe(child.pid);
+    if (useSession) {
+      const grant = JSON.parse(await readFile(path.join(f.release, "runtime-grant.json"), "utf8"));
+      expect(grant.sessionPolicy).toBe(SESSION_A1.id); expect(grant.usageObservedAt).toBeLessThan(now - 60000);
+      expect(grant.ownerAttestedAt).toBeGreaterThan(grant.usageObservedAt);
+    }
     child.stdin.end("OFFLINE_ONLY_FAKE_PRIVATE_SENTINEL\n");
     const exit = await exited;
     const diagnostics = await Promise.all([path.join(f.release, "runtime-failed.json"), path.join(runtimePaths.evidence, "failed.json")]
@@ -205,8 +230,100 @@ it.each(["diagnostic", "h3"] as const)("owner runtime completes the actual %s pl
       expect(state.outcomes[0].row.source).toBe("gemini"); expect(output).toContain('"COMPLETED"');
     }
     const records = JSON.stringify(await new H2Journal(runtimePaths.quota).read());
+    if (useSession) {
+      const external = (await new H2Journal(runtimePaths.quota).read()).filter(e => e.value.kind === "h3-external-accounting");
+      expect(external).toHaveLength(1); expect(external[0].value.http).toBe(1);
+    }
     expect(records).not.toContain("OFFLINE_ONLY_FAKE_PRIVATE_SENTINEL");
     await expect(readFile(path.join(runtimePaths.quota, "block.lock"))).rejects.toThrow();
     expect(JSON.parse(await readFile(path.join(f.release, "runtime-result.json"), "utf8")).exit).toBe(0);
   } finally { clearTimeout(timeout); child.kill(); await exited; }
 }, 15000);
+
+it("A1 adds one hash-bound plan to an otherwise exact owner scope", () => {
+  const s = scope(); s.session = { policy: SESSION_A1.id, planSha256: "e".repeat(64) };
+  expect(() => validateOwnerScope(s, process.cwd(), Date.now())).not.toThrow();
+  expect(() => validateOwnerScope({ ...s, session: { policy: "UNKNOWN", planSha256: "e".repeat(64) } } as unknown as OwnerScope,
+    process.cwd(), Date.now())).toThrow();
+  expect(() => validateOwnerScope({ ...s, session: { ...s.session!, planSha256: "" } }, process.cwd(), Date.now())).toThrow();
+});
+
+it.each(["source", "head"])("A1 post-input%s drift refuses dispatch and cannot replay", async drift => {
+  const f = await fixture(), now = Date.now();
+  const plan = { policy: SESSION_A1.id, day: pacificDay(now), knownPriorHttp: 0, laterExternalReservedHttp: 0,
+    usageObservedAt: now - 120000, usageReference: "offline-partial-ui", evidenceBasis: "OWNER_ATTESTED_PARTIAL_UI",
+    quotaHead: (await new H2Journal(f.paths.quota).read()).at(-1)!.hash, manifestHash: f.s.manifestHash,
+    sourceDigest: f.s.sourceDigest, buildId: f.s.buildId, maxHttpRequests: 6, expiresAt: f.s.expiresAt };
+  const bytes = JSON.stringify(plan); f.s.session = { policy: SESSION_A1.id, planSha256: hash(bytes) };
+  await writeFile(path.join(f.release, "session-plan.json"), bytes);
+  const scopeBytes = JSON.stringify(f.s); f.scopeHash = hash(scopeBytes);
+  await writeFile(path.join(f.release, "scope.json"), scopeBytes);
+  await writeFile(path.join(f.release, "staging-authority.json"), JSON.stringify({ scopeSha256: f.scopeHash, approved: true }));
+  await writeFile(path.join(f.release, "owner-ready.json"), JSON.stringify({ scopeSha256: f.scopeHash,
+    planSha256: f.s.session.planSha256, atMs: now, day: plan.day, knownPriorHttp: 0,
+    exclusive: true, completeHistoryConfirmed: true }));
+  const marker = path.join(f.release, "unexpected-egress.jsonl"), intercept = path.join(f.release, "offline-fetch.cjs");
+  await writeFile(intercept, `global.fetch=async()=>{require('node:fs').appendFileSync(${JSON.stringify(marker)},'unexpected');throw new Error('UNEXPECTED_OFFLINE_TRANSPORT')}`);
+  const env: NodeJS.ProcessEnv = { NODE_ENV: "test" };
+  for (const name of ["SystemRoot", "WINDIR", "COMSPEC", "PATH", "PATHEXT", "TEMP", "TMP", "NODE_OPTIONS", "PP_H2_EGRESS_LOG", "PP_H2_ALLOW_LOOPBACK"])
+    if (process.env[name]) env[name] = process.env[name];
+  const child = spawn(process.execPath, ["--require", intercept, "--import", pathToFileURL(path.resolve("node_modules/tsx/dist/loader.mjs")).href,
+    "scripts/owner-planner-runtime.ts", f.release, f.scopeHash], { cwd: f.root, env, windowsHide: true, stdio: ["pipe", "pipe", "pipe"] });
+  let output = ""; child.stdout.on("data", b => { output += b; }); child.stderr.on("data", b => { output += b; });
+  const exited = new Promise<number | null>((resolve, reject) => { child.on("error", reject); child.on("close", resolve); });
+  const timer = setTimeout(() => child.kill(), 10000);
+  try {
+    let requested = false;
+    for (let i = 0; i < 100; i++) {
+      try { await readFile(path.join(f.release, "key-request.json")); requested = true; break; }
+      catch { await new Promise(r => setTimeout(r, 50)); }
+    }
+    expect(requested, output).toBe(true);
+    if (drift === "source") await writeFile(path.join(f.root, "scripts/lib/gemini-session-admission.ts"), "// offline source drift\n");
+    else await new H2Journal(f.paths.quota).append({ kind: "h3-external-accounting", http: 1,
+      day: plan.day, at: Date.now(), usageReference: "offline-head-drift" });
+    child.stdin.end("OFFLINE_ONLY_FAKE_PRIVATE_SENTINEL\n");
+    expect(await exited, output).toBe(1);
+    const failedBytes = await readFile(path.join(f.release, "runtime-failed.json"));
+    const failed = JSON.parse(failedBytes.toString("utf8"));
+    expect(failed.phase).toBe("POST_INPUT_INSPECTION"); expect(failed.privateInputRead).toBe(true); expect(failed.dispatched).toBe(false);
+    await expect(readFile(path.join(f.release, "dispatch-once.json"))).rejects.toThrow();
+    await expect(readFile(marker)).rejects.toThrow();
+    const status = JSON.parse(await readFile(path.join(f.release, "session-status.json"), "utf8"));
+    expect(status.status).toBe("STOPPED"); expect(status.chargedGenerationAttempts).toBe(0);
+    expect(output).not.toContain("OFFLINE_ONLY_FAKE_PRIVATE_SENTINEL");
+    const replay = spawn(process.execPath, ["--require", intercept, "--import", pathToFileURL(path.resolve("node_modules/tsx/dist/loader.mjs")).href,
+      "scripts/owner-planner-runtime.ts", f.release, f.scopeHash], { cwd: f.root, env, windowsHide: true, stdio: ["ignore", "ignore", "ignore"] });
+    const replayExit = new Promise<number | null>((resolve, reject) => { replay.on("error", reject); replay.on("close", resolve); });
+    const replayTimer = setTimeout(() => replay.kill(), 10000);
+    try { expect(await replayExit).toBe(1); } finally { clearTimeout(replayTimer); replay.kill(); }
+    expect(await readFile(path.join(f.release, "runtime-failed.json"))).toEqual(failedBytes);
+    await expect(readFile(marker)).rejects.toThrow();
+  } finally { clearTimeout(timer); child.kill(); }
+});
+
+it("A1 PowerShell preflight validates the plan without staging, private input or provider process", async () => {
+  const f = await fixture(), now = Date.now();
+  const plan = { policy: SESSION_A1.id, day: pacificDay(now), knownPriorHttp: 0, laterExternalReservedHttp: 0,
+    usageObservedAt: now - 120000, usageReference: "offline-partial-ui", evidenceBasis: "OWNER_ATTESTED_PARTIAL_UI",
+    quotaHead: (await new H2Journal(f.paths.quota).read()).at(-1)!.hash, manifestHash: f.s.manifestHash,
+    sourceDigest: f.s.sourceDigest, buildId: f.s.buildId, maxHttpRequests: 6, expiresAt: f.s.expiresAt };
+  const bytes = JSON.stringify(plan); f.s.session = { policy: SESSION_A1.id, planSha256: hash(bytes) };
+  await writeFile(path.join(f.release, "session-plan.json"), bytes);
+  const scopeBytes = JSON.stringify(f.s); f.scopeHash = hash(scopeBytes);
+  await writeFile(path.join(f.release, "scope.json"), scopeBytes);
+  await writeFile(path.join(f.release, "staging-authority.json"), JSON.stringify({ scopeSha256: f.scopeHash, approved: true }));
+  const result = await new Promise<{ code: number | null; output: string }>((resolve, reject) => {
+    const child = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-File", path.join(f.root, "scripts/owner-planner-stage.ps1"),
+      "-ReleaseDirectory", f.release, "-ExpectedScopeSha256", f.scopeHash, "-InspectOnly"],
+    { windowsHide: true, stdio: ["pipe", "pipe", "pipe"] });
+    let output = ""; child.stdin.end(); child.stdout.on("data", b => { output += b; }); child.stderr.on("data", b => { output += b; });
+    const timer = setTimeout(() => child.kill(), 10000);
+    child.on("error", e => { clearTimeout(timer); reject(e); });
+    child.on("close", code => { clearTimeout(timer); resolve({ code, output }); });
+  });
+  expect(result.code, result.output).toBe(0); expect(result.output).toContain("INSPECT_PASS_NO_KEY_NO_PROVIDER_PROCESS");
+  for (const name of ["owner-ready.json", "staging-attempt.json", "ready.json", "key-request.json", "dispatch-once.json"])
+    await expect(readFile(path.join(f.release, name))).rejects.toThrow();
+  expect(await new H2Journal(f.paths.quota).read()).toHaveLength(1);
+});

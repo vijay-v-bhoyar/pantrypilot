@@ -355,6 +355,25 @@ export function cancelUnpaidOrder(w: Workspace, o: Order) {
   }
   releaseStock(w, o.proposalId);
 }
+function requireNoActiveReplacement(
+  w: Workspace,
+  organizationId: string,
+  originalRequestId: string,
+) {
+  const requestIds = new Set(w.requests
+    .filter((r) => r.organizationId === organizationId && r.replacesRequestId === originalRequestId)
+    .map((r) => r.id));
+  const proposalIds = new Set(w.proposals
+    .filter((p) => requestIds.has(p.requestId))
+    .map((p) => p.id));
+  ensure(
+    !w.orders.some((o) => o.organizationId === organizationId && proposalIds.has(o.proposalId) &&
+      o.status !== "received" && o.status !== "cancelled"),
+    "REPLACEMENT_IN_FLIGHT",
+    "A replacement for this request is already in Purchasing. Resolve or receive it before starting another.",
+    409,
+  );
+}
 function requireCurrentBasket(w: Workspace, request: Workspace["requests"][number], proposal: Proposal) {
   // A stable record digest does not notice stock expiry or an elapsed delivery window.
   // Recompute the approved offer set at the effect boundary, without mutating it.
@@ -576,6 +595,8 @@ export function execute(
         409,
       );
       requireCurrentBasket(w, r, p);
+      if (r.replacesRequestId)
+        requireNoActiveReplacement(w, r.organizationId, r.replacesRequestId);
       const orders: Order[] = [
         ...new Set(p.lines.map((l) => l.supplierId)),
       ].map((supplierId) => {
@@ -1202,11 +1223,13 @@ export function execute(
       );
       const original = w.proposals.find((p) => p.id === o.proposalId)!;
       const request = w.requests.find((x) => x.id === original.requestId)!;
+      const originalRequestId = request.replacesRequestId ?? request.id;
+      requireNoActiveReplacement(w, actor.organizationId, originalRequestId);
       const newRequest = {
         ...request,
         id: randomUUID(),
         createdAt: now,
-        replacesRequestId: request.replacesRequestId ?? request.id,
+        replacesRequestId: originalRequestId,
       };
       w.requests.push(newRequest);
       const p = plan(w, newRequest);

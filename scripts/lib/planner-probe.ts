@@ -1,3 +1,4 @@
+import { SESSION_A1, sessionTiming, type SessionFields } from "./gemini-session-admission";
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
@@ -12,7 +13,7 @@ import { comparePlannerBaseline, evaluationSourceDigest, financialSnapshot, plan
 import { campaignPaths } from "./planner-campaign";
 import { H2, H2Journal, auditCampaignQuota, contained, createH2Policy, h2Assert, initializeQuota,
   pacificDay, readRecord, safeDirectory, safetyClock, sha, withProjectLock, writeOnce,
-  type QuotaOrigin, type SafetyClock } from "./planner-quota";
+  projectDayUsed, auditSessionProbeQuota, type QuotaOrigin, type SafetyClock } from "./planner-quota";
 
 // This probe never produces H2 case outcomes or a full-campaign verdict.
 export const INITIAL_PROBE = Object.freeze({ id: "PP-FEAS-01-INITIAL-PROBE-01",
@@ -37,7 +38,7 @@ type FrozenCase = { case: 1 | 2; workspaceId: string; requestId: string;
 export type ProbeManifest = { version: 1; policy: typeof INITIAL_PROBE | typeof GEMINI_36_PROBE; id: string;
   binding: ProbeBinding; fixtureTime: number; allCasesDigest: string;
   sourceDigest: string; buildId: string; cases: FrozenCase[] };
-export type ProbeApproval = { manifestHash: string; quotaHead: string; day: string;
+export type ProbeApproval = SessionFields & { manifestHash: string; quotaHead: string; day: string;
   quietSince: number; usageObservedAt: number; windowStart: number; windowEnd: number;
   knownPriorHttp: number; laterExternalReservedHttp: number; usageReference: string };
 type Coordination = { approvalHash: string; exclusive: boolean; unaccountedUse: boolean };
@@ -122,14 +123,13 @@ export function validateProbeApproval(manifest: ProbeManifest, approval: ProbeAp
   const times = [approval.quietSince, approval.usageObservedAt, approval.windowStart, approval.windowEnd];
   h2Assert(approval.manifestHash === sha(manifest) && hash.test(approval.quotaHead) &&
     times.every((time) => Number.isSafeInteger(time) && time > 0) &&
-    approval.quietSince + INITIAL_PROBE.quietSettleMs <= approval.usageObservedAt &&
-    approval.usageObservedAt <= approval.windowStart &&
-    approval.windowStart - approval.usageObservedAt <= INITIAL_PROBE.observationAgeMs &&
+    sessionTiming(approval, clock.now()) &&
+    (approval.sessionPolicy === SESSION_A1.id ||
+      approval.windowStart - approval.usageObservedAt <= INITIAL_PROBE.observationAgeMs) &&
     approval.windowEnd > approval.windowStart &&
     approval.windowEnd - approval.windowStart <= INITIAL_PROBE.windowMs &&
     approval.day === pacificDay(approval.windowStart) && approval.day === pacificDay(approval.windowEnd) &&
     clock.now() >= approval.windowStart && clock.now() < approval.windowEnd &&
-    clock.now() - approval.usageObservedAt <= INITIAL_PROBE.observationAgeMs &&
     [approval.knownPriorHttp, approval.laterExternalReservedHttp].every((value) =>
       Number.isSafeInteger(value) && value >= 0) &&
     approval.knownPriorHttp + approval.laterExternalReservedHttp + INITIAL_PROBE.http <= H2.dailyHttp &&
@@ -143,7 +143,8 @@ export async function createProbePolicy(root: string, manifest: ProbeManifest, a
   const journal = new H2Journal(paths.quota), baseline = await journal.read();
   const origin = await readRecord<QuotaOrigin>(path.join(paths.quota, "origin.json"));
   const reservations = baseline.filter((event) => event.value.kind === "pair-reserved" && event.value.day === approval.day);
-  const accounted = reservations.length * 2 + (origin.day === approval.day ? origin.knownUsed : 0);
+  const accounted = approval.sessionPolicy === SESSION_A1.id ? projectDayUsed(baseline.map(e => e.value), origin, approval.day) :
+    reservations.length * 2 + (origin.day === approval.day ? origin.knownUsed : 0);
   h2Assert(origin.project === manifest.binding.project && baseline.length > 0 &&
     sha(baseline[0].value) === sha({ kind: "origin", ...origin }) &&
     baseline.at(-1)!.hash === approval.quotaHead && Number.isSafeInteger(accounted) &&
@@ -177,7 +178,7 @@ export async function createProbePolicy(root: string, manifest: ProbeManifest, a
   };
   const h2 = createH2Policy({ root: paths.quota, project: manifest.binding.project, campaign: manifest.id,
     caseId: 2, model: manifest.binding.model, day: approval.day, approvedDay: approval.day,
-    knownProjectUseReference: approval.usageReference, signal, assertActive: active, clock, transport: countedTransport });
+    knownProjectUseReference: approval.usageReference, sessionPolicy: approval.sessionPolicy, signal, assertActive: active, clock, transport: countedTransport });
   const policy: EvaluationTransportPolicy = { async dispatch(request) {
     if (busy) {
       stopped = true;
@@ -211,6 +212,14 @@ export async function runInitialProbe(root: string, id: string, approval: ProbeA
     const signal = AbortSignal.timeout(remaining);
     const guarded = await createProbePolicy(root, manifest, approval, signal, clock, transport);
     await guarded.coordinated();
+    if (approval.sessionPolicy === SESSION_A1.id) {
+      const journal = new H2Journal(paths.quota), origin = await readRecord<QuotaOrigin>(path.join(paths.quota, "origin.json"));
+      const values = (await journal.read()).map(e => e.value);
+      const delta = approval.knownPriorHttp - projectDayUsed(values, origin, approval.day);
+      h2Assert(Number.isSafeInteger(delta) && delta >= 0);
+      if (delta) await journal.append({ kind: "h3-external-accounting", http: delta, day: approval.day,
+        at: clock.now(), usageReference: approval.usageReference });
+    }
     const baselines = manifest.cases.map((entry, index) => {
       const request = workspaces[index].requests.find((item) => item.id === entry.requestId)!;
       return plan(workspaces[index], request, undefined, manifest.fixtureTime);
@@ -234,7 +243,8 @@ export async function runInitialProbe(root: string, id: string, approval: ProbeA
           workspace.agentRuns.some((run) => run.source === "gemini" && run.status === "completed" && run.evidence.includes(candidate.digest)));
       }
       phase = "QUOTA_AUDIT";
-      const audit = await auditCampaignQuota(paths.quota, manifest.binding.project, id);
+      const audit = await (approval.sessionPolicy === SESSION_A1.id ? auditSessionProbeQuota : auditCampaignQuota)(
+        paths.quota, manifest.binding.project, id);
       h2Assert(audit.countCalls >= 1 && audit.countCalls <= 3 && audit.generationCalls === audit.countCalls &&
         shared.attempts === audit.generationCalls);
       const entries = await new H2Journal(paths.quota).read();

@@ -1,3 +1,4 @@
+import { sessionTiming, sessionGrantKeys, type SessionFields } from "./gemini-session-admission";
 import path from "node:path";
 import type { Workspace } from "../../src/lib/types";
 import { hackathonLifecycle, campaignPaths, type CampaignBinding, type CampaignManifest,
@@ -15,7 +16,7 @@ const grantKeys = ["policy", "scope", "canonicalRoot", "campaignId", "caseId", "
   "configDigest", "manifestHash", "project", "model", "operator", "credentialReference", "quotaHead",
   "day", "quietSince", "usageObservedAt", "windowStart", "windowEnd", "knownPriorHttp",
   "laterExternalReservedHttp", "usageReference", "nonce", "pid", "maxHttpRequests"];
-export type HackathonGrant = {
+export type HackathonGrant = SessionFields & {
   policy: typeof H3.policy; scope: "H3_SINGLE_CASE"; canonicalRoot: string; campaignId: string; caseId: number;
   sourceDigest: string; buildId: string; configDigest: string; manifestHash: string;
   project: string; model: string; operator: string; credentialReference: string; quotaHead: string;
@@ -53,7 +54,7 @@ async function inspectQuota(root: string, id: string, project: string, day: stri
 }
 export function validateHackathonGrant(root: string, manifest: CampaignManifest, nextCase: number,
   grant: HackathonGrant, approvedHash: string, pid: number, clock: SafetyClock) {
-  h2Assert(Object.keys(grant).sort().join() === [...grantKeys].sort().join() &&
+  h2Assert(Object.keys(grant).sort().join() === sessionGrantKeys(grant, grantKeys).sort().join() &&
     grant.policy === H3.policy && grant.scope === "H3_SINGLE_CASE" && grant.maxHttpRequests === 12 &&
     hash.test(approvedHash) && sha(grant) === approvedHash && hash.test(grant.quotaHead) &&
     path.resolve(grant.canonicalRoot) === path.resolve(root) && grant.campaignId === manifest.id &&
@@ -66,9 +67,8 @@ export function validateHackathonGrant(root: string, manifest: CampaignManifest,
     /^[a-zA-Z0-9._/-]{1,160}$/.test(grant.usageReference));
   const times = [grant.quietSince, grant.usageObservedAt, grant.windowStart, grant.windowEnd];
   h2Assert(times.every(t => Number.isSafeInteger(t) && t > 0) &&
-    grant.quietSince + 900000 <= grant.usageObservedAt && grant.usageObservedAt <= grant.windowStart &&
+    sessionTiming(grant, clock.now()) &&
     grant.windowStart <= clock.now() && clock.now() < grant.windowEnd &&
-    clock.now() - grant.usageObservedAt <= 60000 &&
     grant.windowEnd - grant.windowStart <= H3.blockTimeoutMs &&
     grant.windowEnd <= HACKATHON_CUTOFF && clock.now() + H3.blockTimeoutMs <= HACKATHON_CUTOFF &&
     grant.day === pacificDay(clock.now()) && grant.day === pacificDay(grant.windowStart) &&
@@ -103,7 +103,7 @@ export async function inspectHackathonAdmission(root: string, id: string, projec
   return { ...inspected, status: remaining < 12 ? "DEFER" as const : "READY" as const, remaining };
 }
 async function coordinated(evidence: string, grant: HackathonGrant) {
-  const c = await readRecord<Coordination>(path.join(evidence, "h3-activation.json"));
+  const c = await readRecord<Coordination>(path.join(evidence, grant.sessionPolicy ? `h3-activation-${grant.nonce}.json` : "h3-activation.json"));
   h2Assert(Object.keys(c).sort().join() === ["approvalHash", "nonce", "pid", "exclusive", "unaccountedUse"].sort().join() &&
     c.approvalHash === sha(grant) && c.nonce === grant.nonce && c.pid === grant.pid &&
     c.exclusive === true && c.unaccountedUse === false);

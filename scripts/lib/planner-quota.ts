@@ -3,6 +3,7 @@ import { lstat, mkdir, open, readFile, readdir, unlink } from "node:fs/promises"
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { ensure } from "../../src/lib/errors";
+import { SESSION_A1 } from "./gemini-session-admission";
 import type { EvaluationTransportPolicy } from "../../src/lib/model-budget";
 
 export const H2 = Object.freeze({ policy: "PP-FEAS-01-H2", days: 12,
@@ -117,7 +118,8 @@ export async function initializeQuota(root: string, origin: QuotaOrigin) {
 }
 export type QuotaOptions = { root: string; project: string; campaign: string; caseId: number;
   model: string; day: string; approvedDay: string; knownProjectUseReference: string;
-  signal: AbortSignal; assertActive(): void; clock?: SafetyClock; transport?: typeof fetch };
+  signal: AbortSignal; assertActive(): void; clock?: SafetyClock; transport?: typeof fetch;
+  sessionPolicy?: typeof SESSION_A1.id };
 export function nextStart(starts: number[], now: number) {
   const recent = starts.filter((t) => now - t < H2.windowMs);
   return Math.max(now, (starts.at(-1) ?? -Infinity) + H2.startGapMs,
@@ -161,7 +163,9 @@ export function createH3Policy(options: QuotaOptions & { laterExternalReservedHt
 }
 function createFixedPolicy(options: QuotaOptions, policy: FixedPolicy, externalReserved: number): EvaluationTransportPolicy {
   const clock = options.clock || safetyClock, transport = options.transport || fetch;
-  const journal = new H2Journal(options.root); let busy = false, poisoned = false;
+  h2Assert(options.sessionPolicy === undefined || (options.sessionPolicy === SESSION_A1.id && policy === H2));
+  const casePairLimit = options.sessionPolicy === SESSION_A1.id ? 3 : policy.caseCounts;
+  const journal = new H2Journal(options.root); let busy = false, poisoned = false, recovered503 = 0;
   const active = () => { options.signal.throwIfAborted(); options.assertActive();
     h2Assert(!poisoned && options.day === options.approvedDay && pacificDay(clock.now()) === options.day); };
   const history = async () => {
@@ -194,11 +198,13 @@ function createFixedPolicy(options: QuotaOptions, policy: FixedPolicy, externalR
     const pairSignal = AbortSignal.any([request.signal, options.signal]);
     let phase: TransportPhase = "ADMISSION", httpStatus: number | undefined;
     try {
+      for (;;) {
+      httpStatus = undefined; phase = "ADMISSION";
       const { origin, values } = await history();
       const reserved = values.filter((e) => e.kind === "pair-reserved");
       const used = projectDayUsed(values, origin, options.day) + externalReserved;
       const own = reserved.filter((e) => e.campaign === options.campaign && e.caseId === options.caseId);
-      h2Assert(used + 2 <= policy.dailyHttp && own.length < policy.caseCounts &&
+      h2Assert(used + 2 <= policy.dailyHttp && own.length < casePairLimit &&
         reserved.filter((e) => e.campaign === options.campaign).length * 2 + 2 <= policy.campaignHttp);
       const identity = sha({ model: request.modelId, api: "v1beta", body: request.body });
       const pair = randomUUID();
@@ -228,6 +234,17 @@ function createFixedPolicy(options: QuotaOptions, policy: FixedPolicy, externalR
       await emit({ kind: "generation-start", pair, identity, reservedTokens: H2.reservedTokens });
       active(); phase = "GENERATION_SEND"; httpStatus = undefined;
       const response = await request.send(); httpStatus = response.status;
+      // Retry only a returned generation503, within the original combined-pair cap.
+      // Never retry the application operation, a network-unknown outcome or a money action.
+      if (response.status === 503 && options.sessionPolicy === SESSION_A1.id &&
+        recovered503 < SESSION_A1.diagnostic503Retries && own.length + 1 < casePairLimit &&
+        used + 4 <= policy.dailyHttp) {
+        await emit({ kind: "generation-transient", pair, identity, httpStatus: 503, policy: SESSION_A1.id });
+        recovered503++;
+        void response.body?.cancel().catch(() => {});
+        // New pair means a fresh count and full two-slot reservation, not a free retry.
+        continue;
+      }
       const body = await boundedJson(response, pairSignal, value => { phase = `GENERATION_${value}`; });
       active(); phase = "GENERATION_USAGE";
       const usage = body.usageMetadata as { promptTokenCount?: unknown } | undefined;
@@ -241,6 +258,7 @@ function createFixedPolicy(options: QuotaOptions, policy: FixedPolicy, externalR
       await emit({ kind: "generation-result", pair, identity, count, actual,
         difference: actual - count, reservation: H2.reservedTokens });
       return response;
+      }
     } catch {
       poisoned = true;
       // Allowlisted phase/status only: never persist exception, body, URL or headers.
@@ -256,32 +274,44 @@ function createFixedPolicy(options: QuotaOptions, policy: FixedPolicy, externalR
 export async function auditCampaignQuota(root: string, project: string, campaign: string) {
   return auditFixedQuota(root, project, campaign, H2);
 }
+export async function auditSessionProbeQuota(root: string, project: string, campaign: string) {
+  return auditFixedQuota(root, project, campaign, H2, true);
+}
 export async function auditH3Quota(root: string, project: string, campaign: string) {
   return auditFixedQuota(root, project, campaign, H3);
 }
-async function auditFixedQuota(root: string, project: string, campaign: string, policy: FixedPolicy) {
+async function auditFixedQuota(root: string, project: string, campaign: string, policy: FixedPolicy, recover503 = false) {
   const origin = await readRecord<QuotaOrigin>(path.join(root, "origin.json"));
   const entries = await new H2Journal(root).read(), events = entries.map((e) => e.value);
   h2Assert(origin.project === project && events.length > 0 && sha(events[0]) === sha({ kind: "origin", ...origin }) &&
     !events.some((e) => e.kind === "poison"));
+  h2Assert(recover503 || !events.some(e => e.kind === "generation-transient" && e.campaign === campaign));
+  const transients = events.filter(e => e.kind === "generation-transient" && e.campaign === campaign);
+  h2Assert(!recover503 || transients.length <= SESSION_A1.diagnostic503Retries);
   const reservations = events.filter((e) => e.kind === "pair-reserved");
   const days = new Set(reservations.map((e) => e.day));
   for (const day of days) h2Assert(typeof day === "string" && day >= origin.day &&
     projectDayUsed(events, origin, day) <= policy.dailyHttp);
   const own = reservations.filter((e) => e.campaign === campaign);
+  h2Assert(transients.every(e => own.some(p => p.pair === e.pair)));
   h2Assert(own.length * 2 <= policy.campaignHttp && new Set(own.map((e) => e.pair)).size === own.length);
   const cases = Array.from({ length: 12 }, (_, index) => {
     const pairs = own.filter((e) => e.caseId === index + 1); h2Assert(pairs.length <= policy.caseCounts);
     let countCalls = 0, generationCalls = 0;
     for (const pair of pairs) {
       const related = events.filter((e) => e.pair === pair.pair);
-      for (const kind of ["count-start", "count-result", "generation-start", "generation-result"]) {
+      const transient = related.filter(e => e.kind === "generation-transient");
+      h2Assert(transient.length <= 1 && (!transient.length || (recover503 && transient[0].httpStatus === 503 &&
+        transient[0].policy === SESSION_A1.id && transient[0].identity === pair.identity &&
+        transient[0].campaign === campaign && transient[0].caseId === pair.caseId && transient[0].day === pair.day &&
+        !related.some(e => e.kind === "generation-result"))));
+      for (const kind of ["count-start", "count-result", "generation-start", ...(transient.length ? [] : ["generation-result"])]) {
         const matching = related.filter((e) => e.kind === kind);
         h2Assert(matching.length === 1 && matching[0].identity === pair.identity &&
           matching[0].campaign === campaign && matching[0].caseId === index + 1 && matching[0].day === pair.day);
       }
       measuredTokens(related.find((e) => e.kind === "count-result")!.count);
-      promptUsage(related.find((e) => e.kind === "generation-result")!.actual);
+      if (!transient.length) promptUsage(related.find((e) => e.kind === "generation-result")!.actual);
       countCalls++; generationCalls++;
     }
     return { case: index + 1, countCalls, generationCalls, httpReserved: pairs.length * 2 };

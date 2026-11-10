@@ -1,3 +1,5 @@
+import { SESSION_A1 } from "../scripts/lib/gemini-session-admission";
+import { auditSessionProbeQuota, auditH3Quota } from "../scripts/lib/planner-quota";
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
@@ -327,4 +329,147 @@ it.each([
 ])("P22 runtime refuses invalid binding %s", async (name, value) => {
   const f = await initializedFixture(); await fakePlannerRuntime(f); vi.stubEnv(name, value);
   expect(() => admitProbeRuntime(f.root, f.manifest, f.approval)).toThrow(); expect(f.transport).not.toHaveBeenCalled();
+});
+
+it("A1 recovers one returned503 with a newly charged count/generation pair", async () => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); f.approval.quietSince = f.clock.now();
+  f.approval.usageObservedAt = f.clock.now() - 120000; await f.coordination();
+  let generation = 0;
+  f.transport.mockImplementation(async input => String(input).endsWith(":countTokens") ?
+    Response.json({ totalTokens: 2 }) : ++generation === 1 ? new Response(null, { status: 503 }) :
+      Response.json({ usageMetadata: { promptTokenCount: 3 } }));
+  await withProjectLock(f.paths.quota, async () => {
+    const guarded = await f.make(); await f.request(guarded.policy);
+    const audit = await auditSessionProbeQuota(f.paths.quota, INITIAL_PROBE.project, f.id);
+    expect(audit.countCalls).toBe(2); expect(audit.generationCalls).toBe(2); expect(audit.httpReserved).toBe(4);
+  });
+  const events = (await new H2Journal(f.paths.quota).read()).map(e => e.value);
+  expect(events.filter(e => e.kind === "generation-transient")).toHaveLength(1);
+  expect(events.some(e => e.kind === "poison")).toBe(false);
+  expect(f.transport).toHaveBeenCalledTimes(4); expect(globalThis.fetch).not.toHaveBeenCalled();
+});
+it.each([401, 403, 404, 429])("A1 refuses status%s without a retry", async status => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  f.transport.mockImplementation(async input => String(input).endsWith(":countTokens") ?
+    Response.json({ totalTokens: 2 }) : new Response(null, { status }));
+  await expect(withProjectLock(f.paths.quota, async () => f.request((await f.make()).policy))).rejects.toThrow();
+  expect(f.transport).toHaveBeenCalledTimes(2);
+});
+it("A1 repeated503 stops after one retry and preserves the poison", async () => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  f.transport.mockImplementation(async input => String(input).endsWith(":countTokens") ?
+    Response.json({ totalTokens: 2 }) : new Response(null, { status: 503 }));
+  await expect(withProjectLock(f.paths.quota, async () => f.request((await f.make()).policy))).rejects.toThrow();
+  expect(f.transport).toHaveBeenCalledTimes(4);
+  expect((await new H2Journal(f.paths.quota).read()).some(e => e.value.kind === "poison")).toBe(true);
+  await expect(f.make()).rejects.toThrow();
+});
+
+it("A1 boundary never reserves a fourth pair when the third generation returns503", async () => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  let generations = 0;
+  f.transport.mockImplementation(async input => String(input).endsWith(":countTokens") ?
+    Response.json({ totalTokens: 2 }) : ++generations === 3 ? new Response(null, { status: 503 }) :
+      Response.json({ usageMetadata: { promptTokenCount: 3 } }));
+  await expect(withProjectLock(f.paths.quota, async () => {
+    const guard = await f.make();
+    await f.request(guard.policy); await f.request(guard.policy); await f.request(guard.policy);
+  })).rejects.toThrow();
+  expect(f.transport).toHaveBeenCalledTimes(6);
+  expect((await new H2Journal(f.paths.quota).read()).filter(e => e.value.kind === "pair-reserved")).toHaveLength(3);
+});
+
+it.each(["count503", "network-unknown", "abort503"])("A1 boundary does not retry%s", async failure => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  f.transport.mockImplementation(async input => {
+    if (String(input).endsWith(":countTokens")) return failure === "count503" ?
+      new Response(null, { status: 503 }) : Response.json({ totalTokens: 2 });
+    if (failure === "network-unknown") throw new Error("OFFLINE_SENSITIVE_ERROR_SENTINEL");
+    f.control.abort(); return new Response(null, { status: 503 });
+  });
+  await expect(withProjectLock(f.paths.quota, async () => f.request((await f.make()).policy))).rejects.toThrow();
+  expect(f.transport).toHaveBeenCalledTimes(failure === "count503" ? 1 : 2);
+  const events = await new H2Journal(f.paths.quota).read();
+  expect(events.some(e => e.value.kind === "poison")).toBe(true);
+  expect(events.some(e => e.value.kind === "generation-transient")).toBe(false);
+  expect(JSON.stringify(events)).not.toContain("OFFLINE_SENSITIVE_ERROR_SENTINEL");
+});
+
+it("A1 boundary rejects orphan transient records", async () => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  await withProjectLock(f.paths.quota, async () => f.request((await f.make()).policy));
+  await new H2Journal(f.paths.quota).append({ kind: "generation-transient", pair: "orphan", identity: "0".repeat(64),
+    campaign: f.id, caseId: 2, day: f.approval.day, at: f.clock.now(), httpStatus: 503, policy: SESSION_A1.id });
+  await expect(auditSessionProbeQuota(f.paths.quota, INITIAL_PROBE.project, f.id)).rejects.toThrow();
+});
+
+it("A1 boundary keeps diagnostic recovery out of H3 outcomes while retaining shared charges", async () => {
+  const f = await fixture(); f.approval.sessionPolicy = SESSION_A1.id;
+  f.approval.ownerAttestedAt = f.clock.now(); await f.coordination();
+  let generations = 0;
+  f.transport.mockImplementation(async input => String(input).endsWith(":countTokens") ? Response.json({ totalTokens: 2 }) :
+    ++generations === 1 ? new Response(null, { status: 503 }) : Response.json({ usageMetadata: { promptTokenCount: 3 } }));
+  await withProjectLock(f.paths.quota, async () => f.request((await f.make()).policy));
+  await expect(auditH3Quota(f.paths.quota, INITIAL_PROBE.project, f.id)).rejects.toThrow();
+  const later = await auditH3Quota(f.paths.quota, INITIAL_PROBE.project, randomUUID());
+  expect(later.countCalls).toBe(0); expect(later.generationCalls).toBe(0);
+  expect((await new H2Journal(f.paths.quota).read()).filter(e => e.value.kind === "pair-reserved")).toHaveLength(2);
+});
+
+it.each(["identity", "status", "case", "day", "duplicate", "contradictory-success"])(
+  "A1 boundary audit rejects invalid transient%s with a valid control", async drift => {
+    const populate = async (bad: boolean) => {
+      const f = await fixture(), pair = randomUUID(), identity = "a".repeat(64), journal = new H2Journal(f.paths.quota);
+      const common = { pair, identity, campaign: f.id, caseId: 2, day: f.approval.day, at: f.clock.now() };
+      for (const e of [{ kind: "pair-reserved" }, { kind: "count-start" }, { kind: "count-result", count: 2 }, { kind: "generation-start" }])
+        await journal.append({ ...common, ...e });
+      const transient = { ...common, kind: "generation-transient", httpStatus: 503, policy: SESSION_A1.id };
+      if (bad && drift === "identity") transient.identity = "b".repeat(64);
+      if (bad && drift === "status") transient.httpStatus = 429;
+      if (bad && drift === "case") transient.caseId = 3;
+      if (bad && drift === "day") transient.day = "2026-10-31";
+      await journal.append(transient);
+      if (bad && drift === "duplicate") await journal.append(transient);
+      if (bad && drift === "contradictory-success") await journal.append({ ...common, kind: "generation-result", actual: 3 });
+      return f;
+    };
+    const good = await populate(false);
+    expect((await auditSessionProbeQuota(good.paths.quota, INITIAL_PROBE.project, good.id)).httpReserved).toBe(2);
+    const bad = await populate(true);
+    await expect(auditSessionProbeQuota(bad.paths.quota, INITIAL_PROBE.project, bad.id)).rejects.toThrow();
+  });
+
+it("A1 boundary actual planner recovers503 once, persists one proposal and preserves finances", async () => {
+  const f = await initializedFixture();
+  let now = f.clock.now(), elapsed = 0;
+  f.clock = { now: () => now, monotonic: () => elapsed, sleep: async (ms, signal) => {
+    signal.throwIfAborted(); now += ms; elapsed += ms;
+  } };
+  Object.assign(f.approval, { sessionPolicy: SESSION_A1.id, ownerAttestedAt: now, quietSince: now });
+  await writeFile(path.join(f.paths.evidence, "coordination.json"), JSON.stringify({ approvalHash: sha(f.approval), exclusive: true, unaccountedUse: false }));
+  const initial = await fakePlannerRuntime(f), healthy = f.transport.getMockImplementation()!;
+  let generations = 0, executions = 0;
+  f.transport.mockImplementation(async (input, init) => {
+    if (String(input).endsWith(":generateContent") && ++generations === 1) return new Response(null, { status: 503 });
+    return healthy(input, init);
+  });
+  const receipt = await runInitialProbe(f.root, f.id, f.approval, (workspaceId, requestId, fixtureTime, shared, policy) => {
+    executions++;
+    return aiProposal({ workspaceId, actorId: "owner-a", expiresAt: Date.now() + 100000, nonce: "offline-a1-recovery" },
+      requestId, shared, { fixtureTime, transportPolicy: policy, sessionTimeoutMs: 300000 });
+  }, f.clock, f.transport);
+  expect(executions).toBe(1); expect(f.transport).toHaveBeenCalledTimes(4);
+  expect(receipt.countCalls).toBe(2); expect(receipt.generationCalls).toBe(2); expect(receipt.fullCampaignAccepted).toBe(false);
+  const positive = JSON.parse(await readFile(path.join(f.paths.data, f.manifest.cases[1].workspaceId + ".json"), "utf8")) as Workspace;
+  expect(positive.proposals).toHaveLength(1); expect(positive.agentRuns).toHaveLength(1);
+  expect(financialSnapshot(positive)).toBe(financialSnapshot(initial.workspaces[1]));
+  const events = (await new H2Journal(f.paths.quota).read()).map(e => e.value);
+  expect(events.filter(e => e.kind === "generation-transient")).toHaveLength(1);
+  expect(events.some(e => e.kind === "poison")).toBe(false);
 });

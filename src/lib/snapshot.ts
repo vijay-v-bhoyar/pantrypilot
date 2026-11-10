@@ -6,6 +6,16 @@ import type { Workspace } from "./types";
 export function snapshot(w: Workspace) {
   return { format: "pantrypilot-demo-v1", sha256: digest(w), workspace: w };
 }
+export function restoredDemoOwner(w: Pick<Workspace, "actors" | "organizations">) {
+  const owner = Array.isArray(w.actors) && Array.isArray(w.organizations)
+    ? w.actors.find((actor) => actor?.role === "owner" &&
+      typeof actor.id === "string" && actor.id.trim().length > 0 &&
+      typeof actor.organizationId === "string" && actor.organizationId.trim().length > 0 &&
+      w.organizations.some((organization) => organization?.id === actor.organizationId))
+    : undefined;
+  ensure(owner, "RESTORE_SCOPE", "Restored demo needs an owner linked to a workspace organization.");
+  return owner;
+}
 export function restoreDemo(raw: unknown): Workspace {
   const file = z
     .object({
@@ -76,6 +86,7 @@ export function restoreDemo(raw: unknown): Workspace {
     "RESTORE_SCOPE",
     "Provider-backed workspaces require operator reconciliation; they cannot be cloned as demos.",
   );
+  restoredDemoOwner(w);
   w.id = randomUUID();
   w.ownerId = "local-restored-demo";
   w.revision = 0;

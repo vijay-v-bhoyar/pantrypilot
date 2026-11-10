@@ -4,6 +4,7 @@ import { loadWorkspace } from "@/lib/storage";
 import { body, respond } from "@/lib/http";
 import { checkOrigin, setSession } from "@/lib/session";
 import { ensure } from "@/lib/errors";
+import { restoredDemoOwner } from "@/lib/snapshot";
 export async function POST(request: Request) {
   return respond(async () => {
     checkOrigin(request);
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
       "RESTORE_SCOPE",
       "This is not a restored synthetic workspace.",
     );
-    const actor = w.actors.find((a) => a.role === "owner")!;
+    const actor = restoredDemoOwner(w);
     await setSession(w.id, actor.id);
     return { restored: true };
   });

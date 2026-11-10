@@ -31,10 +31,49 @@ try {
             $Entry.Name -match '(^|[/\\])\.env(\.|$)' -or $Entry.Value -notmatch '^[a-f0-9]{64}$' -or
             (Get-FileHash -LiteralPath $SourcePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $Entry.Value) { throw 'Source mismatch' }
     }
-    if ($InspectOnly) { Write-Output 'INSPECT_PASS_NO_KEY_NO_PROCESS'; exit 0 }
+    if ($Scope.session) {
+        if ($Scope.session.policy -ne 'PP-GEMINI-SESSION-A1') { throw 'Unknown session policy' }
+        $SessionPlanPath=Join-Path $Release 'session-plan.json'
+        if ((Get-FileHash -LiteralPath $SessionPlanPath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $Scope.session.planSha256) { throw 'Plan mismatch' }
+        $SessionPlan=Get-Content -LiteralPath $SessionPlanPath -Raw | ConvertFrom-Json
+        # Run credential-free subject/head/accounting validation BEFORE any key prompt.
+        $CheckInfo=New-Object System.Diagnostics.ProcessStartInfo
+        $CheckInfo.FileName='C:\Program Files\nodejs\node.exe'
+        $CheckInfo.WorkingDirectory=$Scope.canonicalRoot
+        $CheckInfo.Arguments='--import tsx "scripts/owner-planner-runtime.ts" "' + $Release + '" "' + $ExpectedScopeSha256 + '" --preflight'
+        $CheckInfo.UseShellExecute=$false; $CheckInfo.CreateNoWindow=$true
+        $CheckInfo.RedirectStandardOutput=$true; $CheckInfo.RedirectStandardError=$true
+        $CheckInfo.EnvironmentVariables.Clear()
+        foreach ($Name in @('SystemRoot','WINDIR','COMSPEC','PATH','PATHEXT','TEMP','TMP')) {
+            $Value=[Environment]::GetEnvironmentVariable($Name)
+            if ($Value) { $CheckInfo.EnvironmentVariables[$Name]=$Value }
+        }
+        $Check=New-Object System.Diagnostics.Process; $Check.StartInfo=$CheckInfo
+        try {
+            if (-not $Check.Start()) { throw 'Preflight refused' }
+            $CheckOut=$Check.StandardOutput.BaseStream.CopyToAsync([IO.Stream]::Null)
+            $CheckErr=$Check.StandardError.BaseStream.CopyToAsync([IO.Stream]::Null)
+            if (-not $Check.WaitForExit(60000)) { $Check.Kill(); throw 'Preflight timed out' }
+            $CheckOut.Wait(); $CheckErr.Wait()
+            if ($Check.ExitCode -ne 0) { throw 'Preflight refused; no private input requested' }
+        } finally { $Check.Dispose() }
+    }
+    if ($InspectOnly) {
+        if ($Scope.session) { Write-Output 'INSPECT_PASS_NO_KEY_NO_PROVIDER_PROCESS' }
+        else { Write-Output 'INSPECT_PASS_NO_KEY_NO_PROCESS' }
+        exit 0
+    }
     if ([Console]::IsInputRedirected) { throw 'Owner console required' }
     Write-Once (Join-Path $Release 'staging-attempt.json') @{ scopeSha256=$ExpectedScopeSha256; atMs=(Now-Ms); maximumManualAttempts=1; secretRecorded=$false }
     $Attempted=$true
+    if ($Scope.session) {
+        Write-Output ('Session ' + $SessionPlan.day + ': prior combined requests ' + $SessionPlan.knownPriorHttp +
+            ', later reserve ' + $SessionPlan.laterExternalReservedHttp + ', run cap ' + $Scope.maxHttpRequests + '.')
+        $OwnerReady=Read-Host 'Confirm the complete project history/count shown remains correct and other Gemini callers are paused. Type READY or cancel'
+        if ($OwnerReady -cne 'READY') { throw 'Owner readiness not confirmed' }
+        Write-Once (Join-Path $Release 'owner-ready.json') @{ scopeSha256=$ExpectedScopeSha256; planSha256=$Scope.session.planSha256;
+            atMs=(Now-Ms); day=$SessionPlan.day; knownPriorHttp=$SessionPlan.knownPriorHttp; exclusive=$true; completeHistoryConfirmed=$true }
+    }
     $Key=Read-Host 'Enter the selected Gemini key privately (hidden; no API window has started)' -AsSecureString
     if ($Key.Length -lt 16 -or $Key.Length -gt 256 -or $Scope.expiresAt -le (Now-Ms)) { throw 'Private input refused or expired' }
     $Key.MakeReadOnly()
@@ -55,7 +94,8 @@ try {
     $OutDrain=$Child.StandardOutput.BaseStream.CopyToAsync([IO.Stream]::Null)
     $ErrDrain=$Child.StandardError.BaseStream.CopyToAsync([IO.Stream]::Null)
     $ReadyUntil=[Math]::Min((Now-Ms)+900000,[long]$Scope.expiresAt)
-    Write-Output 'Key staged privately. Waiting up to 15 minutes for exact process-bound activation. Do not run another attempt.'
+    if ($Scope.session) { Write-Output 'Key staged privately. The approved local runner is performing the process-bound handoff; no chat activation is needed.' }
+    else { Write-Output 'Key staged privately. Waiting up to 15 minutes for exact process-bound activation. Do not run another attempt.' }
     while ((Now-Ms) -lt $ReadyUntil -and -not $Child.HasExited) {
         $RequestPath=Join-Path $Release 'key-request.json'
         if (Test-Path -LiteralPath $RequestPath) {
@@ -77,6 +117,12 @@ try {
             if ($Remaining -le 0 -or -not $Child.WaitForExit([int][Math]::Min($Remaining,300000))) { throw 'Exact window expired; outcome uncertain' }
             $OutDrain.Wait(); $ErrDrain.Wait(); $Code=$Child.ExitCode
             Write-Once (Join-Path $Release 'owner-result.json') @{ status='PROCESS_EXITED_REQUIRES_EVIDENCE_READBACK'; exit=$Code; pid=$Child.Id; atMs=(Now-Ms) }
+            if ($Scope.session -and (Test-Path -LiteralPath (Join-Path $Release 'session-status.json'))) {
+                $Safe=Get-Content -LiteralPath (Join-Path $Release 'session-status.json') -Raw | ConvertFrom-Json
+                if ($Safe.status -in @('COMPLETED','STOPPED') -and $Safe.phase -match '^[A-Z_]{1,40}$') {
+                    Write-Output ('Session ' + $Safe.status + ' at ' + $Safe.phase + '. Inspect the saved result; no full campaign acceptance is inferred.')
+                }
+            }
             Write-Output ('Bounded process exited ' + $Code + '. Preserve evidence; do not retry automatically.')
             exit $Code
         }

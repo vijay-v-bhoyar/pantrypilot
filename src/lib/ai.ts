@@ -18,7 +18,7 @@ const output = z.object({
   infeasible: z.boolean(),
 });
 export type PlannerEvaluationContext = Readonly<{
-  fixtureTime: number; transportPolicy: EvaluationTransportPolicy;
+  fixtureTime: number; transportPolicy: EvaluationTransportPolicy; sessionTimeoutMs?: 300000;
 }>;
 export async function aiProposal(session: Session, requestId: string, evaluationBudget?: ModelBudget,
   evaluation?: PlannerEvaluationContext) {
@@ -38,6 +38,9 @@ export async function aiProposal(session: Session, requestId: string, evaluation
   );
   const modelId = requiredGeminiModel();
   const limits = requiredModelLimits();
+  ensure(evaluation?.sessionTimeoutMs === undefined ||
+    (evaluation.sessionTimeoutMs === 300000 && evaluationBudget && evaluationBudget.limits.timeoutMs <= 300000),
+    "EVAL_CONFIG", "Invalid evaluation-only session timeout.");
   evaluationBudget?.assertCapacity();
   const source = await withWorkspace(session.workspaceId, async (w) => {
     const actor = actorFor(w, session.actorId);
@@ -123,7 +126,7 @@ export async function aiProposal(session: Session, requestId: string, evaluation
   const control = agentController(session.workspaceId, source.organizationId);
   const budget = createModelBudget(limits);
   const signal = AbortSignal.any([control.controller.signal, budget.signal,
-    AbortSignal.timeout(60000), ...(evaluationBudget ? [evaluationBudget.signal] : [])]);
+    AbortSignal.timeout(evaluation?.sessionTimeoutMs ?? 60000), ...(evaluationBudget ? [evaluationBudget.signal] : [])]);
   try {
     const model = createGoogleGenerativeAI({
       apiKey: process.env.GEMINI_API_KEY,
