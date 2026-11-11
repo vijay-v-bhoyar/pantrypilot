@@ -2,18 +2,12 @@
 
 PantryPilot links nonprofit giving, inventory, reviewed supplier purchasing, recovery and distribution. This source export includes the MIT license, application, scripts, migrations, maintained tests and synthetic evaluation assets. The default local demo uses manual planning and simulated payments. It does not send money or invoke an AI provider.
 
-## Owner-attended planner evaluations
-
-`scripts/owner-planner-stage.ps1` and `scripts/owner-planner-runtime.ts` provide a separate, fail-closed diagnostic/H3 launcher. They are not part of the credential-free demo setup. A run requires an exact approved scope and source inventory, an initialized preserved project journal, current usage/quiet evidence and a fresh process-bound grant. The exported source includes no usable scope, approval, activation or credentials. Missing or expired records refuse execution.
-
-The owner enters the selected key in a hidden local PowerShell prompt before activation. It remains in that process's memory for at most the approved fifteen-minute staging wait, then passes through a private stdin pipe only after credential-free checks of the actual Node PID, nonce and grant. The launcher never reads an environment file, saves the key or fingerprints it. Disposal reduces retention; it does not guarantee memory erasure. Staging and dispatch records prevent automatic replay. Counting and generation obey the absolute approval deadline as well as their existing request and time limits. Safe failure phases and preserved journals require readback; a zero exit code alone is not qualification.
-
 ## Prerequisites and setup
 
-Use Node.js >=22.9, npm and Python >=3.10 available as `python` for packaging tests. Windows commands below use `npm.cmd`; on other systems omit `.cmd`. Dependency installation executes package lifecycle scripts. Install only the exact lockfile versions in a fresh directory; use an existing exact-version cache for offline installation.
+Use Node.js >=22.9, npm and Python >=3.10 available as `python` for packaging tests. Windows commands below use `npm.cmd`; on other systems omit `.cmd`. Install the exact lockfile in a fresh directory. The Windows demo setup uses npm with lifecycle scripts disabled. For offline setup, use an existing cache that contains the locked versions.
 
 ```powershell
-npm.cmd ci --no-audit --no-fund
+npm.cmd ci --ignore-scripts --no-audit --no-fund
 ```
 
 A fresh terminal must have no inherited provider credentials or hosted configuration. Select this local synthetic process profile; it requires no credential file:
@@ -86,19 +80,15 @@ Initialization requires separate approval and an already existing clean canonica
 
 H3 is locally tested, not provider-qualified. Its final receipt separates `hackathonGateAccepted` from `fullCampaignAccepted:false`. The unchanged H2 schema2/ten-pair/240-ceiling/twelve-distinct-date mechanism remains pending for later qualification. An initial diagnostic probe is neither H3 acceptance nor H2 full qualification. See `docs/planning/contracts.md` for both contracts. No provider call, real campaign initialization, paid fallback or credential use is authorized by these instructions.
 
-## Current local verification — November 4, 2026
+## What the local demo verifies
 
-The current source adds explicit inventory suitability checks and approval-time expiry revalidation. Lots with missing or mismatched attributes cannot satisfy a restricted kit. Approval and checkout recheck whether the selected basket remains sufficient before reserving money or creating orders. Approved offer metadata follows receipt and later inventory use; existing unknown lots are not automatically relabeled.
+Inventory lots must match the kit's required attributes, and approval and checkout recheck suitability and expiry. The demo also exercises refund confirmation, fresh approval for replacement purchases and receipt before distribution. Use the commands above to reproduce the local checks on your checkout.
 
-This candidate passed an offline exact-lockfile install, **817 unit/route tests across 43 files**, **57 selected Chromium journeys**, lint, typecheck, a production Webpack build and the Community artifact boundary check. The seventeen new unit checks cover expiry and inventory eligibility; the two added browser journeys cover the corresponding desktop/mobile workflow. Evaluation source digest: `e309ac52007e95634c140c42eaf3f9c3000ca7f96e0819bddc9c202b9c2f21c7`; build `4kvcBNfpijY1pM7BFE5aO`. Five native Studio cases remain deferred NOT_RUN. These are November 4 local synthetic results, not a fresh rerun from repackaging, provider qualification, hosted behavior or human acceptance.
+## Owner-attended planner evaluations
 
-## Earlier verified local candidate — November 3, 2026
+`scripts/owner-planner-stage.ps1` and `scripts/owner-planner-runtime.ts` provide a separate, fail-closed diagnostic/H3 launcher. They are not part of the credential-free demo setup. A run requires an exact approved scope and source inventory, an initialized preserved project journal, current usage/quiet evidence and a fresh process-bound grant. The exported source includes no usable scope, approval, activation or credentials. Missing or expired records refuse execution.
 
-The explicit Gemini 3.6 diagnostic binding, H3 and owner-launcher source passed an offline exact-lockfile install, **800 unit/route tests across 42 files**, **173 focused checks**, **55 selected Chromium journeys**, lint, post-build typecheck, a production Webpack build and the Community artifact boundary check. Evaluation source digest: `487f5bd845f1d96757cdb79cadb16f9c92437e54a88ceb3fcfbf8d8365ea60a8`; build `ONkysz9LN0vG_XipQ6LYv`. Five native Studio cases remain deferred NOT_RUN. No dependency junction was used. These results were produced on November 3; refreshing documentation does not rerun or refresh their timestamps.
-
-The first full unit run had four campaign timeouts and one Windows EBUSY cleanup failure. That result is preserved; the identical suite passed once using a fresh owned temporary directory, with no test, assertion or timeout changes. The exact environmental cause is not established solely by the passing rerun. Installation used the existing exact-version npm cache; uncached installation and other operating systems were not tested. Existing dependency and SDK fixture warnings remain disclosed.
-
-These checks prove the local synthetic profile only. Source publication does not establish PayPal/Gemini qualification, hosted behavior or independent human acceptance. The export excludes private evidence, failed ledgers, credentials and operational data. No successful provider campaign or deployed application is claimed.
+The owner enters the selected key in a hidden local PowerShell prompt before activation. It remains in that process's memory for at most the approved fifteen-minute staging wait, then passes through a private stdin pipe only after credential-free checks of the actual Node PID, nonce and grant. The launcher never reads an environment file, saves the key or fingerprints it. Disposal reduces retention; it does not guarantee memory erasure. Staging and dispatch records prevent automatic replay. Counting and generation obey the absolute approval deadline as well as their existing request and time limits. Safe failure phases and preserved journals require readback; a zero exit code alone is not qualification.
 
 ## Explicit diagnostic model binding
 
