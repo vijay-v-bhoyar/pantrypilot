@@ -26,17 +26,26 @@ $env:NEXT_TELEMETRY_DISABLED='1'
 
 Financial actions in this profile are synthetic operations needed by the demo journeys. Never add live-money credentials. Keep `.env.local`, workspace data, cookies and logs outside source publication. The example environment file is a template, not provider admission; its older evaluation-cap comment does not describe the H2 campaign policy in `docs/planning/contracts.md`.
 
-## Local checks and startup
+## Start the local judge demo
 
 ```powershell
-npm.cmd run lint
-npm.cmd test
 npm.cmd run build -- --webpack
-npm.cmd run typecheck
 npm.cmd run start -- --port 3102
 ```
 
-Build and typecheck run sequentially because Next regenerates types. Webpack is the documented local build path; default Turbopack previously failed in the Windows environment. From a second terminal with the same profile, run:
+Open [the local demo](http://127.0.0.1:3102) and select **Explore the working demo**. Keep the server running while you try the roles in the demo journey below. [The health endpoint](http://127.0.0.1:3102/api/health) should show local storage, simulated payments, manual AI and disabled provider actions.
+
+## Local verification
+
+Run the build above first so Next generates its types, then run these commands in a second terminal with the same profile:
+
+```powershell
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd test
+```
+
+Webpack is the documented local build path; default Turbopack previously failed in the Windows environment. With the demo server still running, verify the browser journeys:
 
 ```powershell
 $env:PANTRYPILOT_TEST_ORIGIN='http://127.0.0.1:3102'
@@ -48,6 +57,8 @@ The matching Chromium must already be installed for offline browser verification
 ## Demo journey
 
 Request kits and compare approved offers; have finance approve the exact proposal and simulate checkout. Have the supplier cancel an item, review the resulting recovery, simulate the merchant-authorized refund, receive remaining supplies and approve a fresh replacement. Record receipts before distributing kits. Analytics distinguishes planned, purchased, received and distributed quantities. Giving also supports synthetic one-time gifts and recurring-gift workflows.
+
+In the recorded synthetic recovery journey, the workspace starts with a $600.00 balance. After the cancellation, simulated refund, replacement and recorded receipts, the evidence view shows 50 kits distributed, $226.40 available and $0.00 reserved. These amounts are fixture results.
 
 ## How PantryPilot uses PayPal
 
